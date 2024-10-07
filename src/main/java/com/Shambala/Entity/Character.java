@@ -1,5 +1,6 @@
 package com.Shambala.Entity;
 
+import com.Shambala.Enum.Race;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,12 +24,15 @@ public class Character implements Serializable {
     private Long id;
 
     @Column(unique = true)
-    @NotEmpty(message = "Ainsi donc tu n'as pas de nom ?")
+    @NotEmpty(message = "Ainsi donc, tu n'as pas de nom ?")
     private String name;
 
     private String playerClass;
     private String background;
-    private String race;
+
+    @NotEmpty(message = "Il faut choisir ton espèce, même si tu es un blob")
+    private Race race;
+
     private String classExperience;
     private String globalExperience;
 

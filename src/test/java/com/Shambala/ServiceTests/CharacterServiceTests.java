@@ -1,10 +1,14 @@
 package com.Shambala.ServiceTests;
 
+import com.Shambala.Enum.Race;
 import com.Shambala.Service.CharacterService;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterServiceTests {
 
@@ -19,7 +23,7 @@ public class CharacterServiceTests {
     @Test
     public void characterName_ShouldNotBeNull() {
         String name = "Efrim";
-        boolean nameNotNull = CharacterService.characterHasNotANullName(name);
+        boolean nameNotNull = CharacterService.characterHasAValidName(name);
 
         assertTrue(nameNotNull);
     }
@@ -38,8 +42,17 @@ public class CharacterServiceTests {
         String nameWithNumber = "Efrim123";
         assertFalse(CharacterService.characterHasAValidName(nameWithNumber));
 
-        // Cas invalide : nom avec plusieurs caractères spéciaux
         String nameWithMultipleSpecialChars = "Efrim@#Nal!";
         assertFalse(CharacterService.characterHasAValidName(nameWithMultipleSpecialChars));
+    }
+
+    @Test
+    public void characterRace_ShouldBeInTheEnumListOfRace() {
+        Set<String> expectedRaces = Set.of("KHAZAD", "YSGANDIEN", "YSGANDIENNE");
+
+        Set<String> actualRaces = CharacterService.getAllRaces();
+
+        assertEquals(expectedRaces, actualRaces);
+
     }
 }

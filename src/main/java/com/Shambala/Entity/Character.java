@@ -1,10 +1,7 @@
 package com.Shambala.Entity;
 
 import com.Shambala.Enum.Race;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +32,9 @@ public class Character implements Serializable {
 
     private String classExperience;
     private String globalExperience;
+
+    @OneToOne
+    private CharacterStats characterStats;
 
 
 }

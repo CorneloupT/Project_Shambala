@@ -1,4 +1,4 @@
-package com.Shambala.ServiceTests;
+package com.Shambala.ServiceCharacterTests;
 
 import com.Shambala.Service.ServiceImpl.CharacterServiceImpl;
 import com.Shambala.Enum.Race;

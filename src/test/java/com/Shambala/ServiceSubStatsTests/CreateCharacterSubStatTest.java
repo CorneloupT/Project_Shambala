@@ -6,10 +6,9 @@ import com.Shambala.Service.ServiceImpl.CharacterSubStatServiceImpl;
 import com.Shambala.models.CharacterSubStats;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class createCharacterSubStatTest {
+public class CreateCharacterSubStatTest {
 
     @Test
     void testCreateCharacterSubStat_whenSubStatsAreProvided_returnAllSubStats() {
@@ -19,9 +18,23 @@ public class createCharacterSubStatTest {
             int subStatValue = 15;
             StatType statType = StatType.FGT;
         //Act
-            CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName, subStatValue, statType);
+            CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName);
 
         //Assert
             assertNotNull(characterSubStats, "the createCharacterSubStat() should not return null");
     }
+
+    @Test
+    void testCreateCharacterSubStat_whenSubStatsAreProvided_returnSameName() {
+        CharacterSubStatService characterSubStatService = new CharacterSubStatServiceImpl();
+        String subStatName = "endurance";
+        int subStatValue = 15;
+        StatType statType = StatType.FGT;
+
+        CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName);
+
+        assertEquals(subStatName, characterSubStats.getSubStatName());
+
+    }
+
 }

@@ -11,4 +11,7 @@ import lombok.NoArgsConstructor;
 public class CharacterSubStats {
 
     private String subStatName;
+    private int subStatValue;
+    private StatType statType;
+
 }

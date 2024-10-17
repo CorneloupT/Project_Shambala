@@ -18,23 +18,48 @@ public class CreateCharacterSubStatTest {
             int subStatValue = 15;
             StatType statType = StatType.FGT;
         //Act
-            CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName);
+            CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName, subStatValue, statType);
 
         //Assert
             assertNotNull(characterSubStats, "the createCharacterSubStat() should not return null");
     }
 
     @Test
-    void testCreateCharacterSubStat_whenSubStatsAreProvided_returnSameName() {
+    void testCreateCharacterSubStat_whenSubStatsAreProvided_returnSameSubStatName() {
         CharacterSubStatService characterSubStatService = new CharacterSubStatServiceImpl();
         String subStatName = "endurance";
         int subStatValue = 15;
         StatType statType = StatType.FGT;
 
-        CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName);
+        CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName, subStatValue, statType);
 
         assertEquals(subStatName, characterSubStats.getSubStatName());
 
     }
 
+    @Test
+    void testCreateCharacterSubStat_whenSubStatsAreProvided_returnSameSubStatValue() {
+        CharacterSubStatService characterSubStatService = new CharacterSubStatServiceImpl();
+        String subStatName = "endurance";
+        int subStatValue = 15;
+        StatType statType = StatType.FGT;
+
+        CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName, subStatValue, statType);
+
+        assertEquals(subStatValue, characterSubStats.getSubStatValue());
+
+    }
+
+    @Test
+    void testCreateCharacterSubStat_whenSubStatsAreProvided_returnSameSubStatType() {
+        CharacterSubStatService characterSubStatService = new CharacterSubStatServiceImpl();
+        String subStatName = "endurance";
+        int subStatValue = 15;
+        StatType statType = StatType.FGT;
+
+        CharacterSubStats characterSubStats = characterSubStatService.createCharacterSubStat(subStatName, subStatValue, statType);
+
+        assertEquals(statType, characterSubStats.getStatType());
+
+    }
 }

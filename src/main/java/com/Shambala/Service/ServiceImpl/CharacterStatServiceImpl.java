@@ -18,23 +18,6 @@ public class CharacterStatServiceImpl implements CharacterStatService {
                                          int willPowerStat,
                                          int fightStat) {
 
-        if (physicalStat >= 50 || physicalStat <= 10 || physicalStat % 5 != 0) {
-            throw new IllegalArgumentException("Maximum of Physical Stat is 50, Minimum is 10 and should be divisible by 5");
-        }
-        if (dexterityStat >= 50 || dexterityStat <= 10 || dexterityStat % 5 != 0) {
-            throw new IllegalArgumentException("Maximum of Dexterity Stat is 50, Minimum is 10 and should be divisible by 5");
-        }
-        if (psychicStat >= 50 || psychicStat <= 10 || psychicStat % 5 != 0) {
-            throw new IllegalArgumentException("Maximum of Psychic Stat is 50, Minimum is 10 and should be divisible by 5");
-        }
-        if (willPowerStat >= 50 || willPowerStat <= 10 || willPowerStat % 5 != 0) {
-            throw new IllegalArgumentException("Maximum of Will Power Stat is 50, Minimum is 10 and should be divisible by 5");
-        }
-        if (fightStat >= 50 || fightStat <= 10 || fightStat % 5 != 0) {
-            throw new IllegalArgumentException("Maximum of Fight Stat is 50, Minimum is 10 and should be divisible by 5");
-        }
-
-
         return new CharacterStats(
                 lifePoints,
                 lifePointsMax,
@@ -48,4 +31,24 @@ public class CharacterStatServiceImpl implements CharacterStatService {
                 willPowerStat,
                 fightStat);
     }
+
+    @Override
+    public void verifyPrincipalCharacterStats(CharacterStats principalStats) {
+        int[] principalStatsToCheck = {
+                principalStats.getPhysicalStat(),
+                principalStats.getDexterityStat(),
+                principalStats.getPsychicStat(),
+                principalStats.getWillPowerStat(),
+                principalStats.getFightStat()
+        };
+
+        for(int principalStat : principalStatsToCheck) {
+            if (principalStat >= 50 || principalStat <= 10 || principalStat % 5 != 0 ) {
+                throw new IllegalArgumentException("Principal Stat should not be superior to 50, inferior to 10 and divisible by 5");
+            }
+        }
+
+    }
+
 }
+

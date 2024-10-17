@@ -20,4 +20,5 @@ public class CharacterStats {
     private int psychicStat;
     private int willPowerStat;
     private int fightStat;
+
 }

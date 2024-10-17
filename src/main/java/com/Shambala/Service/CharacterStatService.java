@@ -15,4 +15,6 @@ public interface CharacterStatService {
                                   int psychicStat,
                                   int willPowerStat,
                                   int fightStat);
+
+    void verifyPrincipalCharacterStats(CharacterStats principalStats);
 }

@@ -6,7 +6,11 @@ import com.Shambala.models.CharacterStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,15 +61,31 @@ public class CharacterStatsTest {
                 fightStat);
     }
 
-    private int[] principalStatValue(CharacterStats principalStats) {
-        return new int[]{
-                principalStats.getPhysicalStat(),
-                principalStats.getDexterityStat(),
-                principalStats.getPsychicStat(),
-                principalStats.getWillPowerStat(),
-                principalStats.getFightStat()
-        };
+    static Stream<Arguments> statsProvider() {
+        return Stream.of(
+                Arguments.of(10, 34, 40, 50, 20),   // premier jeu de valeurs
+                Arguments.of(5, 20, 30, 40, 50),  // second jeu de valeurs
+                Arguments.of(10, 20, 30, 40, 70)        // troisième jeu de valeurs
+        );
     }
+
+    @ParameterizedTest
+    @MethodSource("statsProvider")
+    void testVerifyPrincipalCharacterStats_WhenPrincipalsStatsAreProvided_ShouldBeSupTo50_InfTo10_DivisibleBy5(int physicalStat, int dexterityStat, int psychicStat, int willPowerStat, int fightStat) {
+        // Créez une instance de CharacterStats et affectez les valeurs.
+        CharacterStats principalStats = new CharacterStats();
+        principalStats.setPhysicalStat(physicalStat);
+        principalStats.setDexterityStat(dexterityStat);
+        principalStats.setPsychicStat(psychicStat);
+        principalStats.setWillPowerStat(willPowerStat);
+        principalStats.setFightStat(fightStat);
+
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                characterStatService.verifyPrincipalCharacterStats(principalStats));
+        assertEquals("Principal Stat should not be superior to 50, inferior to 10 and divisible by 5", exception.getMessage());
+    }
+
 
     @Test
     void testCreateCharacterStats_whenStatsAreProvided_returnAllStats() {

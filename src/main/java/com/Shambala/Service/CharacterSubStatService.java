@@ -1,5 +1,9 @@
 package com.Shambala.Service;
 
+import com.Shambala.Enum.StatType;
+import com.Shambala.models.CharacterSubStats;
+
 public interface CharacterSubStatService {
-    void createCharacterSubStat();
+
+    CharacterSubStats createCharacterSubStat(String subStatName, int subStatValue, StatType statType);
 }

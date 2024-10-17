@@ -12,6 +12,7 @@ public class CharacterSubStats {
 
     private String subStatName;
     private int subStatValue;
+    private String description;
     private StatType statType;
 
 }

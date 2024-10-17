@@ -5,5 +5,5 @@ import com.Shambala.models.CharacterSubStats;
 
 public interface CharacterSubStatService {
 
-    CharacterSubStats createCharacterSubStat(String subStatName, int subStatValue, StatType statType);
+    CharacterSubStats createCharacterSubStat(String subStatName, int subStatValue, String description, StatType statType);
 }

@@ -7,7 +7,7 @@ import com.Shambala.models.CharacterSubStats;
 public class CharacterSubStatServiceImpl implements CharacterSubStatService {
 
     @Override
-    public CharacterSubStats createCharacterSubStat(String subStatName, int subStatValue, StatType statType) {
-        return new CharacterSubStats(subStatName, subStatValue, statType);
+    public CharacterSubStats createCharacterSubStat(String subStatName, int subStatValue, String description, StatType statType) {
+        return new CharacterSubStats(subStatName, subStatValue, description, statType);
     }
 }

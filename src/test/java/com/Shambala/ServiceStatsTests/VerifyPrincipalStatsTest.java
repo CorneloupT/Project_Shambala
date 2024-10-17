@@ -19,21 +19,20 @@ public class VerifyPrincipalStatsTest {
 
     @BeforeEach
     void setup() {
-        characterStatService = new CharacterStatServiceImpl(); // Assurez-vous que c'est la bonne implémentation
+        characterStatService = new CharacterStatServiceImpl();
     }
 
     static Stream<Arguments> statsProvider() {
         return Stream.of(
-                Arguments.of(10, 34, 40, 50, 20),   // premier jeu de valeurs
-                Arguments.of(5, 20, 30, 40, 50),  // second jeu de valeurs
-                Arguments.of(10, 20, 30, 40, 70)        // troisième jeu de valeurs
+                Arguments.of(10, 34, 40, 50, 20),
+                Arguments.of(5, 20, 30, 40, 50),
+                Arguments.of(10, 20, 30, 40, 70)
         );
     }
 
     @ParameterizedTest
     @MethodSource("statsProvider")
     void testVerifyPrincipalCharacterStats_WhenPrincipalsStatsAreProvided_ShouldBeSupTo50_InfTo10_DivisibleBy5(int physicalStat, int dexterityStat, int psychicStat, int willPowerStat, int fightStat) {
-        // Créez une instance de CharacterStats et affectez les valeurs.
         CharacterStats principalStats = new CharacterStats();
         principalStats.setPhysicalStat(physicalStat);
         principalStats.setDexterityStat(dexterityStat);

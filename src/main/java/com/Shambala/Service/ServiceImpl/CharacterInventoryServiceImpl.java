@@ -8,16 +8,16 @@ import java.util.List;
 public class CharacterInventoryServiceImpl implements CharacterInventoryService {
 
     @Override
-    public CharacterInventory createCharacterInventory(int gold,
-                                                       String head,
-                                                       String arm,
-                                                       String bust,
-                                                       String leg,
-                                                       String foot,
-                                                       String rightHand,
-                                                       String leftHand,
+    public CharacterInventory createCharacterInventory(int goldAmount,
+                                                       String headItem,
+                                                       String armItem,
+                                                       String bustItem,
+                                                       String legItem,
+                                                       String footItem,
+                                                       String rightHandItem,
+                                                       String leftHandItem,
                                                        List<String> bag) {
 
-        return new CharacterInventory(gold);
+        return new CharacterInventory(goldAmount, headItem, armItem, bustItem);
     }
 }

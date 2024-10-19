@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface CharacterInventoryService {
 
-    CharacterInventory createCharacterInventory(int gold,
-                                                String head,
-                                                String arm,
-                                                String bust,
-                                                String leg,
-                                                String foot,
-                                                String rightHand,
-                                                String leftHand,
+    CharacterInventory createCharacterInventory(int goldAmount,
+                                                String headItem,
+                                                String armItem,
+                                                String bustItem,
+                                                String legItem,
+                                                String footItem,
+                                                String rightHandItem,
+                                                String leftHandItem,
                                                 List<String> bag);
 }

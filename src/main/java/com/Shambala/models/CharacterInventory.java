@@ -11,6 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 public class CharacterInventory {
 
-    private int gold;
+    private int goldAmount;
+    private String headItem;
+    private String armItem;
+    private String bustItem;
+
 
 }

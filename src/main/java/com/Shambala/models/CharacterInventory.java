@@ -1,9 +1,16 @@
 package com.Shambala.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CharacterInventory {
 
-    public CharacterInventory(int gold, String head, String arm, String bust, String leg, String foot, String rightHand, String leftHand, List<String> bag) {
-    }
+    private int gold;
+
 }

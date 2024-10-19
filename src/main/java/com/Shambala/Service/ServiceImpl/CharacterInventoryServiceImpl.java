@@ -18,6 +18,6 @@ public class CharacterInventoryServiceImpl implements CharacterInventoryService 
                                                        String leftHand,
                                                        List<String> bag) {
 
-        return new CharacterInventory(gold, head, arm, bust, leg, foot, rightHand, leftHand, bag);
+        return new CharacterInventory(gold);
     }
 }

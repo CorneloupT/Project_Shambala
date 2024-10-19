@@ -34,4 +34,24 @@ public class CreateCharacterInventoryTest {
         assertNotNull(characterInventoryTest, "createCharacterInventory method should not return null");
     }
 
+    @Test
+    void testCreateCharacterInventory_whenInventoryIsProvided_shouldReturnSameMountOfGold() {
+        CharacterInventoryService characterInventoryService = new CharacterInventoryServiceImpl();
+        int gold = 158;
+        String head = "helmet";
+        String arm = "armlet";
+        String bust = "breastplate";
+        String leg = "legplate";
+        String foot = "boots";
+        String rightHand = "sword";
+        String leftHand = "shield";
+        List<String> bag = new ArrayList<>(Arrays.asList("torch", "rope"));
+
+        //Act
+        CharacterInventory characterInventoryTest = characterInventoryService.createCharacterInventory(gold, head, arm, bust, leg, foot, rightHand, leftHand, bag);
+
+        //Assert
+        assertEquals(gold, characterInventoryTest.getGold());
+    }
+
 }

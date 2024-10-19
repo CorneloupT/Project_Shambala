@@ -2,11 +2,14 @@ package com.Shambala.ServiceInventoryTests;
 
 import com.Shambala.Service.CharacterInventoryService;
 import com.Shambala.Service.ServiceImpl.CharacterInventoryServiceImpl;
+import com.Shambala.models.CharacterInventory;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateCharacterInventoryTest {
 
@@ -23,10 +26,12 @@ public class CreateCharacterInventoryTest {
         String rightHand = "sword";
         String leftHand = "shield";
         List<String> bag = new ArrayList<>(Arrays.asList("torch", "rope"));
+
         //Act
-        characterInventoryService.createCharacterInventory(gold, head, arm, bust, leg, foot, rightHand, leftHand, bag);
+        CharacterInventory characterInventoryTest = characterInventoryService.createCharacterInventory(gold, head, arm, bust, leg, foot, rightHand, leftHand, bag);
 
         //Assert
+        assertNotNull(characterInventoryTest, "createCharacterInventory method should not return null");
     }
 
 }

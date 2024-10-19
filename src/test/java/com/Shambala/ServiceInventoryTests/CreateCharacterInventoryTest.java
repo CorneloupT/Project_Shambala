@@ -3,6 +3,7 @@ package com.Shambala.ServiceInventoryTests;
 import com.Shambala.Service.CharacterInventoryService;
 import com.Shambala.Service.ServiceImpl.CharacterInventoryServiceImpl;
 import com.Shambala.models.CharacterInventory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -13,44 +14,47 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateCharacterInventoryTest {
 
+    private CharacterInventoryService characterInventoryService;
+
+    private int gold;
+    private String head;
+    private String arm;
+    private String bust;
+    private String leg;
+    private String foot;
+    private String rightHand;
+    private String leftHand;
+    private List<String> bag = new ArrayList<>();
+
+    @BeforeEach
+    void setUp() {
+        characterInventoryService = new CharacterInventoryServiceImpl();
+        gold = 158;
+        head = "helmet";
+        arm = "armlet";
+        bust = "breastplate";
+        leg = "legplate";
+        foot = "boots";
+        rightHand = "sword";
+        leftHand = "shield";
+        bag = new ArrayList<>(Arrays.asList("torch", "rope"));
+    }
+
+    private CharacterInventory createInventoryTest() {
+        return characterInventoryService.createCharacterInventory(gold, head, arm, bust, leg, foot, rightHand, leftHand, bag);
+    }
+
     @Test
     void testCreateCharacterInventory_whenInventoryIsProvided_shouldReturnAllInventory() {
-        //Arrange
-        CharacterInventoryService characterInventoryService = new CharacterInventoryServiceImpl();
-        int gold = 158;
-        String head = "helmet";
-        String arm = "armlet";
-        String bust = "breastplate";
-        String leg = "legplate";
-        String foot = "boots";
-        String rightHand = "sword";
-        String leftHand = "shield";
-        List<String> bag = new ArrayList<>(Arrays.asList("torch", "rope"));
-
         //Act
-        CharacterInventory characterInventoryTest = characterInventoryService.createCharacterInventory(gold, head, arm, bust, leg, foot, rightHand, leftHand, bag);
-
+        CharacterInventory characterInventoryTest = createInventoryTest();
         //Assert
         assertNotNull(characterInventoryTest, "createCharacterInventory method should not return null");
     }
 
     @Test
     void testCreateCharacterInventory_whenInventoryIsProvided_shouldReturnSameMountOfGold() {
-        CharacterInventoryService characterInventoryService = new CharacterInventoryServiceImpl();
-        int gold = 158;
-        String head = "helmet";
-        String arm = "armlet";
-        String bust = "breastplate";
-        String leg = "legplate";
-        String foot = "boots";
-        String rightHand = "sword";
-        String leftHand = "shield";
-        List<String> bag = new ArrayList<>(Arrays.asList("torch", "rope"));
-
-        //Act
-        CharacterInventory characterInventoryTest = characterInventoryService.createCharacterInventory(gold, head, arm, bust, leg, foot, rightHand, leftHand, bag);
-
-        //Assert
+        CharacterInventory characterInventoryTest = createInventoryTest();
         assertEquals(gold, characterInventoryTest.getGold());
     }
 

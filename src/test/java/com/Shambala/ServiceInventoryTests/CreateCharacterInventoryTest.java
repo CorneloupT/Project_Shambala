@@ -76,5 +76,35 @@ public class CreateCharacterInventoryTest {
         assertEquals(bustItem, characterInventoryTest.getBustItem());
     }
 
+    @Test
+    void testCreateCharacterInventory_whenInventoryIsProvided_shouldReturnSameLegItem() {
+        CharacterInventory characterInventoryTest = createInventoryTest();
+        assertEquals(legItem, characterInventoryTest.getLegItem());
+    }
+
+    @Test
+    void testCreateCharacterInventory_whenInventoryIsProvided_shouldReturnSameFootItem() {
+        CharacterInventory characterInventoryTest = createInventoryTest();
+        assertEquals(footItem, characterInventoryTest.getFootItem());
+    }
+
+    @Test
+    void testCreateCharacterInventory_whenInventoryIsProvided_shouldReturnSameRightHandItem() {
+        CharacterInventory characterInventoryTest = createInventoryTest();
+        assertEquals(rightHandItem, characterInventoryTest.getRightHandItem());
+    }
+
+    @Test
+    void testCreateCharacterInventory_whenInventoryIsProvided_shouldReturnSameLeftHandItem() {
+        CharacterInventory characterInventoryTest = createInventoryTest();
+        assertEquals(leftHandItem, characterInventoryTest.getLeftHandItem());
+    }
+
+    @Test
+    void testCreateCharacterInventory_whenInventoryIsProvided_shouldReturnSameListOfItemInBag() {
+        CharacterInventory characterInventoryTest = createInventoryTest();
+        assertEquals(bag, characterInventoryTest.getBag());
+    }
+
 
 }

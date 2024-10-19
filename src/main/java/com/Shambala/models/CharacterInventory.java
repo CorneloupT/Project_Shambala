@@ -15,6 +15,11 @@ public class CharacterInventory {
     private String headItem;
     private String armItem;
     private String bustItem;
+    private String legItem;
+    private String footItem;
+    private String rightHandItem;
+    private String leftHandItem;
+    private List<String> bag;
 
 
 }

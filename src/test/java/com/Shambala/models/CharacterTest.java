@@ -37,6 +37,16 @@ class CharacterTest {
         background = "Bonjour";
     }
 
+    private record InnerBuilder(String getName,
+                                Race getRace,
+                                String getPlayerClass,
+                                int getGlobalLevel,
+                                int getExperience,
+                                int getClassLevel,
+                                int getClassExperience,
+                                String getBackground) implements CharacterBuilder {
+    }
+
     private CharacterBuilder createTestCharacter() {
         return new InnerBuilder(name, race, playerClass, globalLevel, experience, classLevel, classExperience, background);
     }
@@ -152,14 +162,5 @@ class CharacterTest {
         verify(export).setBackground(eq("Bonjour"));
     }
 
-    private record InnerBuilder(String getName,
-                                Race getRace,
-                                String getPlayerClass,
-                                int getGlobalLevel,
-                                int getExperience,
-                                int getClassLevel,
-                                int getClassExperience,
-                                String getBackground) implements CharacterBuilder {
-    }
 
 }

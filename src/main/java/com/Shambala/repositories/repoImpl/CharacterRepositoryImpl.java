@@ -21,7 +21,7 @@ class CharacterRepositoryImpl implements CharacterRepository {
     public Character getById(Long idCharacter) {
         // TODO attention au NPE
         CharacterEntity entity = entityManager.find(CharacterEntity.class, idCharacter);
-        return entity.toModel();
+        return entity.toCharacterModel();
     }
     
 }

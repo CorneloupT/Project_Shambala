@@ -1,6 +1,5 @@
 package com.Shambala.ServiceStatsTests;
 
-import com.Shambala.Service.CharacterStatService;
 import com.Shambala.Service.ServiceImpl.CharacterStatServiceImpl;
 import com.Shambala.models.CharacterStats;
 import org.junit.jupiter.api.BeforeEach;

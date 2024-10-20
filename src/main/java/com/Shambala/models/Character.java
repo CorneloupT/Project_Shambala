@@ -2,14 +2,13 @@ package com.Shambala.models;
 
 import com.Shambala.Enum.Race;
 import com.Shambala.models.builder.CharacterBuilder;
-import com.Shambala.models.builder.CharacterExport;
+import com.Shambala.models.export.CharacterExport;
 import lombok.Getter;
 
 @Getter
 public class Character {
 
-    // TODO  L'id a disparu, à voir si c'est voulu ou pas ! Il faudra surement le remettre
-
+    private Long id;
     private String name;
     private Race race;
     private String playerClass;
@@ -21,19 +20,19 @@ public class Character {
 
     public static Character from(CharacterBuilder builder) {
         Character character = new Character();
-        character.name = builder.name();
-        character.race = builder.race();
-        character.playerClass = builder.playerClass();
-        character.globalLevel = builder.globalLevel();
-        character.experience = builder.experience();
-        character.classLevel = builder.classLevel();
-        character.classExperience = builder.classExperience();
-        character.background = builder.background();
-        character.verify();
+        character.name = builder.getName();
+        character.race = builder.getRace();
+        character.playerClass = builder.getPlayerClass();
+        character.globalLevel = builder.getGlobalLevel();
+        character.experience = builder.getExperience();
+        character.classLevel = builder.getClassLevel();
+        character.classExperience = builder.getClassExperience();
+        character.background = builder.getBackground();
+        character.verifyCharacterNameAndValueOfLevelAndExperience();
         return character;
     }
 
-    private void verify() {
+    private void verifyCharacterNameAndValueOfLevelAndExperience() {
         if (name == null || name.isEmpty() || !name.matches("^[a-zA-Z0-9 ]+$")) {
             throw new IllegalArgumentException("Character name can't be null, empty or containing invalid characters");
         }
@@ -46,13 +45,13 @@ public class Character {
     }
 
     public void exportTo(CharacterExport export) {
-        export.nameIs(name);
-        export.raceIs(race);
-        export.playerClassIs(playerClass);
-        export.globalLevelIs(globalLevel);
-        export.experienceIs(experience);
-        export.classLevelIs(classLevel);
-        export.classExperienceIs(classExperience);
-        export.backgroundIs(background);
+        export.setName(name);
+        export.setRace(race);
+        export.setPlayerClass(playerClass);
+        export.setGlobalLevel(globalLevel);
+        export.setExperience(experience);
+        export.setClassLevel(classLevel);
+        export.setClassExperience(classExperience);
+        export.setBackground(background);
     }
 }

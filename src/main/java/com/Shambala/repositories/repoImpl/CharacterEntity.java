@@ -3,7 +3,7 @@ package com.Shambala.repositories.repoImpl;
 import com.Shambala.Enum.Race;
 import com.Shambala.models.Character;
 import com.Shambala.models.builder.CharacterBuilder;
-import com.Shambala.models.builder.CharacterExport;
+import com.Shambala.models.export.CharacterExport;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,7 +13,7 @@ import lombok.Data;
  * Une classe de type Entity devrait toujours rester au niveau de la couche de persistence et ne jamais aller plus haut
  */
 @Data
-class CharacterEntity implements CharacterExport {
+class CharacterEntity implements CharacterExport, CharacterBuilder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,61 +28,8 @@ class CharacterEntity implements CharacterExport {
     private int classExperience;
     private String background;
 
-    Character toModel() {
-        // ça, c'est juste pour ne pas avoir à recréer des getter pour matcher le builder
-        // mais on pourrait aussi changer l'API du builder pour que les méthodes soient getName() au lieu de name()
-        // pareil pour l'export où on pourrait utiliser la notation setName() au lieu de nameIs()
-        return Character.from(new InnerCharacterBuilder(name, race, playerClass, globalLevel, experience, classLevel, classExperience, background));
+    Character toCharacterModel() {
+        return Character.from(this);
     }
 
-    @Override
-    public void nameIs(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void raceIs(Race race) {
-        this.race = race;
-    }
-
-    @Override
-    public void playerClassIs(String playerClass) {
-        this.playerClass = playerClass;
-    }
-
-    @Override
-    public void globalLevelIs(int globalLevel) {
-        this.globalLevel = globalLevel;
-    }
-
-    @Override
-    public void experienceIs(int experience) {
-        this.experience = experience;
-    }
-
-    @Override
-    public void classLevelIs(int classLevel) {
-        this.classLevel = classLevel;
-    }
-
-    @Override
-    public void classExperienceIs(int classExperience) {
-        this.classExperience = classExperience;
-    }
-
-    @Override
-    public void backgroundIs(String background) {
-        this.background = background;
-    }
-
-    private record InnerCharacterBuilder(String name,
-                                         Race race,
-                                         String playerClass,
-                                         int globalLevel,
-                                         int experience,
-                                         int classLevel,
-                                         int classExperience,
-                                         String background)
-            implements CharacterBuilder {
-    }
 }

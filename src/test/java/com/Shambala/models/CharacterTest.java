@@ -2,7 +2,7 @@ package com.Shambala.models;
 
 import com.Shambala.Enum.Race;
 import com.Shambala.models.builder.CharacterBuilder;
-import com.Shambala.models.builder.CharacterExport;
+import com.Shambala.models.export.CharacterExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -142,24 +142,24 @@ class CharacterTest {
         Character character = Character.from(createTestCharacter());
         character.exportTo(export);
 
-        verify(export).nameIs(eq("Efrim"));
-        verify(export).raceIs(eq(Race.YSGANDIEN));
-        verify(export).playerClassIs(eq("Pyromancien"));
-        verify(export).globalLevelIs(eq(5));
-        verify(export).experienceIs(eq(1500));
-        verify(export).classLevelIs(eq(6));
-        verify(export).classExperienceIs(eq(2000));
-        verify(export).backgroundIs(eq("Bonjour"));
+        verify(export).setName(eq("Efrim"));
+        verify(export).setRace(eq(Race.YSGANDIEN));
+        verify(export).setPlayerClass(eq("Pyromancien"));
+        verify(export).setGlobalLevel(eq(5));
+        verify(export).setExperience(eq(1500));
+        verify(export).setClassLevel(eq(6));
+        verify(export).setClassExperience(eq(2000));
+        verify(export).setBackground(eq("Bonjour"));
     }
 
-    private record InnerBuilder(String name,
-                                Race race,
-                                String playerClass,
-                                int globalLevel,
-                                int experience,
-                                int classLevel,
-                                int classExperience,
-                                String background) implements CharacterBuilder {
+    private record InnerBuilder(String getName,
+                                Race getRace,
+                                String getPlayerClass,
+                                int getGlobalLevel,
+                                int getExperience,
+                                int getClassLevel,
+                                int getClassExperience,
+                                String getBackground) implements CharacterBuilder {
     }
 
 }

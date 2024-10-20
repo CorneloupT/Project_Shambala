@@ -1,7 +1,7 @@
 package com.Shambala.ServiceStatsTests;
 
-import com.Shambala.Service.ServiceImpl.CharacterStatServiceImpl;
 import com.Shambala.models.CharacterStats;
+import com.Shambala.models.builder.CharacterStatsBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,122 +9,80 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateCharacterStatsTest {
 
-    private CharacterStatService characterStatService;
-
     private int lifePoints;
     private int lifePointsMax;
     private int ENPoints;
     private int ENPointsMax;
     private int luckyPoints;
     private int protection;
-    private int physicalStat;
-    private int dexterityStat;
-    private int psychicStat;
-    private int willPowerStat;
-    private int fightStat;
 
     @BeforeEach
     void Setup() {
-        characterStatService = new CharacterStatServiceImpl();
         lifePoints = 12;
         lifePointsMax = 14;
         ENPoints = 3;
         ENPointsMax = 5;
         luckyPoints = 5;
         protection = 2;
-        physicalStat = 40;
-        dexterityStat = 30;
-        psychicStat = 15;
-        willPowerStat = 30;
-        fightStat = 35;
     }
 
-    private CharacterStats createCharacterStats() {
-        return characterStatService.createNewStats(
-                lifePoints,
-                lifePointsMax,
-                ENPoints,
-                ENPointsMax,
-                luckyPoints,
-                protection,
-                physicalStat,
-                dexterityStat,
-                psychicStat,
-                willPowerStat,
-                fightStat);
+    private record InnerBuilder(int getLifePoint,
+                                int getLifePointMax,
+                                int getENPoints,
+                                int getENPointsMax,
+                                int getLuckyPoint,
+                                int getProtection)
+            implements CharacterStatsBuilder {
+    }
+
+    private CharacterStatsBuilder createCharacterStats() {
+        return new InnerBuilder(lifePoints, lifePointsMax,ENPoints, ENPointsMax, luckyPoints, protection);
     }
 
     @Test
-    void testCreateCharacterStats_whenStatsAreProvided_returnAllStats() {
+    void testCreateCharacterStats_whenStatsAreProvided_returnAllStatsFromBuilder() {
         //Act
-        CharacterStats characterStats = createCharacterStats();
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(new InnerBuilder(
+                10, 12,5,5,5,2
+        ));
         //Assert
-        assertNotNull(characterStats, "The method should not return null Stats");
+        assertNotNull(characterStats);
     }
 
     @Test
     void testCreateCharacterStats_whenLifePointsAreProvided_returnLifePoints() {
-        CharacterStats characterStats = createCharacterStats();
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
         assertEquals(lifePoints, characterStats.getLifePoints());
     }
 
     @Test
     void testCreateCharacterStats_whenMaxLifePointsAreProvided_returnMaxLifePoints() {
-        CharacterStats characterStats = createCharacterStats();
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
         assertEquals(lifePointsMax, characterStats.getLifePointsMax());
     }
 
     @Test
     void testCreateCharacterStats_whenENPointsAreProvided_returnENPoints() {
-        CharacterStats characterStats = createCharacterStats();
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
         assertEquals(ENPoints, characterStats.getENPoints());
     }
 
     @Test
     void testCreateCharacterStats_whenMaxENPointsAreProvided_returnMaxENPoints() {
-        CharacterStats characterStats = createCharacterStats();
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
         assertEquals(lifePointsMax, characterStats.getLifePointsMax());
     }
 
     @Test
     void testCreateCharacterStats_whenLuckyPointAreProvided_returnMaxLuckyPoint() {
-        CharacterStats characterStats = createCharacterStats();
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
         assertEquals(luckyPoints, characterStats.getLuckyPoints());
     }
 
     @Test
     void testCreateCharacterStats_whenProtectionIsProvided_returnProtection() {
-        CharacterStats characterStats = createCharacterStats();
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
         assertEquals(protection, characterStats.getProtection());
     }
 
-    @Test
-    void testCreateCharacterStats_whenPhysicalStatIsProvided_returnPhysicalStat() {
-        CharacterStats characterStats = createCharacterStats();
-        assertEquals(physicalStat, characterStats.getPhysicalStat());
-    }
-
-    @Test
-    void testCreateCharacterStats_whenDexterityStatIsProvided_returnDexterityStat() {
-        CharacterStats characterStats = createCharacterStats();
-        assertEquals(dexterityStat, characterStats.getDexterityStat());
-    }
-
-    @Test
-    void testCreateCharacterStats_whenPsychicStatIsProvided_returnPsychicStat() {
-        CharacterStats characterStats = createCharacterStats();
-        assertEquals(psychicStat, characterStats.getPsychicStat());
-    }
-
-    @Test
-    void testCreateCharacterStats_whenWillPowerStatIsProvided_returnWillPowerStat() {
-        CharacterStats characterStats = createCharacterStats();
-        assertEquals(willPowerStat, characterStats.getWillPowerStat());
-    }
-
-    @Test
-    void testCreateCharacterStats_whenFightStatIsProvided_returnFightStat() {
-        CharacterStats characterStats = createCharacterStats();
-        assertEquals(fightStat, characterStats.getFightStat());
-    }
 }

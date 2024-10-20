@@ -28,7 +28,10 @@ class CharacterEntity implements CharacterExport {
     private int classExperience;
     private String background;
 
-    public Character toModel() {
+    Character toModel() {
+        // ça, c'est juste pour ne pas avoir à recréer des getter pour matcher le builder
+        // mais on pourrait aussi changer l'API du builder pour que les méthodes soient getName() au lieu de name()
+        // pareil pour l'export où on pourrait utiliser la notation setName() au lieu de nameIs()
         return Character.from(new InnerCharacterBuilder(name, race, playerClass, globalLevel, experience, classLevel, classExperience, background));
     }
 

@@ -6,8 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ShambalaApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    // FIXME ce test échouera tant qu'un datasource ne sera pas défini
+    @Test
+    void contextLoads() {
+    }
 
 }

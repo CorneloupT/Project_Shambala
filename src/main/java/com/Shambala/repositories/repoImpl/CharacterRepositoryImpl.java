@@ -5,13 +5,23 @@ import com.Shambala.repositories.CharacterRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-public class CharacterRepositoryImpl implements CharacterRepository {
+class CharacterRepositoryImpl implements CharacterRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public Character saveNewCharacter(Character character) {
-        return character;
+    public void saveNewCharacter(Character character) {
+        CharacterEntity entity = new CharacterEntity();
+        character.exportTo(entity);
+        entityManager.persist(entity);
     }
+
+    @Override
+    public Character getById(Long idCharacter) {
+        // TODO attention au NPE
+        CharacterEntity entity = entityManager.find(CharacterEntity.class, idCharacter);
+        return entity.toModel();
+    }
+    
 }

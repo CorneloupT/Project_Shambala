@@ -36,4 +36,10 @@ public class CharacterPrincipalStatsTest {
         CharacterPrincipalStat characterPrincipalStat = CharacterPrincipalStat.fromBuilder(new TestBuilder(30));
         assertNotNull(characterPrincipalStat);
     }
+
+    @Test
+    void testCreatePrincipalStats_whenPhysicalStatIsProvided_returnPhysicalStatValue() {
+        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+        assertEquals(physical, principalStatTest.getPhysical());
+    }
 }

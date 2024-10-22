@@ -1,7 +1,9 @@
 package com.Shambala.models;
 
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
+import lombok.Getter;
 
+@Getter
 public class CharacterPrincipalStat {
 
     private int physical;

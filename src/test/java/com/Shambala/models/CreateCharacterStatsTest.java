@@ -93,9 +93,10 @@ public class CreateCharacterStatsTest {
            CharacterStats.fromStatBuilder(createCharacterStats());
         });
 
-        assertEquals("life points are always inferior or egal to max life points", lifePointException.getMessage());
+        assertEquals("life points and EN points are always less than or equal to their maximum", lifePointException.getMessage());
     }
 
+    // Est-ce qu'on peut faire une refactorisation de ces deux tests ou vut-il mieux les laisser séparés ?
     @Test
     void testCreateCharacterStats_whenENPointsAndENPointsMaxAreProvided_ENPointsMaxIsMaximum() {
         ENPoints = 7;
@@ -105,7 +106,7 @@ public class CreateCharacterStatsTest {
            CharacterStats.fromStatBuilder(createCharacterStats());
         });
 
-        assertEquals("EN points are always inferior or egal to max EN points", ENPointsException.getMessage());
+        assertEquals("life points and EN points are always less than or equal to their maximum", ENPointsException.getMessage());
     }
 
 }

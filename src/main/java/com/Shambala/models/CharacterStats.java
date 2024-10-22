@@ -22,20 +22,13 @@ public class CharacterStats {
         characterStats.ENPointsMax = characterStatsBuilder.getENPointsMax();
         characterStats.luckyPoints = characterStatsBuilder.getLuckyPoint();
         characterStats.protection = characterStatsBuilder.getProtection();
-        characterStats.verifyLifePointsAndMaxlifePoints();
-        characterStats.verifyENPointsAndMaxENPoints();
+        characterStats.verifyMaxLifePointsAndMaxENPoints();;
         return characterStats;
     }
 
-    public void verifyLifePointsAndMaxlifePoints() {
-        if (lifePoints > lifePointsMax) {
-            throw new IllegalArgumentException("life points are always inferior or egal to max life points");
-        }
-    }
-
-    public void verifyENPointsAndMaxENPoints() {
-        if (ENPoints > ENPointsMax) {
-            throw new IllegalArgumentException("EN points are always inferior or egal to max EN points");
+    public void verifyMaxLifePointsAndMaxENPoints() {
+        if (lifePoints > lifePointsMax || ENPoints > ENPointsMax) {
+            throw new IllegalArgumentException("life points and EN points are always less than or equal to their maximum");
         }
     }
 

@@ -1,4 +1,4 @@
-package com.Shambala.ServiceInventoryTests;
+package com.Shambala.InventoryTests;
 
 import com.Shambala.Service.CharacterInventoryService;
 import com.Shambala.Service.ServiceImpl.CharacterInventoryServiceImpl;

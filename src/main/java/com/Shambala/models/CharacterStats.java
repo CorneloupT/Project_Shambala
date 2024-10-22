@@ -2,13 +2,9 @@ package com.Shambala.models;
 
 import com.Shambala.models.builder.CharacterStatsBuilder;
 import com.Shambala.models.export.CharacterStatsExport;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class CharacterStats {
 
     private int lifePoints;
@@ -26,7 +22,21 @@ public class CharacterStats {
         characterStats.ENPointsMax = characterStatsBuilder.getENPointsMax();
         characterStats.luckyPoints = characterStatsBuilder.getLuckyPoint();
         characterStats.protection = characterStatsBuilder.getProtection();
+        characterStats.verifyLifePointsAndMaxlifePoints();
+        characterStats.verifyENPointsAndMaxENPoints();
         return characterStats;
+    }
+
+    public void verifyLifePointsAndMaxlifePoints() {
+        if (lifePoints > lifePointsMax) {
+            throw new IllegalArgumentException("life points are always inferior or egal to max life points");
+        }
+    }
+
+    public void verifyENPointsAndMaxENPoints() {
+        if (ENPoints > ENPointsMax) {
+            throw new IllegalArgumentException("EN points are always inferior or egal to max EN points");
+        }
     }
 
     public void exportTo(CharacterStatsExport statsExport) {

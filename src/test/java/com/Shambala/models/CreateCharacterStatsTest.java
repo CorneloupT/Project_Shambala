@@ -1,6 +1,5 @@
-package com.Shambala.ServiceStatsTests;
+package com.Shambala.models;
 
-import com.Shambala.models.CharacterStats;
 import com.Shambala.models.builder.CharacterStatsBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,6 +82,30 @@ public class CreateCharacterStatsTest {
     void testCreateCharacterStats_whenProtectionIsProvided_returnProtection() {
         CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
         assertEquals(protection, characterStats.getProtection());
+    }
+
+    @Test
+    void testCreateCharacterStats_whenLifePointsAndMaxLifePointsAreProvided_lifePointsMaxIsMaximum() {
+        lifePoints = 15;
+        lifePointsMax = 14;
+
+        IllegalArgumentException lifePointException = assertThrows(IllegalArgumentException.class, () -> {
+           CharacterStats.fromStatBuilder(createCharacterStats());
+        });
+
+        assertEquals("life points are always inferior or egal to max life points", lifePointException.getMessage());
+    }
+
+    @Test
+    void testCreateCharacterStats_whenENPointsAndENPointsMaxAreProvided_ENPointsMaxIsMaximum() {
+        ENPoints = 7;
+        ENPointsMax = 6;
+
+        IllegalArgumentException ENPointsException = assertThrows(IllegalArgumentException.class, () -> {
+           CharacterStats.fromStatBuilder(createCharacterStats());
+        });
+
+        assertEquals("EN points are always inferior or egal to max EN points", ENPointsException.getMessage());
     }
 
 }

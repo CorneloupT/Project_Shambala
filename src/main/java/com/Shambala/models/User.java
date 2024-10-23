@@ -3,6 +3,8 @@ package com.Shambala.models;
 import com.Shambala.models.builder.UserBuilder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class User {
 
@@ -11,6 +13,7 @@ public class User {
     private String email;
     private String nickName;
     private String password;
+    private List<Character> characterList;
 
     public static User fromBuilder(UserBuilder userBuilder) {
         User user = new User();
@@ -19,6 +22,7 @@ public class User {
         user.email = userBuilder.getEmail();
         user.nickName = userBuilder.getNickName();
         user.password = userBuilder.getPassword();
+        user.characterList = userBuilder.getCharacterList();
         return user;
     }
 

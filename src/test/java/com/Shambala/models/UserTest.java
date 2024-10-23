@@ -108,4 +108,12 @@ public class UserTest {
         assertEquals(characterList, userTest.getCharacterList());
     }
 
+    @Test
+    void testCreateNewUser_whenUserMailIsProvided_returnEmailWithValidPattern() {
+        IllegalArgumentException emailException = assertThrows(IllegalArgumentException.class, () -> {
+            User.fromBuilder(createTestUser());
+        });
+        assertEquals("User email pattern is incorrect", emailException.getMessage());
+    }
+
 }

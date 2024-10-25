@@ -123,13 +123,53 @@ public class UserTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"bob", "bob@"})
+    @NullAndEmptySource
+    @ValueSource(strings = {"&#@", "Bob_Nal", "Jack!"})
+    void testCreateNewUser_whenUserLastNameIsNullOrEmptyOrHasSpecialCharacter_throwException(String lastName) {
+        this.lastName = lastName;
+        IllegalArgumentException userLastNameException = assertThrows(IllegalArgumentException.class, () -> {
+            User.fromBuilder(createTestUser());
+        });
+        assertEquals("User lastName should not be null, empty or contain specials characters", userLastNameException.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "user",
+            "user@",
+            "invalid-email@.com",
+            "user@domain",
+            "user@domain.123",
+            "user@domain..com",
+            "user@domain.com.au",
+            "user.name+tag@domain.co.uk"})
     void testCreateNewUser_whenUserMailIsProvided_returnEmailWithValidPattern(String email) {
         this.email = email;
         IllegalArgumentException emailException = assertThrows(IllegalArgumentException.class, () -> {
             User.fromBuilder(createTestUser());
         });
         assertEquals("User email pattern is incorrect", emailException.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    void testCreateNewUser_whenUserNickNameIsNullOrEmpty_throwException(String nickName) {
+        this.nickName = nickName;
+        IllegalArgumentException userNickNameException = assertThrows(IllegalArgumentException.class, () -> {
+            User.fromBuilder(createTestUser());
+        });
+        assertEquals("User nickName should not be null or empty", userNickNameException.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"azerty"})
+    void testCreateNewUser_whenUserPasswordIsNullOrEmptyOrToShort_throwException(String password) {
+        this.password = password;
+        IllegalArgumentException userPasswordException = assertThrows(IllegalArgumentException.class, () -> {
+            User.fromBuilder(createTestUser());
+        });
+        assertEquals("User password should not be null or empty, and at least 8 characters", userPasswordException.getMessage());
     }
 
 }

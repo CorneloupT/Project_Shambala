@@ -24,7 +24,10 @@ public class User {
         user.password = userBuilder.getPassword();
         user.characterList = userBuilder.getCharacterList();
         user.verifyUserFirstNameIsCorrect();
+        user.verifyUserLastNameIsCorrect();
         user.verifyUserEmailIsCorrect();
+        user.verifyUserNickNameIsCorrect();
+        user.verifyUserPasswordIsCorrect();
         return user;
     }
 
@@ -34,12 +37,30 @@ public class User {
         }
     }
 
+    private void verifyUserLastNameIsCorrect() {
+        if (lastName == null || lastName.isEmpty() || !lastName.matches("^[a-zA-Z0-9 ]+$")) {
+            throw new IllegalArgumentException("User lastName should not be null, empty or contain specials characters");
+        }
+    }
+
     private void verifyUserEmailIsCorrect() {
 
-        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$";
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$";
 
-        if (!email.matches(emailPattern)) {
+        if (!email.matches(emailPattern) || email == null) {
             throw new IllegalArgumentException("User email pattern is incorrect");
+        }
+    }
+
+    private void verifyUserNickNameIsCorrect() {
+        if (nickName == null || nickName.isEmpty()) {
+            throw new IllegalArgumentException("User nickName should not be null or empty");
+        }
+    }
+
+    private void verifyUserPasswordIsCorrect() {
+        if (password == null || password.isEmpty() || password.length() < 8) {
+            throw  new IllegalArgumentException("User password should not be null or empty, and at least 8 characters");
         }
     }
 

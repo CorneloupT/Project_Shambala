@@ -6,6 +6,9 @@ import com.Shambala.models.builder.UserBuilder;
 import com.Shambala.models.export.CharacterExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +111,21 @@ public class UserTest {
         assertEquals(characterList, userTest.getCharacterList());
     }
 
-    @Test
-    void testCreateNewUser_whenUserMailIsProvided_returnEmailWithValidPattern() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"&#@", "Bob_Nal", "Jack!"})
+    void testCreateNewUser_whenUserFirstNameIsNullOrEmptyOrHasSpecialCharacter_throwException(String firstName) {
+        this.firstName = firstName;
+        IllegalArgumentException userFirstNameException = assertThrows(IllegalArgumentException.class, () -> {
+            User.fromBuilder(createTestUser());
+        });
+        assertEquals("User firstName should not be null, empty or contain specials characters", userFirstNameException.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"bob", "bob@"})
+    void testCreateNewUser_whenUserMailIsProvided_returnEmailWithValidPattern(String email) {
+        this.email = email;
         IllegalArgumentException emailException = assertThrows(IllegalArgumentException.class, () -> {
             User.fromBuilder(createTestUser());
         });

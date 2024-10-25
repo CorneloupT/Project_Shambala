@@ -23,12 +23,22 @@ public class User {
         user.nickName = userBuilder.getNickName();
         user.password = userBuilder.getPassword();
         user.characterList = userBuilder.getCharacterList();
+        user.verifyUserFirstNameIsCorrect();
         user.verifyUserEmailIsCorrect();
         return user;
     }
 
+    private void verifyUserFirstNameIsCorrect() {
+        if (firstName == null || firstName.isEmpty() || !firstName.matches("^[a-zA-Z0-9 ]+$")) {
+            throw new IllegalArgumentException("User firstName should not be null, empty or contain specials characters");
+        }
+    }
+
     private void verifyUserEmailIsCorrect() {
-        if (!email.matches("\"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$\"")) {
+
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$";
+
+        if (!email.matches(emailPattern)) {
             throw new IllegalArgumentException("User email pattern is incorrect");
         }
     }

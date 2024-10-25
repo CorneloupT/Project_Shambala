@@ -23,31 +23,27 @@ public class User {
         user.nickName = userBuilder.getNickName();
         user.password = userBuilder.getPassword();
         user.characterList = userBuilder.getCharacterList();
-        user.verifyUserFirstNameIsCorrect();
-        user.verifyUserLastNameIsCorrect();
+        user.verifyUserNames();
         user.verifyUserEmailIsCorrect();
         user.verifyUserNickNameIsCorrect();
         user.verifyUserPasswordIsCorrect();
         return user;
     }
 
-    private void verifyUserFirstNameIsCorrect() {
-        if (firstName == null || firstName.isEmpty() || !firstName.matches("^[a-zA-Z0-9 ]+$")) {
-            throw new IllegalArgumentException("User firstName should not be null, empty or contain specials characters");
+    public void verifyUserNames() {
+        verifyName(firstName, "User firstName");
+        verifyName(lastName, "User lastName");
+    }
+    private void verifyName(String name, String nameField) {
+        if (name == null || name.isEmpty() || !name.matches("^[a-zA-Z0-9 ]+$")) {
+            throw new IllegalArgumentException(nameField + " should not be null, empty or contain specials characters");
         }
     }
-
-    private void verifyUserLastNameIsCorrect() {
-        if (lastName == null || lastName.isEmpty() || !lastName.matches("^[a-zA-Z0-9 ]+$")) {
-            throw new IllegalArgumentException("User lastName should not be null, empty or contain specials characters");
-        }
-    }
-
     private void verifyUserEmailIsCorrect() {
 
         String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$";
 
-        if (!email.matches(emailPattern) || email == null) {
+        if (!email.matches(emailPattern)) {
             throw new IllegalArgumentException("User email pattern is incorrect");
         }
     }

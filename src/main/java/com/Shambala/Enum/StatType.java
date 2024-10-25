@@ -13,7 +13,7 @@ public enum StatType {
         this.statType = statType;
     }
 
-    public String getRaceName() {
+    public String getStatType() {
         return statType;
     }
 }

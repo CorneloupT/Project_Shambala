@@ -46,33 +46,15 @@ public class CharacterPrincipalStatsTest {
         assertEquals(value, principalStatTest.getValue());
     }
 
-    @Test
-    void testCreatePrincipalStat_whenValueIsProvided_shouldBeGreaterThan10() {
-        value = 5;
-        IllegalArgumentException statValueGreaterException = assertThrows(IllegalArgumentException.class, () -> {
+    @ParameterizedTest
+    @ValueSource(ints = {5, 60, 47})
+    void testCreatePrincipalStat_whenValueIsProvided_shouldBeGreaterThan10LesserThan50AndDivisibleBy5(int value) {
+        this.value = value;
+        IllegalArgumentException statValueException = assertThrows(IllegalArgumentException.class, () -> {
             CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
         });
 
-        assertEquals("Principal stat value should be greater than 10", statValueGreaterException.getMessage());
+        assertEquals("Principal stat value should be greater than 10, lesser than 50 and divisible by 5", statValueException.getMessage());
     }
 
-    @Test
-    void testCreatePrincipalStat_whenValueIsProvided_shouldBeLesserThan50() {
-        value = 60;
-        IllegalArgumentException statValueLesserException = assertThrows(IllegalArgumentException.class, () -> {
-            CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
-        });
-
-        assertEquals("Principal stat value should be lesser than 50", statValueLesserException.getMessage());
-    }
-
-    @Test
-    void testCreatePrincipalStat_whenValueIsProvided_shouldBeDivisibleBy5() {
-        value = 47;
-        IllegalArgumentException statValueIncorrectException = assertThrows(IllegalArgumentException.class, () -> {
-            CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
-        });
-
-        assertEquals("Principal stat value should be divisible by 5", statValueIncorrectException.getMessage());
-    }
 }

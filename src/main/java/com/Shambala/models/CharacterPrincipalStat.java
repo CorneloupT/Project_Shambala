@@ -14,27 +14,13 @@ public class CharacterPrincipalStat {
         CharacterPrincipalStat characterPrincipalStat = new CharacterPrincipalStat();
         characterPrincipalStat.statType = builder.getStatType();
         characterPrincipalStat.value = builder.getValue();
-        characterPrincipalStat.verifyValueIsNotUnder10();
-        characterPrincipalStat.verifyValueIsNotGreaterThan50();
-        characterPrincipalStat.verifyValueISDivisibleBy5();
+        characterPrincipalStat.verifyValue();
         return characterPrincipalStat;
     }
 
-    private void verifyValueIsNotUnder10() {
-        if (value < 10) {
-            throw new IllegalArgumentException("Principal stat value should be greater than 10");
-        }
-    }
-
-    private void verifyValueIsNotGreaterThan50() {
-        if (value > 50) {
-            throw new IllegalArgumentException("Principal stat value should be lesser than 50");
-        }
-    }
-
-    private void verifyValueISDivisibleBy5() {
-        if (value % 5 != 0) {
-            throw new IllegalArgumentException("Principal stat value should be divisible by 5");
+    private void verifyValue() {
+        if (value < 10 || value > 50 || value % 5 != 0) {
+            throw new IllegalArgumentException("Principal stat value should be greater than 10, lesser than 50 and divisible by 5");
         }
     }
 }

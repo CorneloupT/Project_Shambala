@@ -1,11 +1,11 @@
 package com.Shambala.Enum;
 
 public enum StatType {
-    PHY("Physical"),
-    DEX("Dexterity"),
-    PSY("Psychic"),
-    WIL("WillPower"),
-    FGT("Fight");
+    PHYSICAL("Physical"),
+    DEXTERITY("Dexterity"),
+    PSYCHIC("Psychic"),
+    WILLPOWER("WillPower"),
+    FIGHT("Fight");
 
     private final String statType;
 

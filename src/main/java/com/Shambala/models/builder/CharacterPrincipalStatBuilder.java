@@ -1,5 +1,9 @@
 package com.Shambala.models.builder;
 
+import com.Shambala.Enum.StatType;
+
 public interface CharacterPrincipalStatBuilder {
-    int getPhysical();
+    StatType getStatType();
+    int getValue();
+
 }

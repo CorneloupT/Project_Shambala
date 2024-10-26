@@ -1,45 +1,58 @@
 package com.Shambala.models;
 
+import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterPrincipalStatsTest {
 
-    // Je ne sais pas dans quel ordre m'y prendre avec les builders pour les tests. Donc je vais faire comme suit :
-    // 1) implémentation du test
-    // 2) création de l'interface CharacterPrincipalStatBuilder
-    // 3) création de la classe CharacterPrincipalStat
-    // 4) Initialisation du paramètre physical et du setUp()
-    // 5) Construction du testBuilder et de createTestPrincipalStat()
-    // 6) Lancement du test
-
-    private int physical;
+    private StatType statType;
+    private int value;
 
     @BeforeEach
     void setUp() {
-        physical = 30;
+        statType = StatType.PHYSICAL;
     }
 
-    private record TestBuilder(int getPhysical) implements CharacterPrincipalStatBuilder {
+    private record TestBuilder(StatType getStatType, int getValue) implements CharacterPrincipalStatBuilder {
 
     }
 
     private CharacterPrincipalStatBuilder createTestPrincipalStat() {
-        return new TestBuilder(physical);
+        return new TestBuilder(statType, value);
     }
 
     @Test
     void should_create_character_principal_stat_from_builder() {
-        CharacterPrincipalStat characterPrincipalStat = CharacterPrincipalStat.fromBuilder(new TestBuilder(30));
+        CharacterPrincipalStat characterPrincipalStat = CharacterPrincipalStat.fromBuilder(new TestBuilder(StatType.PHYSICAL, 50));
         assertNotNull(characterPrincipalStat);
     }
 
     @Test
-    void testCreatePrincipalStats_whenPhysicalStatIsProvided_returnPhysicalStatValue() {
+    void testCreatePrincipalStats_whenStatTypeIsProvided_returnStatTypeValue() {
         CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
-        assertEquals(physical, principalStatTest.getPhysical());
+        assertEquals(statType, principalStatTest.getStatType());
+    }
+
+    @Test
+    void testCreatePrincipalStats_whenValueIsProvided_returnValue() {
+        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+        assertEquals(value, principalStatTest.getValue());
+    }
+
+    @Test
+    void testCreatePrincipalStat_whenValueIsProvided_shouldBeGreaterThan10() {
+        value = 5;
+        IllegalArgumentException statValueGreaterException = assertThrows(IllegalArgumentException.class, () -> {
+            CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+        });
+
+        assertEquals("Principal stat value should be greater than 10", statValueGreaterException.getMessage());
     }
 }

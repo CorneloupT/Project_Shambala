@@ -4,6 +4,8 @@ import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterSubStatsBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,33 +62,14 @@ public class CharacterSubStatTest {
         assertEquals(description, characterSubStats.getDescription());
     }
 
-    @Test
-    void testCreateSubStat_whenSubStatIsGreaterThan30_returnError() {
-        subStatValue = 35;
-        IllegalArgumentException subStatGreaterException = assertThrows(IllegalArgumentException.class, () -> {
-            CharacterSubStats.fromSubStatBuilder(createTestSubStat());
-        });
-
-        assertEquals("Sub Stat should not be greater than 30", subStatGreaterException.getMessage());
-    }
-
-    @Test
-    void testCreateSubStat_whenSubStatIsLesserThan5_returnError() {
-        subStatValue = 0;
-        IllegalArgumentException subStatLesserException = assertThrows(IllegalArgumentException.class, () -> {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 14, 31})
+    void testCreateSubStat_whenSubStatIsGreaterThan50_OrLesserThan10_OrNotDivisibleBy5_returnError(int subStatValue) {
+        this.subStatValue = subStatValue;
+        IllegalArgumentException subStatValueException = assertThrows(IllegalArgumentException.class, () -> {
            CharacterSubStats.fromSubStatBuilder(createTestSubStat());
         });
 
-        assertEquals("Sub Stat should not be lesser than 5", subStatLesserException.getMessage());
-    }
-
-    @Test
-    void testCreateSubStat_whenSubStatIsNotDivisibleBy5_returnError() {
-        subStatValue = 27;
-        IllegalArgumentException subStatNotDivisibleBy5Exception = assertThrows(IllegalArgumentException.class, () -> {
-            CharacterSubStats.fromSubStatBuilder(createTestSubStat());
-        });
-
-        assertEquals("Sub Stat should be divisible by 5", subStatNotDivisibleBy5Exception.getMessage());
+        assertEquals("SubStat Value should not be greater than 30, lesser than 5 and should be divisibleby 5", subStatValueException.getMessage());
     }
 }

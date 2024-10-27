@@ -22,6 +22,27 @@ public class CharacterSubStats {
         characterSubStats.subStatName = builder.getSubStatName();
         characterSubStats.subStatValue = builder.getSubStatValue();
         characterSubStats.description = builder.getDescription();
+        characterSubStats.verifyGreaterValueSubStat();
+        characterSubStats.verifyLesserValueSubStat();
+        characterSubStats.verifyDivisibleValueSubStat();
         return characterSubStats;
+    }
+
+    private void verifyDivisibleValueSubStat() {
+        if (subStatValue % 5 != 0) {
+            throw new IllegalArgumentException("Sub Stat should be divisible by 5");
+        }
+    }
+
+    private void verifyLesserValueSubStat() {
+        if (subStatValue < 5) {
+            throw new IllegalArgumentException("Sub Stat should not be lesser than 5");
+        }
+    }
+
+    private void verifyGreaterValueSubStat() {
+        if (subStatValue > 30) {
+            throw new IllegalArgumentException("Sub Stat should not be greater than 30");
+        }
     }
 }

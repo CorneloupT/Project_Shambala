@@ -59,4 +59,34 @@ public class CharacterSubStatTest {
         CharacterSubStats characterSubStats = CharacterSubStats.fromSubStatBuilder(createTestSubStat());
         assertEquals(description, characterSubStats.getDescription());
     }
+
+    @Test
+    void testCreateSubStat_whenSubStatIsGreaterThan30_returnError() {
+        subStatValue = 35;
+        IllegalArgumentException subStatGreaterException = assertThrows(IllegalArgumentException.class, () -> {
+            CharacterSubStats.fromSubStatBuilder(createTestSubStat());
+        });
+
+        assertEquals("Sub Stat should not be greater than 30", subStatGreaterException.getMessage());
+    }
+
+    @Test
+    void testCreateSubStat_whenSubStatIsLesserThan5_returnError() {
+        subStatValue = 0;
+        IllegalArgumentException subStatLesserException = assertThrows(IllegalArgumentException.class, () -> {
+           CharacterSubStats.fromSubStatBuilder(createTestSubStat());
+        });
+
+        assertEquals("Sub Stat should not be lesser than 5", subStatLesserException.getMessage());
+    }
+
+    @Test
+    void testCreateSubStat_whenSubStatIsNotDivisibleBy5_returnError() {
+        subStatValue = 27;
+        IllegalArgumentException subStatNotDivisibleBy5Exception = assertThrows(IllegalArgumentException.class, () -> {
+            CharacterSubStats.fromSubStatBuilder(createTestSubStat());
+        });
+
+        assertEquals("Sub Stat should be divisible by 5", subStatNotDivisibleBy5Exception.getMessage());
+    }
 }

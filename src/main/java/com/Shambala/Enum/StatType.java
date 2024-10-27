@@ -1,5 +1,9 @@
 package com.Shambala.Enum;
 
+import com.Shambala.models.builder.CharacterSubStatsBuilder;
+import lombok.Getter;
+
+@Getter
 public enum StatType {
     PHYSICAL("Physical"),
     DEXTERITY("Dexterity"),
@@ -13,7 +17,4 @@ public enum StatType {
         this.statType = statType;
     }
 
-    public String getStatType() {
-        return statType;
-    }
 }

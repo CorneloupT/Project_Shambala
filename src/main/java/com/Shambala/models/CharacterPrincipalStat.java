@@ -19,12 +19,21 @@ public class CharacterPrincipalStat {
         characterPrincipalStat.value = builder.getValue();
         characterPrincipalStat.subStatsList = builder.getSubStatsList();
         characterPrincipalStat.verifyValue();
+        characterPrincipalStat.verifyListOfSubStat();
         return characterPrincipalStat;
     }
 
     private void verifyValue() {
         if (value < 10 || value > 50 || value % 5 != 0) {
             throw new IllegalArgumentException("Principal stat value should be greater than 10, lesser than 50 and divisible by 5");
+        }
+    }
+
+    private void verifyListOfSubStat() {
+        for (CharacterSubStats subStats : subStatsList) {
+            if (subStats.getStatType() != this.statType) {
+                throw new IllegalArgumentException("test");
+            }
         }
     }
 

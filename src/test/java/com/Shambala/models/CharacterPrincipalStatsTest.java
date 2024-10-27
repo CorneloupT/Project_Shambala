@@ -24,12 +24,12 @@ public class CharacterPrincipalStatsTest {
 
     @BeforeEach
     void setUp() {
-        statType = StatType.PHYSICAL;
+        statType = StatType.PSYCHIC;
         value = 45;
         subStatsList = new ArrayList<>();
 
         CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
-        when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PHYSICAL);
+        when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
         when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition");
         when(mockSubStatBuilder.getSubStatValue()).thenReturn(20);
         when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
@@ -48,7 +48,7 @@ public class CharacterPrincipalStatsTest {
 
     @Test
     void should_create_character_principal_stat_from_builder() {
-        CharacterPrincipalStat characterPrincipalStat = CharacterPrincipalStat.fromBuilder(new TestBuilder(StatType.PHYSICAL, 50, subStatsList));
+        CharacterPrincipalStat characterPrincipalStat = CharacterPrincipalStat.fromBuilder(new TestBuilder(StatType.PSYCHIC, 50, subStatsList));
         assertNotNull(characterPrincipalStat);
     }
 
@@ -79,6 +79,16 @@ public class CharacterPrincipalStatsTest {
     void testCreatePrincipalStat_whenPrincipalStatAreProvided_returnListOfSubStat() {
         CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
         assertEquals(subStatsList, principalStatTest.getSubStatsList());
+    }
+
+    @Test
+    void testCreatePrincipalStat_whenPrincipalStatTypeIsProvided_returnListOfSubStatWithTheSameType() {
+        statType = StatType.DEXTERITY;
+        IllegalArgumentException subStatTypeException = assertThrows(IllegalArgumentException.class, () -> {
+           CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+        });
+
+        assertEquals("test", subStatTypeException.getMessage());
     }
 
 }

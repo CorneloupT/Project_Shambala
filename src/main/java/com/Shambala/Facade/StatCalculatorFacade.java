@@ -5,7 +5,7 @@ import com.Shambala.models.builder.CharacterSubStatsBuilder;
 
 
 public class StatCalculatorFacade {
-
+    ;
     public int getValueOfDice100() {
         return (int) (Math.random() * 100) + 1;
     }
@@ -22,6 +22,19 @@ public class StatCalculatorFacade {
             return "Fail! addStatValue is greater than the dice roll.";
         } else {
             return "Succes! addStatValue is lesser than the dice roll.";
+        }
+    }
+
+    public String criticalResultD100(CharacterPrincipalStatBuilder principalStat, CharacterSubStatsBuilder subStats) {
+        int addStatValue = addStatsValue(principalStat, subStats);
+        int dice100Value = getValueOfDice100();
+
+        if (dice100Value > addStatValue && dice100Value >= 96) {
+            return "Aie ! ça ressemble à un échec critique !";
+        } else if (dice100Value < addStatValue && dice100Value <= 5){
+            return "Critical Success !!";
+        } else {
+            return resultD100AndConsequences(principalStat, subStats);
         }
     }
 }

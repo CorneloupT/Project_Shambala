@@ -55,4 +55,20 @@ public class StatCalculatorFacadeTest {
         assertEquals("Succes! addStatValue is lesser than the dice roll.", result);
     }
 
+    @Test
+    void testThrowingDiceResultIsCriticalFail() {
+        when(calculatorFacade.getValueOfDice100()).thenReturn(99);
+
+        String criticalResult = String.valueOf(calculatorFacade.criticalResultD100(principalStatBuilder, subStatsBuilder));
+        assertEquals("Aie ! ça ressemble à un échec critique !", criticalResult);
+    }
+
+    @Test
+    void testThrowingDiceResultIsCriticalSuccess() {
+        when(calculatorFacade.getValueOfDice100()).thenReturn(2);
+
+        String criticalResult = String.valueOf(calculatorFacade.criticalResultD100(principalStatBuilder, subStatsBuilder));
+        assertEquals("Critical Success !!", criticalResult);
+    }
+
 }

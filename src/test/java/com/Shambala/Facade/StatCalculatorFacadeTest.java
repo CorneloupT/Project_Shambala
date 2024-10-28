@@ -1,10 +1,31 @@
 package com.Shambala.Facade;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
+import com.Shambala.models.builder.CharacterSubStatsBuilder;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 public class StatCalculatorFacadeTest {
+
+    private StatCalculatorFacade calculatorFacade;
+    private CharacterPrincipalStatBuilder principalStatBuilder;
+    private CharacterSubStatsBuilder subStatsBuilder;
+
+    @BeforeEach
+    void setUp() {
+        calculatorFacade = new StatCalculatorFacade();
+
+        principalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
+        when(principalStatBuilder.getValue()).thenReturn(30);
+
+        subStatsBuilder = mock(CharacterSubStatsBuilder.class);
+        when(subStatsBuilder.getSubStatValue()).thenReturn(10);
+
+    }
 
     @Test
     void testGetRandomValueOfDice100() {
@@ -14,6 +35,7 @@ public class StatCalculatorFacadeTest {
 
     @Test
     void testAddPrincipalAndSubStatValue() {
-        int result = StatCalculatorFacade.getValueOfDice100(principalStat, subStat);
+        int result = StatCalculatorFacade.addStatsValue(principalStatBuilder, subStatsBuilder);
+        assertEquals(40, result, "Addition entre les deux statistiques");
     }
 }

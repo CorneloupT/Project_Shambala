@@ -17,7 +17,7 @@ public class StatCalculatorFacadeTest {
 
     @BeforeEach
     void setUp() {
-        calculatorFacade = new StatCalculatorFacade();
+        calculatorFacade = spy(new StatCalculatorFacade());
 
         principalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
         when(principalStatBuilder.getValue()).thenReturn(30);
@@ -29,19 +29,30 @@ public class StatCalculatorFacadeTest {
 
     @Test
     void testGetRandomValueOfDice100() {
-        int randomValue = StatCalculatorFacade.getValueOfDice100();
+        int randomValue = calculatorFacade.getValueOfDice100();
         assertTrue(randomValue >= 1 && randomValue <= 100, "la valeur du D100 est entre 1 et 100");
     }
 
     @Test
     void testAddPrincipalAndSubStatValue() {
-        int result = StatCalculatorFacade.addStatsValue(principalStatBuilder, subStatsBuilder);
+        int result = calculatorFacade.addStatsValue(principalStatBuilder, subStatsBuilder);
         assertEquals(40, result, "Addition entre les deux statistiques");
     }
 
     @Test
     void testThrowingDiceResultIsFail() {
+        when(calculatorFacade.getValueOfDice100()).thenReturn(51);
+
         String result = String.valueOf(calculatorFacade.resultD100IsFail(principalStatBuilder, subStatsBuilder));
-        assertEquals("Success! addStatValue is greater than the dice roll.", result);
+        assertEquals("Fail! addStatValue is greater than the dice roll.", result);
     }
+
+    @Test
+    void testThrowingDiceResultIsSuccess() {
+        when(calculatorFacade.getValueOfDice100()).thenReturn(33);
+
+        String result = String.valueOf(calculatorFacade.resultD100IsFail(principalStatBuilder, subStatsBuilder));
+        assertEquals("Succes! addStatValue is lesser than the dice roll.", result);
+    }
+
 }

@@ -2,6 +2,8 @@ package com.Shambala.models;
 
 import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
+import com.Shambala.models.export.CharacterExport;
+import com.Shambala.models.export.CharacterPrincipalStatExport;
 import lombok.Getter;
 
 import java.util.List;
@@ -35,6 +37,12 @@ public class CharacterPrincipalStat {
                 throw new IllegalArgumentException("test");
             }
         }
+    }
+
+    public void exportTo(CharacterPrincipalStatExport principalStatExport) {
+        principalStatExport.setType(statType);
+        principalStatExport.setValue(value);
+        principalStatExport.setListSubStat(subStatsList);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.Shambala.Facade;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.builder.CharacterSubStatsBuilder;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ public class StatCalculatorFacadeTest {
 
     @Test
     void testGetRandomValueOfDice100() {
-        int randomValue = StatCalculatorFacade.getValueOfDice100(1, 100);
+        int randomValue = StatCalculatorFacade.getValueOfDice100();
         assertTrue(randomValue >= 1 && randomValue <= 100, "la valeur du D100 est entre 1 et 100");
     }
 
@@ -37,5 +37,11 @@ public class StatCalculatorFacadeTest {
     void testAddPrincipalAndSubStatValue() {
         int result = StatCalculatorFacade.addStatsValue(principalStatBuilder, subStatsBuilder);
         assertEquals(40, result, "Addition entre les deux statistiques");
+    }
+
+    @Test
+    void testThrowingDiceResultIsFail() {
+        String result = String.valueOf(calculatorFacade.resultD100IsFail(principalStatBuilder, subStatsBuilder));
+        assertEquals("Success! addStatValue is greater than the dice roll.", result);
     }
 }

@@ -3,7 +3,6 @@ package com.Shambala.Facade;
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.builder.CharacterSubStatsBuilder;
 
-import java.util.Random;
 
 public class StatCalculatorFacade {
 
@@ -15,7 +14,7 @@ public class StatCalculatorFacade {
         return principalStat.getValue() + subStats.getSubStatValue();
     }
 
-    public String resultD100IsFail(CharacterPrincipalStatBuilder principalStat, CharacterSubStatsBuilder subStats) {
+    public String resultD100AndConsequences(CharacterPrincipalStatBuilder principalStat, CharacterSubStatsBuilder subStats) {
         int addStatValue = addStatsValue(principalStat, subStats);
         int dice100Value = getValueOfDice100();
 

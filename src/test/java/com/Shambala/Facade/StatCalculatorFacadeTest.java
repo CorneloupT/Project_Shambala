@@ -43,7 +43,7 @@ public class StatCalculatorFacadeTest {
     void testThrowingDiceResultIsFail() {
         when(calculatorFacade.getValueOfDice100()).thenReturn(51);
 
-        String result = String.valueOf(calculatorFacade.resultD100IsFail(principalStatBuilder, subStatsBuilder));
+        String result = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStatBuilder, subStatsBuilder));
         assertEquals("Fail! addStatValue is greater than the dice roll.", result);
     }
 
@@ -51,7 +51,7 @@ public class StatCalculatorFacadeTest {
     void testThrowingDiceResultIsSuccess() {
         when(calculatorFacade.getValueOfDice100()).thenReturn(33);
 
-        String result = String.valueOf(calculatorFacade.resultD100IsFail(principalStatBuilder, subStatsBuilder));
+        String result = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStatBuilder, subStatsBuilder));
         assertEquals("Succes! addStatValue is lesser than the dice roll.", result);
     }
 

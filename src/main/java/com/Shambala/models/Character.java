@@ -8,7 +8,6 @@ import lombok.Getter;
 @Getter
 public class Character {
 
-    private Long id;
     private String name;
     private Race race;
     private String playerClass;

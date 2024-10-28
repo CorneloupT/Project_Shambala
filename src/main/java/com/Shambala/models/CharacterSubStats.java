@@ -2,13 +2,10 @@ package com.Shambala.models;
 
 import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterSubStatsBuilder;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Getter
 public class CharacterSubStats {
 
     private StatType statType;
@@ -31,4 +28,5 @@ public class CharacterSubStats {
             throw new IllegalArgumentException("SubStat Value should not be greater than 30, lesser than 5 and should be divisibleby 5");
         }
     }
+
 }

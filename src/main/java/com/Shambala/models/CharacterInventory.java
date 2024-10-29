@@ -11,15 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 public class CharacterInventory {
 
-    private int goldAmount;
-    private String headItem;
-    private String armItem;
-    private String bustItem;
-    private String legItem;
-    private String footItem;
-    private String rightHandItem;
-    private String leftHandItem;
+    private List<CharacterEquipement> characterEquipement;
     private List<String> bag;
+    private int goldAmount;
 
 
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CreateCharacterStatsTest {
+public class CharacterStatsTest {
 
     private int lifePoints;
     private int lifePointsMax;

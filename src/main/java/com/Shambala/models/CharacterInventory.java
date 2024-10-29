@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CharacterInventory {
 
-    private List<CharacterEquipement> characterEquipement;
+    private List<CharacterEquipment> characterEquipement;
     private List<String> bag;
     private int goldAmount;
 

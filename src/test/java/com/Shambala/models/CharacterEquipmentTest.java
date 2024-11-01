@@ -25,7 +25,7 @@ public class CharacterEquipmentTest {
         equipmentType = EquipmentType.ARMOR;
         materialType = MaterialType.WHITE_STEEL;
         quality = Quality.NOVICE;
-        breakPoint = 60;
+        breakPoint = 75;
     }
 
     private record testBuilder(
@@ -51,7 +51,7 @@ public class CharacterEquipmentTest {
                         EquipmentType.ARMOR,
                         MaterialType.WHITE_STEEL,
                         Quality.NOVICE,
-                        40));
+                        75));
         assertNotNull(characterEquipment);
     }
 
@@ -128,5 +128,11 @@ public class CharacterEquipmentTest {
         equipmentType = EquipmentType.WEAPON;
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(2, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityNoviceIsProvided_returnBreakPoint75WithTypeArmor() {
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(75, equipmentTest.getBreakPoint());
     }
 }

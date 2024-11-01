@@ -4,7 +4,7 @@ import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.MaterialType;
 import com.Shambala.Enum.Quality;
 
-public interface CharacterEquipementBuilder {
+public interface CharacterEquipmentBuilder {
     String getName();
 
     String getDescription();

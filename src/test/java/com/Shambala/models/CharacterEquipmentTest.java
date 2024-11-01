@@ -3,7 +3,7 @@ package com.Shambala.models;
 import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.MaterialType;
 import com.Shambala.Enum.Quality;
-import com.Shambala.models.builder.CharacterEquipementBuilder;
+import com.Shambala.models.builder.CharacterEquipmentBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,68 +34,99 @@ public class CharacterEquipmentTest {
             EquipmentType getEquipmentType,
             MaterialType getMaterialType,
             Quality getQuality,
-            int getBreakPoint) implements CharacterEquipementBuilder {
+            int getBreakPoint) implements CharacterEquipmentBuilder {
 
     }
 
-    private CharacterEquipementBuilder createEquipementTest() {
+    private CharacterEquipmentBuilder createEquipmentTest() {
         return new testBuilder(name, description, equipmentType, materialType, quality, breakPoint);
     }
 
     @Test
     void testCreateNewEquipmentForCharacter_shouldCreateEquipmentFromBuilder() {
-        CharacterEquipment characterEquipement = CharacterEquipment.
-                fromEquipementBuilder(new testBuilder(
+        CharacterEquipment characterEquipment = CharacterEquipment.
+                fromEquipmentBuilder(new testBuilder(
                         "bow",
                         "nice bow",
                         EquipmentType.ARMOR,
                         MaterialType.WHITE_STEEL,
                         Quality.NOVICE,
                         40));
-        assertNotNull(characterEquipement);
+        assertNotNull(characterEquipment);
     }
 
     @Test
     void testCreateNewEquipmentName_shouldReturnEquipmentName() {
-        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipementBuilder(createEquipementTest());
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(name, equipmentTest.getName());
     }
 
     @Test
     void testCreateNewEquipmentDescription_shouldReturnEquipmentDescription() {
-        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipementBuilder(createEquipementTest());
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(description, equipmentTest.getDescription());
     }
 
     @Test
     void testCreateNewEquipmentMaterialType_shouldReturnEquipmentMaterialType() {
-        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipementBuilder(createEquipementTest());
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(materialType, equipmentTest.getMaterialType());
     }
 
     @Test
     void testCreateNewEquipmentQuality_shouldReturnEquipmentQuality() {
-        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipementBuilder(createEquipementTest());
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(quality, equipmentTest.getQuality());
     }
 
     @Test
     void testCreateNewEquipmentBreakPoint_shouldReturnBreakPoint() {
-        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipementBuilder(createEquipementTest());
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(breakPoint, equipmentTest.getBreakPoint());
     }
 
     @Test
     void testCreateNewEquipmentType_shouldReturnType() {
-        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipementBuilder(createEquipementTest());
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(equipmentType, equipmentTest.getEquipmentType());
     }
 
     @Test
     void testCreateNewEquipment_whenQualityNoviceIsProvided_returnBreakPoint60WithTypeWeapon() {
-        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipementBuilder(createEquipementTest());
+        equipmentType = EquipmentType.WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(60, equipmentTest.getBreakPoint());
     }
 
+    @Test
+    void testCreateNewEquipment_whenQualityApprenticeIsProvided_returnBreakPoint40WithTypeWeapon() {
+        quality = Quality.APPRENTICE;
+        equipmentType = EquipmentType.WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(40, equipmentTest.getBreakPoint());
+    }
 
+    @Test
+    void testCreateNewEquipment_whenQualityConfirmedIsProvided_returnBreakPoint25WithTypeWeapon() {
+        quality = Quality.CONFIRMED;
+        equipmentType = EquipmentType.WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(25, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityMasterIsProvided_returnBreakPoint10WithTypeWeapon() {
+        quality = Quality.MASTER;
+        equipmentType = EquipmentType.WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(10, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityGrandMasterIsProvided_returnBreakPoint2WithTypeWeapon() {
+        quality = Quality.GRAND_MASTER;
+        equipmentType = EquipmentType.WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(2, equipmentTest.getBreakPoint());
+    }
 }

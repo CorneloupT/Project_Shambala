@@ -57,19 +57,41 @@ public class DamageCalculatorFacadeTest {
 
     @Test
     void testDamageCalculator_WhenEquipmentQualityNoviceIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
-        int modifier = -1;
         when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateRollDamageWithNoviceEquipment(characterEquipmentBuilder, 6, modifier);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithDifferentEquipmentQuality(characterEquipmentBuilder, 6);
         assertEquals(4 , resultDamage);
     }
 
     @Test
     void testDamageCalculator_WhenEquipmentQualityApprenticeIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
-        int modifier = 0;
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.APPRENTICE);
         when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateRollDamageWithApprenticeEquipment(characterEquipmentBuilder, 6, modifier);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithDifferentEquipmentQuality(characterEquipmentBuilder, 6);
         assertEquals(5 , resultDamage);
+    }
+
+    @Test
+    void testDamageCalculator_WhenEquipmentQualityConfirmedIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.CONFIRMED);
+        when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithDifferentEquipmentQuality(characterEquipmentBuilder, 6);
+        assertEquals(6 , resultDamage);
+    }
+
+    @Test
+    void testDamageCalculator_WhenEquipmentQualityMasterIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.MASTER);
+        when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithDifferentEquipmentQuality(characterEquipmentBuilder, 6);
+        assertEquals(7 , resultDamage);
+    }
+
+    @Test
+    void testDamageCalculator_WhenEquipmentQualityGrandMasterIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.GRAND_MASTER);
+        when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithDifferentEquipmentQuality(characterEquipmentBuilder, 6);
+        assertEquals(8 , resultDamage);
     }
 
 }

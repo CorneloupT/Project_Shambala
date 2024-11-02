@@ -13,19 +13,20 @@ public class DamageCalculatorFacade {
         return rollDamageDice(sides);
     }
 
-    public int calculateRollDamageWithNoviceEquipment(CharacterEquipmentBuilder characterEquipmentBuilder, int diceSides, int modifier) {
-        if (characterEquipmentBuilder.getQuality().equals(Quality.NOVICE)) {
-            int rolledValue = getValueOfDice(diceSides);
-            return rolledValue + modifier;
-        }
-        return modifier;
+    public int getModifierQualityWithOneHandWeapon(Quality quality) {
+        return switch (quality) {
+            case NOVICE -> -1;
+            case APPRENTICE -> 0;
+            case CONFIRMED -> 1;
+            case MASTER -> 2;
+            case GRAND_MASTER -> 3;
+        };
     }
 
-    public int calculateRollDamageWithApprenticeEquipment(CharacterEquipmentBuilder characterEquipmentBuilder, int diceSides, int modifier) {
-        if (characterEquipmentBuilder.getQuality().equals(Quality.APPRENTICE)) {
+    public int calculateRollDamageWithDifferentEquipmentQuality(CharacterEquipmentBuilder characterEquipmentBuilder, int diceSides) {
+            Quality quality = characterEquipmentBuilder.getQuality();
+            int modifier = getModifierQualityWithOneHandWeapon(quality);
             int rolledValue = getValueOfDice(diceSides);
             return rolledValue + modifier;
-        }
-        return modifier;
     }
 }

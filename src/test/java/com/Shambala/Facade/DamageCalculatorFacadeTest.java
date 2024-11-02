@@ -16,6 +16,12 @@ public class DamageCalculatorFacadeTest {
     }
 
     @Test
+    void testGetRandomValueOFDice4() {
+        int randomD4Value = damageCalculatorFacade.getValueOfDice4();
+        assertTrue(randomD4Value >= 1 && randomD4Value <= 4, "la valeur du D4 est comprise entre 1 eet 4");
+    }
+
+    @Test
     void testGetRandomValueOfDice6() {
         int randomD6Value = damageCalculatorFacade.getValueOfDice6();
         assertTrue(randomD6Value >= 1 && randomD6Value <= 6, "la valeur du D6 est comprise entre 1 et 6");

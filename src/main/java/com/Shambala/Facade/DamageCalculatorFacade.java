@@ -2,6 +2,7 @@ package com.Shambala.Facade;
 
 import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.Quality;
+import com.Shambala.models.CharacterEquipment;
 import com.Shambala.models.builder.CharacterEquipmentBuilder;
 
 public class DamageCalculatorFacade {
@@ -40,6 +41,16 @@ public class DamageCalculatorFacade {
         };
     }
 
+    public int getOneHandDamage(CharacterEquipmentBuilder characterEquipmentBuilder) {
+        Quality quality = characterEquipmentBuilder.getQuality();
+        return getModifierQuality(quality, EquipmentType.ONEHAND_WEAPON);
+    }
+
+    public int getTwoHandDamage(CharacterEquipmentBuilder characterEquipmentBuilder) {
+        Quality quality = characterEquipmentBuilder.getQuality();
+        return getModifierQuality(quality, EquipmentType.TWOHAND_WEAPON);
+    }
+
     public int getArmorProtection(CharacterEquipmentBuilder characterEquipmentBuilder) {
         Quality quality = characterEquipmentBuilder.getQuality();
         return getModifierQuality(quality, EquipmentType.ARMOR);
@@ -58,6 +69,5 @@ public class DamageCalculatorFacade {
         int reductionDamage = getModifierQuality(quality, EquipmentType.ARMOR);
         return damage - reductionDamage;
     }
-
 
 }

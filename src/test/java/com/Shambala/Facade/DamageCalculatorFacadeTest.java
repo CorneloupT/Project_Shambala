@@ -52,6 +52,76 @@ public class DamageCalculatorFacadeTest {
     }
 
     @Test
+    void testGetBonusDamageOfNoviceOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
+        int oneHandDamage = damageCalculatorFacade.getOneHandDamage(characterEquipmentBuilder);
+        assertEquals(-1, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfApprenticeOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.APPRENTICE);
+        int oneHandDamage = damageCalculatorFacade.getOneHandDamage(characterEquipmentBuilder);
+        assertEquals(0, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfConfirmedOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.CONFIRMED);
+        int oneHandDamage = damageCalculatorFacade.getOneHandDamage(characterEquipmentBuilder);
+        assertEquals(1, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfMasterOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.MASTER);
+        int oneHandDamage = damageCalculatorFacade.getOneHandDamage(characterEquipmentBuilder);
+        assertEquals(2, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfGrandMasterOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.GRAND_MASTER);
+        int oneHandDamage = damageCalculatorFacade.getOneHandDamage(characterEquipmentBuilder);
+        assertEquals(3, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfNoviceTwoHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
+        int oneHandDamage = damageCalculatorFacade.getTwoHandDamage(characterEquipmentBuilder);
+        assertEquals(-2, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfApprenticeTwoHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.APPRENTICE);
+        int oneHandDamage = damageCalculatorFacade.getTwoHandDamage(characterEquipmentBuilder);
+        assertEquals(0, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfConfirmedTwoHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.CONFIRMED);
+        int oneHandDamage = damageCalculatorFacade.getTwoHandDamage(characterEquipmentBuilder);
+        assertEquals(2, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfMasterTwoHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.MASTER);
+        int oneHandDamage = damageCalculatorFacade.getTwoHandDamage(characterEquipmentBuilder);
+        assertEquals(3, oneHandDamage);
+    }
+
+    @Test
+    void testGetBonusDamageOfGrandMasterTwoHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.GRAND_MASTER);
+        int oneHandDamage = damageCalculatorFacade.getTwoHandDamage(characterEquipmentBuilder);
+        assertEquals(4, oneHandDamage);
+    }
+
+    @Test
     void testDamageCalculator_whenEquipmentQualityNoviceIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
         when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);

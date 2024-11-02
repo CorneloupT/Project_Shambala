@@ -10,4 +10,8 @@ public enum EquipmentType {
     EquipmentType(String equipmentType) {
         this.equipment = equipmentType;
     }
+
+    public String getEquipmentType() {
+        return equipment;
+    }
 }

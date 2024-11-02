@@ -1,5 +1,8 @@
 package com.Shambala.Facade;
 
+import com.Shambala.Enum.Quality;
+import com.Shambala.models.builder.CharacterEquipmentBuilder;
+
 public class DamageCalculatorFacade {
 
     public int rollDamageDice(int sides) {
@@ -24,5 +27,19 @@ public class DamageCalculatorFacade {
 
     public int getValueOfDice12() {
         return rollDamageDice(12);
+    }
+
+    public int calculateRollDamageWithNoviceEquipment(CharacterEquipmentBuilder characterEquipmentBuilder, int modifier) {
+        if (characterEquipmentBuilder.getQuality().equals(Quality.NOVICE)) {
+            return getValueOfDice6() + modifier;
+        }
+        return modifier;
+    }
+
+    public int calculateRollDamageWithApprenticeEquipment(CharacterEquipmentBuilder characterEquipmentBuilder, int modifier) {
+        if (characterEquipmentBuilder.getQuality().equals(Quality.APPRENTICE)) {
+            return getValueOfDice8() + modifier;
+        }
+        return modifier;
     }
 }

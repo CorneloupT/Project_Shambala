@@ -2,23 +2,33 @@ package com.Shambala.Facade;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
+import com.Shambala.Enum.EquipmentType;
+import com.Shambala.Enum.Quality;
+import com.Shambala.models.CharacterEquipment;
+import com.Shambala.models.builder.CharacterEquipmentBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DamageCalculatorFacadeTest {
 
     private DamageCalculatorFacade damageCalculatorFacade;
+    private CharacterEquipmentBuilder characterEquipmentBuilder;
 
     @BeforeEach
     void setUp() {
-        damageCalculatorFacade = new DamageCalculatorFacade();
+        damageCalculatorFacade = spy(new DamageCalculatorFacade());
+
+        characterEquipmentBuilder = mock(CharacterEquipmentBuilder.class);
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
+        when(characterEquipmentBuilder.getEquipmentType()).thenReturn(EquipmentType.WEAPON);
     }
 
     @Test
     void testGetRandomValueOFDice4() {
         int randomD4Value = damageCalculatorFacade.getValueOfDice4();
-        assertTrue(randomD4Value >= 1 && randomD4Value <= 4, "la valeur du D4 est comprise entre 1 eet 4");
+        assertTrue(randomD4Value >= 1 && randomD4Value <= 4, "la valeur du D4 est comprise entre 1 et 4");
     }
 
     @Test
@@ -45,5 +55,21 @@ public class DamageCalculatorFacadeTest {
         assertTrue(randomD12Value >= 1 && randomD12Value <= 12, "la valeur du D12 est comprise entre 1 et 12");
     }
 
+    @Test
+    void testDamageCalculator_WhenEquipmentQualityNoviceIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
+        int modifier = -1;
+        when(damageCalculatorFacade.getValueOfDice6()).thenReturn(5);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithNoviceEquipment(characterEquipmentBuilder, modifier);
+        assertEquals((damageCalculatorFacade.getValueOfDice6() + modifier) , resultDamage);
+    }
+
+    @Test
+    void testDamageCalculator_WhenEquipmentQualityApprenticeIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
+        int modifier = 0;
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.APPRENTICE);
+        when(damageCalculatorFacade.getValueOfDice8()).thenReturn(5);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithApprenticeEquipment(characterEquipmentBuilder, modifier);
+        assertEquals((damageCalculatorFacade.getValueOfDice8() + modifier) , resultDamage);
+    }
 
 }

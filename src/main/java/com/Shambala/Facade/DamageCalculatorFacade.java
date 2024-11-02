@@ -41,33 +41,21 @@ public class DamageCalculatorFacade {
         };
     }
 
-    public int getOneHandDamage(CharacterEquipmentBuilder characterEquipmentBuilder) {
+    public int getModifier(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType) {
         Quality quality = characterEquipmentBuilder.getQuality();
-        return getModifierQuality(quality, EquipmentType.ONEHAND_WEAPON);
+        return getModifierQuality(quality, equipmentType);
     }
 
-    public int getTwoHandDamage(CharacterEquipmentBuilder characterEquipmentBuilder) {
-        Quality quality = characterEquipmentBuilder.getQuality();
-        return getModifierQuality(quality, EquipmentType.TWOHAND_WEAPON);
-    }
-
-    public int getArmorProtection(CharacterEquipmentBuilder characterEquipmentBuilder) {
-        Quality quality = characterEquipmentBuilder.getQuality();
-        return getModifierQuality(quality, EquipmentType.ARMOR);
-    }
-
-    public int calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType, int diceSides) {
-        Quality quality = characterEquipmentBuilder.getQuality();
-        int modifier = getModifierQuality(quality, equipmentType);
+    public int calculateDamageWithWeaponModifier(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType, int diceSides) {
+        int modifier = getModifier(characterEquipmentBuilder, equipmentType);
         int rolledValue = getValueOfDice(diceSides);
         return rolledValue + modifier;
     }
 
-    public int calculateDamageReductionWithArmor(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType) {
+    public int calculateDamageReductionWithArmorModifier(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType) {
+        int damage =  calculateDamageWithWeaponModifier(characterEquipmentBuilder, equipmentType, 8);
         Quality quality = characterEquipmentBuilder.getQuality();
-        int damage = calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, equipmentType, 8);
-        int reductionDamage = getModifierQuality(quality, EquipmentType.ARMOR);
-        return damage - reductionDamage;
+        return damage - getModifierQuality(quality, EquipmentType.ARMOR);
     }
 
 }

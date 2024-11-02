@@ -143,4 +143,41 @@ public class DamageCalculatorFacadeTest {
         assertEquals(5 , resultDamageReduction);
     }
 
+    @Test
+    void testGetBonusReductionFromArmor_Negative1WhenNovice() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
+        int armorProtection = damageCalculatorFacade.getArmorProtection(characterEquipmentBuilder);
+        assertEquals(-1, armorProtection);
+    }
+
+    @Test
+    void testGetBonusReductionFromArmor_0WhenApprentice() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.APPRENTICE);
+        int armorProtection = damageCalculatorFacade.getArmorProtection(characterEquipmentBuilder);
+        assertEquals(0, armorProtection);
+    }
+
+    @Test
+    void testGetBonusReductionFromArmor_0WhenConfirmed() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.CONFIRMED);
+        int armorProtection = damageCalculatorFacade.getArmorProtection(characterEquipmentBuilder);
+        assertEquals(0, armorProtection);
+    }
+
+    @Test
+    void testGetBonusReductionFromArmor_1WhenMaster() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.MASTER);
+        int armorProtection = damageCalculatorFacade.getArmorProtection(characterEquipmentBuilder);
+        assertEquals(1, armorProtection);
+    }
+
+    @Test
+    void testGetBonusReductionFromArmor_2WhenGrandMaster() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.GRAND_MASTER);
+        int armorProtection = damageCalculatorFacade.getArmorProtection(characterEquipmentBuilder);
+        assertEquals(2, armorProtection);
+    }
+
+
+
 }

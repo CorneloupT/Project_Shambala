@@ -40,11 +40,16 @@ public class DamageCalculatorFacade {
         };
     }
 
+    public int getArmorProtection(CharacterEquipmentBuilder characterEquipmentBuilder) {
+        Quality quality = characterEquipmentBuilder.getQuality();
+        return getModifierQuality(quality, EquipmentType.ARMOR);
+    }
+
     public int calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType, int diceSides) {
-            Quality quality = characterEquipmentBuilder.getQuality();
-            int modifier = getModifierQuality(quality, equipmentType);
-            int rolledValue = getValueOfDice(diceSides);
-            return rolledValue + modifier;
+        Quality quality = characterEquipmentBuilder.getQuality();
+        int modifier = getModifierQuality(quality, equipmentType);
+        int rolledValue = getValueOfDice(diceSides);
+        return rolledValue + modifier;
     }
 
     public int calculateDamageReductionWithArmor(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType) {
@@ -53,4 +58,6 @@ public class DamageCalculatorFacade {
         int reductionDamage = getModifierQuality(quality, EquipmentType.ARMOR);
         return damage - reductionDamage;
     }
+
+
 }

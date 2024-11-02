@@ -19,8 +19,7 @@ public class DamageCalculatorFacade {
         return switch (equipmentType) {
             case ARMOR -> switch (quality) {
                 case NOVICE -> -1;
-                case APPRENTICE -> 0;
-                case CONFIRMED -> 0;
+                case APPRENTICE, CONFIRMED -> 0;
                 case MASTER -> 1;
                 case GRAND_MASTER -> 2;
             };

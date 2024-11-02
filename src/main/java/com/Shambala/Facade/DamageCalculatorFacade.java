@@ -16,7 +16,13 @@ public class DamageCalculatorFacade {
 
     public int getModifierQuality(Quality quality, EquipmentType equipmentType) {
         return switch (equipmentType) {
-            case ARMOR -> 0;
+            case ARMOR -> switch (quality) {
+                case NOVICE -> -1;
+                case APPRENTICE -> 0;
+                case CONFIRMED -> 0;
+                case MASTER -> 1;
+                case GRAND_MASTER -> 2;
+            };
             case ONEHAND_WEAPON -> switch (quality) {
                 case NOVICE -> -1;
                 case APPRENTICE -> 0;
@@ -34,12 +40,17 @@ public class DamageCalculatorFacade {
         };
     }
 
-
-    public int calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(CharacterEquipmentBuilder characterEquipmentBuilder, int diceSides) {
+    public int calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType, int diceSides) {
             Quality quality = characterEquipmentBuilder.getQuality();
-            EquipmentType equipmentType = characterEquipmentBuilder.getEquipmentType();
             int modifier = getModifierQuality(quality, equipmentType);
             int rolledValue = getValueOfDice(diceSides);
             return rolledValue + modifier;
+    }
+
+    public int calculateDamageReductionWithArmor(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType) {
+        Quality quality = characterEquipmentBuilder.getQuality();
+        int damage = calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, equipmentType, 8);
+        int reductionDamage = getModifierQuality(quality, EquipmentType.ARMOR);
+        return damage - reductionDamage;
     }
 }

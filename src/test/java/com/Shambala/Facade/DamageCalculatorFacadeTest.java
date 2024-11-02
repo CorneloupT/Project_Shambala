@@ -18,10 +18,7 @@ public class DamageCalculatorFacadeTest {
     @BeforeEach
     void setUp() {
         damageCalculatorFacade = spy(new DamageCalculatorFacade());
-
         characterEquipmentBuilder = mock(CharacterEquipmentBuilder.class);
-        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
-        when(characterEquipmentBuilder.getEquipmentType()).thenReturn(EquipmentType.ONEHAND_WEAPON);
     }
 
     @Test
@@ -56,8 +53,9 @@ public class DamageCalculatorFacadeTest {
 
     @Test
     void testDamageCalculator_whenEquipmentQualityNoviceIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
         when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 6);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.ONEHAND_WEAPON,6);
         assertEquals(4 , resultDamage);
     }
 
@@ -65,7 +63,7 @@ public class DamageCalculatorFacadeTest {
     void testDamageCalculator_whenEquipmentQualityApprenticeIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.APPRENTICE);
         when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 6);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.ONEHAND_WEAPON,6);
         assertEquals(5 , resultDamage);
     }
 
@@ -73,7 +71,7 @@ public class DamageCalculatorFacadeTest {
     void testDamageCalculator_whenEquipmentQualityConfirmedIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.CONFIRMED);
         when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 6);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.ONEHAND_WEAPON,6);
         assertEquals(6 , resultDamage);
     }
 
@@ -81,7 +79,7 @@ public class DamageCalculatorFacadeTest {
     void testDamageCalculator_whenEquipmentQualityMasterIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.MASTER);
         when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 6);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.ONEHAND_WEAPON,6);
         assertEquals(7 , resultDamage);
     }
 
@@ -89,7 +87,7 @@ public class DamageCalculatorFacadeTest {
     void testDamageCalculator_whenEquipmentQualityGrandMasterIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.GRAND_MASTER);
         when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 6);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.ONEHAND_WEAPON,6);
         assertEquals(8 , resultDamage);
     }
 
@@ -98,7 +96,7 @@ public class DamageCalculatorFacadeTest {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
         when(characterEquipmentBuilder.getEquipmentType()).thenReturn(EquipmentType.TWOHAND_WEAPON);
         when(damageCalculatorFacade.getValueOfDice(8)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 8);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.TWOHAND_WEAPON,8);
         assertEquals(3 , resultDamage);
     }
 
@@ -107,7 +105,7 @@ public class DamageCalculatorFacadeTest {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.APPRENTICE);
         when(characterEquipmentBuilder.getEquipmentType()).thenReturn(EquipmentType.TWOHAND_WEAPON);
         when(damageCalculatorFacade.getValueOfDice(8)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 8);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.TWOHAND_WEAPON,8);
         assertEquals(5 , resultDamage);
     }
 
@@ -116,7 +114,7 @@ public class DamageCalculatorFacadeTest {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.CONFIRMED);
         when(characterEquipmentBuilder.getEquipmentType()).thenReturn(EquipmentType.TWOHAND_WEAPON);
         when(damageCalculatorFacade.getValueOfDice(8)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 8);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.TWOHAND_WEAPON,8);
         assertEquals(7 , resultDamage);
     }
 
@@ -125,17 +123,24 @@ public class DamageCalculatorFacadeTest {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.MASTER);
         when(characterEquipmentBuilder.getEquipmentType()).thenReturn(EquipmentType.TWOHAND_WEAPON);
         when(damageCalculatorFacade.getValueOfDice(8)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 8);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, EquipmentType.TWOHAND_WEAPON,8);
         assertEquals(8 , resultDamage);
     }
 
     @Test
     void testDamageCalculator_whenEquipmentQualityGrandMasterIsProvided_returnDamageWithModifierForTwoHandWeapon() {
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.GRAND_MASTER);
-        when(characterEquipmentBuilder.getEquipmentType()).thenReturn(EquipmentType.TWOHAND_WEAPON);
         when(damageCalculatorFacade.getValueOfDice(8)).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder, 8);
+        int resultDamage = damageCalculatorFacade.calculateDamageWithDifferentEquipmentTypeAndWeaponQuality(characterEquipmentBuilder,  EquipmentType.TWOHAND_WEAPON,8);
         assertEquals(9 , resultDamage);
+    }
+
+    @Test
+    void testDamageCalculator_whenOneHandWeaponNoviceQualityIsProvided_returnDamageReductionWithArmor() {
+        when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.NOVICE);
+        when(damageCalculatorFacade.getValueOfDice(8)).thenReturn(5);
+        int resultDamageReduction = damageCalculatorFacade.calculateDamageReductionWithArmor(characterEquipmentBuilder, EquipmentType.ONEHAND_WEAPON);
+        assertEquals(5 , resultDamageReduction);
     }
 
 }

@@ -29,6 +29,11 @@ public class CharacterEquipment {
         characterEquipment.verifyQualityConfirmedHasBreakPoint25WithTypeWeapon();
         characterEquipment.verifyQualityMasterHasBreakPoint10WithTypeWeapon();
         characterEquipment.verifyQualityGrandMasterHasBreakPoint2WithTypeWeapon();
+        characterEquipment.verifyQualityNoviceHasBreakPoint75WithTypeArmor();
+        characterEquipment.verifyQualityApprenticeHasBreakPoint50WithTypeArmor();
+        characterEquipment.verifyQualityConfirmedHasBreakPoint35WithTypeArmor();
+        characterEquipment.verifyQualityMasterHasBreakPoint15WithTypeArmor();
+        characterEquipment.verifyQualityGrandMasterHasBreakPoint5WithTypeArmor();
         return characterEquipment;
     }
 
@@ -59,6 +64,36 @@ public class CharacterEquipment {
     private void verifyQualityGrandMasterHasBreakPoint2WithTypeWeapon() {
         if (quality.equals(Quality.GRAND_MASTER) && equipmentType.equals(EquipmentType.WEAPON)) {
             breakPoint = 2;
+        }
+    }
+
+    private void verifyQualityNoviceHasBreakPoint75WithTypeArmor() {
+        if (quality.equals(Quality.NOVICE) && equipmentType.equals(EquipmentType.ARMOR)) {
+            breakPoint = 75;
+        }
+    }
+
+    private void verifyQualityApprenticeHasBreakPoint50WithTypeArmor() {
+        if (quality.equals(Quality.APPRENTICE) && equipmentType.equals(EquipmentType.ARMOR)) {
+            breakPoint = 50;
+        }
+    }
+
+    private void verifyQualityConfirmedHasBreakPoint35WithTypeArmor() {
+        if (quality.equals(Quality.CONFIRMED) && equipmentType.equals(EquipmentType.ARMOR)) {
+            breakPoint = 35;
+        }
+    }
+
+    private void verifyQualityMasterHasBreakPoint15WithTypeArmor() {
+        if (quality.equals(Quality.MASTER) && equipmentType.equals(EquipmentType.ARMOR)) {
+            breakPoint = 15;
+        }
+    }
+
+    private void verifyQualityGrandMasterHasBreakPoint5WithTypeArmor() {
+        if (quality.equals(Quality.GRAND_MASTER) && equipmentType.equals(EquipmentType.ARMOR)) {
+            breakPoint = 5;
         }
     }
 

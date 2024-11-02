@@ -135,4 +135,32 @@ public class CharacterEquipmentTest {
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(75, equipmentTest.getBreakPoint());
     }
+
+    @Test
+    void testCreateNewEquipment_whenQualityApprenticeIsProvided_returnBreakPoint50WithTypeArmor() {
+        quality = Quality.APPRENTICE;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(50, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityConfirmedIsProvided_returnBreakPoint35WithTypeArmor() {
+        quality = Quality.CONFIRMED;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(35, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityMasterIsProvided_returnBreakPoint15WithTypeArmor() {
+        quality = Quality.MASTER;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(15, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityGrandMasterIsProvided_returnBreakPoint5WithTypeArmor() {
+        quality = Quality.GRAND_MASTER;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(5, equipmentTest.getBreakPoint());
+    }
 }

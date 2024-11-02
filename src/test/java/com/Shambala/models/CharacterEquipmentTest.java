@@ -92,40 +92,79 @@ public class CharacterEquipmentTest {
     }
 
     @Test
-    void testCreateNewEquipment_whenQualityNoviceIsProvided_returnBreakPoint60WithTypeWeapon() {
-        equipmentType = EquipmentType.WEAPON;
+    void testCreateNewEquipment_whenQualityNoviceIsProvided_returnBreakPoint60WithTypeOneHandWeapon() {
+        equipmentType = EquipmentType.ONEHAND_WEAPON;
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(60, equipmentTest.getBreakPoint());
     }
 
     @Test
-    void testCreateNewEquipment_whenQualityApprenticeIsProvided_returnBreakPoint40WithTypeWeapon() {
+    void testCreateNewEquipment_whenQualityApprenticeIsProvided_returnBreakPoint40WithTypeOneHandWeapon() {
         quality = Quality.APPRENTICE;
-        equipmentType = EquipmentType.WEAPON;
+        equipmentType = EquipmentType.ONEHAND_WEAPON;
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(40, equipmentTest.getBreakPoint());
     }
 
     @Test
-    void testCreateNewEquipment_whenQualityConfirmedIsProvided_returnBreakPoint25WithTypeWeapon() {
+    void testCreateNewEquipment_whenQualityConfirmedIsProvided_returnBreakPoint25WithTypeOneHandWeapon() {
         quality = Quality.CONFIRMED;
-        equipmentType = EquipmentType.WEAPON;
+        equipmentType = EquipmentType.ONEHAND_WEAPON;
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(25, equipmentTest.getBreakPoint());
     }
 
     @Test
-    void testCreateNewEquipment_whenQualityMasterIsProvided_returnBreakPoint10WithTypeWeapon() {
+    void testCreateNewEquipment_whenQualityMasterIsProvided_returnBreakPoint10WithTypeOneHandWeapon() {
         quality = Quality.MASTER;
-        equipmentType = EquipmentType.WEAPON;
+        equipmentType = EquipmentType.ONEHAND_WEAPON;
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(10, equipmentTest.getBreakPoint());
     }
 
     @Test
-    void testCreateNewEquipment_whenQualityGrandMasterIsProvided_returnBreakPoint2WithTypeWeapon() {
+    void testCreateNewEquipment_whenQualityGrandMasterIsProvided_returnBreakPoint2WithTypeOneHandWeapon() {
         quality = Quality.GRAND_MASTER;
-        equipmentType = EquipmentType.WEAPON;
+        equipmentType = EquipmentType.ONEHAND_WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(2, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityNoviceIsProvided_returnBreakPoint60WithTypeTwoHandWeapon() {
+        equipmentType = EquipmentType.TWOHAND_WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(60, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityApprenticeIsProvided_returnBreakPoint40WithTypeTwoHandWeapon() {
+        quality = Quality.APPRENTICE;
+        equipmentType = EquipmentType.TWOHAND_WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(40, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityConfirmedIsProvided_returnBreakPoint25WithTypeTwoHandWeapon() {
+        quality = Quality.CONFIRMED;
+        equipmentType = EquipmentType.TWOHAND_WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(25, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityMasterIsProvided_returnBreakPoint10WithTypeTwoHandWeapon() {
+        quality = Quality.MASTER;
+        equipmentType = EquipmentType.TWOHAND_WEAPON;
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(10, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void testCreateNewEquipment_whenQualityGrandMasterIsProvided_returnBreakPoint2WithTypeTwoHandWeapon() {
+        quality = Quality.GRAND_MASTER;
+        equipmentType = EquipmentType.TWOHAND_WEAPON;
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(2, equipmentTest.getBreakPoint());
     }

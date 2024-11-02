@@ -24,13 +24,12 @@ public class CharacterEquipment {
         characterEquipment.quality = equipmentBuilder.getQuality();
         characterEquipment.breakPoint = equipmentBuilder.getBreakPoint();
         characterEquipment.equipmentType = equipmentBuilder.getEquipmentType();
-        characterEquipment.verifyWeaponPercentageBreakPointWhenQualityIsProvided();
-        characterEquipment.verifyArmorPercentageBreakPointWhenQualityIsProvided();
+        characterEquipment.verifyEquipmentPercentageBreakPointWhenQualityIsProvided();
         return characterEquipment;
     }
 
-    private void verifyWeaponPercentageBreakPointWhenQualityIsProvided() {
-        if (equipmentType.equals(EquipmentType.WEAPON)) {
+    private void verifyEquipmentPercentageBreakPointWhenQualityIsProvided() {
+        if (equipmentType.equals(EquipmentType.ONEHAND_WEAPON) || equipmentType.equals(EquipmentType.TWOHAND_WEAPON) ) {
             breakPoint = switch (quality) {
                 case NOVICE -> 60;
                 case APPRENTICE -> 40;
@@ -38,11 +37,7 @@ public class CharacterEquipment {
                 case MASTER -> 10;
                 case GRAND_MASTER -> 2;
             };
-        }
-    }
-
-    private void verifyArmorPercentageBreakPointWhenQualityIsProvided() {
-        if (equipmentType.equals(EquipmentType.ARMOR)) {
+        } else if (equipmentType.equals(EquipmentType.ARMOR)) {
             breakPoint = switch (quality) {
                 case NOVICE -> 75;
                 case APPRENTICE -> 50;

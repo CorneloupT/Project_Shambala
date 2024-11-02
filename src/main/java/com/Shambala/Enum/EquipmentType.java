@@ -2,7 +2,8 @@ package com.Shambala.Enum;
 
 public enum EquipmentType {
     ARMOR("ARMOR"),
-    WEAPON("WEAPON");
+    ONEHAND_WEAPON("ONEHAND_WEAPON"),
+    TWOHAND_WEAPON("TWOHAND_WEAPON");
 
     private final String equipment;
 

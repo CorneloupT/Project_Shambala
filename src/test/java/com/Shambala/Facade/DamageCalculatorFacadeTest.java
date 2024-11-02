@@ -27,49 +27,49 @@ public class DamageCalculatorFacadeTest {
 
     @Test
     void testGetRandomValueOFDice4() {
-        int randomD4Value = damageCalculatorFacade.getValueOfDice4();
+        int randomD4Value = damageCalculatorFacade.getValueOfDice(4);
         assertTrue(randomD4Value >= 1 && randomD4Value <= 4, "la valeur du D4 est comprise entre 1 et 4");
     }
 
     @Test
     void testGetRandomValueOfDice6() {
-        int randomD6Value = damageCalculatorFacade.getValueOfDice6();
+        int randomD6Value = damageCalculatorFacade.getValueOfDice(6);
         assertTrue(randomD6Value >= 1 && randomD6Value <= 6, "la valeur du D6 est comprise entre 1 et 6");
     }
 
     @Test
     void testGetRandomValueOfDice8() {
-        int randomD8Value = damageCalculatorFacade.getValueOfDice8();
+        int randomD8Value = damageCalculatorFacade.getValueOfDice(8);
         assertTrue(randomD8Value >= 1 && randomD8Value <= 8, "la valeur du D8 est comprise entre 1 et 8");
     }
 
     @Test
     void testGetRandomValueOfDice10() {
-        int randomD10Value = damageCalculatorFacade.getValueOfDice10();
+        int randomD10Value = damageCalculatorFacade.getValueOfDice(10);
         assertTrue(randomD10Value >= 1 && randomD10Value <= 10, "la valeur du D10 est comprise entre 1 et 10");
     }
 
     @Test
     void testGetRandomValueOfDice12() {
-        int randomD12Value = damageCalculatorFacade.getValueOfDice12();
+        int randomD12Value = damageCalculatorFacade.getValueOfDice(12);
         assertTrue(randomD12Value >= 1 && randomD12Value <= 12, "la valeur du D12 est comprise entre 1 et 12");
     }
 
     @Test
     void testDamageCalculator_WhenEquipmentQualityNoviceIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
         int modifier = -1;
-        when(damageCalculatorFacade.getValueOfDice6()).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateRollDamageWithNoviceEquipment(characterEquipmentBuilder, modifier);
-        assertEquals((damageCalculatorFacade.getValueOfDice6() + modifier) , resultDamage);
+        when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithNoviceEquipment(characterEquipmentBuilder, 6, modifier);
+        assertEquals(4 , resultDamage);
     }
 
     @Test
     void testDamageCalculator_WhenEquipmentQualityApprenticeIsProvided_ReturnDamageWithModifierForOneHandWeapon() {
         int modifier = 0;
         when(characterEquipmentBuilder.getQuality()).thenReturn(Quality.APPRENTICE);
-        when(damageCalculatorFacade.getValueOfDice8()).thenReturn(5);
-        int resultDamage = damageCalculatorFacade.calculateRollDamageWithApprenticeEquipment(characterEquipmentBuilder, modifier);
-        assertEquals((damageCalculatorFacade.getValueOfDice8() + modifier) , resultDamage);
+        when(damageCalculatorFacade.getValueOfDice(6)).thenReturn(5);
+        int resultDamage = damageCalculatorFacade.calculateRollDamageWithApprenticeEquipment(characterEquipmentBuilder, 6, modifier);
+        assertEquals(5 , resultDamage);
     }
 
 }

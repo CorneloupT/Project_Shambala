@@ -1,6 +1,12 @@
 package com.Shambala.models.export;
 
 import com.Shambala.Enum.Race;
+import com.Shambala.models.CharacterEquipment;
+import com.Shambala.models.CharacterInventory;
+import com.Shambala.models.CharacterPrincipalStat;
+import com.Shambala.models.CharacterStats;
+
+import java.util.List;
 
 public interface CharacterExport {
 
@@ -20,4 +26,13 @@ public interface CharacterExport {
 
     void setBackground(String background);
 
+    void setId(long id);
+
+    void setCharacterStats(CharacterStats characterStats);
+
+    void setCharacterPrincipalStat(List<CharacterPrincipalStat> principalStatList);
+
+    void setCharacterEquipmentList(List<CharacterEquipment> equipmentList);
+
+    void setCharacterInventory(CharacterInventory inventory);
 }

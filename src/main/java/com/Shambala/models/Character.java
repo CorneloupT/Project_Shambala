@@ -5,9 +5,12 @@ import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.export.CharacterExport;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class Character {
 
+    private long id;
     private String name;
     private Race race;
     private String playerClass;
@@ -16,9 +19,14 @@ public class Character {
     private int classLevel;
     private int classExperience;
     private String background;
+    private CharacterStats characterStats;
+    private List<CharacterPrincipalStat> principalStatList;
+    private List<CharacterEquipment> equipmentList;
+    private CharacterInventory inventory;
 
     public static Character from(CharacterBuilder builder) {
         Character character = new Character();
+        character.id = builder.getId();
         character.name = builder.getName();
         character.race = builder.getRace();
         character.playerClass = builder.getPlayerClass();
@@ -27,6 +35,10 @@ public class Character {
         character.classLevel = builder.getClassLevel();
         character.classExperience = builder.getClassExperience();
         character.background = builder.getBackground();
+        character.characterStats = builder.getCharacterStats();
+        character.principalStatList = builder.getPrincipalStatList();
+        character.equipmentList = builder.getEquipmentList();
+        character.inventory = builder.getInventory();
         character.verifyCharacterNameAndValueOfLevelAndExperience();
         return character;
     }
@@ -44,6 +56,7 @@ public class Character {
     }
 
     public void exportTo(CharacterExport export) {
+        export.setId(id);
         export.setName(name);
         export.setRace(race);
         export.setPlayerClass(playerClass);
@@ -52,5 +65,9 @@ public class Character {
         export.setClassLevel(classLevel);
         export.setClassExperience(classExperience);
         export.setBackground(background);
+        export.setCharacterStats(characterStats);
+        export.setCharacterPrincipalStat(principalStatList);
+        export.setCharacterEquipmentList(equipmentList);
+        export.setCharacterInventory(inventory);
     }
 }

@@ -9,6 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -16,6 +20,7 @@ import static org.mockito.Mockito.verify;
 
 class CharacterTest {
 
+    private Long id;
     private String name;
     private Race race;
     private String playerClass;
@@ -24,9 +29,14 @@ class CharacterTest {
     private int classLevel;
     private int classExperience;
     private String background;
+    private CharacterStats characterStats;
+    private List<CharacterPrincipalStat> principalStatList;
+    private List<CharacterEquipment> equipmentList;
+    private CharacterInventory inventory;
 
     @BeforeEach
     void setUp() {
+        id = 1L;
         name = "Efrim";
         race = Race.YSGANDIEN;
         playerClass = "Pyromancien";
@@ -35,26 +45,37 @@ class CharacterTest {
         classLevel = 6;
         classExperience = 2000;
         background = "Bonjour";
+        characterStats = new CharacterStats();
+        principalStatList = new ArrayList<>();
+        equipmentList = new ArrayList<>();
+        inventory = new CharacterInventory();
+
     }
 
-    private record InnerBuilder(String getName,
+    private record InnerBuilder(long getId,
+                                String getName,
                                 Race getRace,
                                 String getPlayerClass,
                                 int getGlobalLevel,
                                 int getExperience,
                                 int getClassLevel,
                                 int getClassExperience,
-                                String getBackground) implements CharacterBuilder {
+                                String getBackground,
+                                CharacterStats getCharacterStats,
+                                List<CharacterPrincipalStat> getPrincipalStatList,
+                                List<CharacterEquipment> getEquipmentList,
+                                CharacterInventory getInventory) implements CharacterBuilder {
     }
 
     private CharacterBuilder createTestCharacter() {
-        return new InnerBuilder(name, race, playerClass, globalLevel, experience, classLevel, classExperience, background);
+        return new InnerBuilder(id, name, race, playerClass, globalLevel, experience, classLevel, classExperience, background,
+                characterStats, principalStatList, equipmentList, inventory);
     }
 
     @Test
     void should_create_character_from_builder() {
-        Character character = Character.from(new InnerBuilder("coucou", Race.KHAZAD, "class", 100,
-                150, 200, 250, "background"));
+        Character character = Character.from(new InnerBuilder(1L,"coucou", Race.KHAZAD, "class", 100,
+                150, 200, 250, "background", characterStats, principalStatList, equipmentList, inventory));
         assertNotNull(character);
     }
 
@@ -106,14 +127,37 @@ class CharacterTest {
         assertEquals(background, characterTest.getBackground());
     }
 
+    @Test
+    void testCreateNewCharacter_whenCharacterStatsAreProvided_returnCharacterStats() {
+        Character characterTest = Character.from(createTestCharacter());
+        assertEquals(characterStats, characterTest.getCharacterStats());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenCharacterPrincipalStatsListIsProvided_returnPrincipalStatsList() {
+        Character characterTest = Character.from(createTestCharacter());
+        assertEquals(principalStatList, characterTest.getPrincipalStatList());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenCharacterEquipmentsListIsProvided_returnEquipmentList() {
+        Character characterTest = Character.from(createTestCharacter());
+        assertEquals(equipmentList, characterTest.getEquipmentList());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenCharacterInventoryIsProvided_returnInventory() {
+        Character characterTest = Character.from(createTestCharacter());
+        assertEquals(inventory, characterTest.getInventory());
+    }
+
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {"&#@", "Efrim_Nal", "Jack!"})
     public void testCreateNewCharacter_whenCharacterNameIsNullOrEmptyOrHasSpecialCharacter_returnThrowException(String name) {
         this.name = name;
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Character.from(createTestCharacter());
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> Character.from(createTestCharacter()));
 
         assertEquals("Character name can't be null, empty or containing invalid characters", exception.getMessage());
     }
@@ -125,9 +169,8 @@ class CharacterTest {
         classLevel = 0;
 
         //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Character.from(createTestCharacter());
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> Character.from(createTestCharacter()));
 
         assertEquals("Global level and Class level start at level 1", exception.getMessage());
     }
@@ -139,9 +182,8 @@ class CharacterTest {
         classExperience = -1;
 
         //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Character.from(createTestCharacter());
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> Character.from(createTestCharacter()));
 
         assertEquals("Global experience and class experience points could not be negatives", exception.getMessage());
     }
@@ -160,6 +202,10 @@ class CharacterTest {
         verify(export).setClassLevel(eq(6));
         verify(export).setClassExperience(eq(2000));
         verify(export).setBackground(eq("Bonjour"));
+        verify(export).setCharacterStats(eq(characterStats));
+        verify(export).setCharacterPrincipalStat(eq(principalStatList));
+        verify(export).setCharacterEquipmentList(eq(equipmentList));
+        verify(export).setCharacterInventory(eq(inventory));
     }
 
 

@@ -4,10 +4,13 @@ import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.MaterialType;
 import com.Shambala.Enum.Quality;
 import com.Shambala.models.builder.CharacterEquipmentBuilder;
+import com.Shambala.models.export.CharacterEquipmentExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class CharacterEquipmentTest {
 
@@ -201,5 +204,19 @@ public class CharacterEquipmentTest {
         quality = Quality.GRAND_MASTER;
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(5, equipmentTest.getBreakPoint());
+    }
+
+    @Test
+    void shouldExportCharacterEquipmentValues() {
+        CharacterEquipmentExport characterEquipmentExport = mock(CharacterEquipmentExport.class);
+        CharacterEquipment equipment = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        equipment.exportEquipment(characterEquipmentExport);
+
+        verify(characterEquipmentExport).setName("bow");
+        verify(characterEquipmentExport).setDescription("new equipment");
+        verify(characterEquipmentExport).setEquipmentType(EquipmentType.ARMOR);
+        verify(characterEquipmentExport).setMaterialType(MaterialType.WHITE_STEEL);
+        verify(characterEquipmentExport).setQuality(Quality.NOVICE);
+        verify(characterEquipmentExport).setBreakPoint(75);
     }
 }

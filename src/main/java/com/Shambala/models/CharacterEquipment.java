@@ -4,6 +4,7 @@ import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.MaterialType;
 import com.Shambala.Enum.Quality;
 import com.Shambala.models.builder.CharacterEquipmentBuilder;
+import com.Shambala.models.export.CharacterEquipmentExport;
 import lombok.Getter;
 
 @Getter
@@ -46,6 +47,15 @@ public class CharacterEquipment {
                 case GRAND_MASTER -> 5;
             };
         }
+    }
+
+    public void exportEquipment(CharacterEquipmentExport export) {
+        export.setName(name);
+        export.setDescription(description);
+        export.setMaterialType(materialType);
+        export.setQuality(quality);
+        export.setBreakPoint(breakPoint);
+        export.setEquipmentType(equipmentType);
     }
 
 }

@@ -1,8 +1,12 @@
 package com.Shambala.models;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import com.Shambala.models.builder.CharacterInventoryBuilder;
+import com.Shambala.models.export.CharacterInventoryExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,6 +56,17 @@ public class CharacterInventoryTest {
     void testCreateCharacterInventory_whenAmountOfGoldIsProvided_returnAmountOfGold() {
         CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(createTestInventory());
         assertEquals(goldAmount, characterInventory.getGoldAmount());
+    }
+
+    @Test
+    void shouldExportCharacterInventoryValues() {
+        CharacterInventoryExport inventoryExport = mock(CharacterInventoryExport.class);
+        CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(createTestInventory());
+        characterInventory.exportInventory(inventoryExport);
+
+        verify(inventoryExport).setCharacterEquipment(eq(characterEquipment));
+        verify(inventoryExport).setBag(eq(bag));
+        verify(inventoryExport).setGoldAmount(eq(goldAmount));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.Shambala.models;
 
 import com.Shambala.models.builder.CharacterInventoryBuilder;
+import com.Shambala.models.export.CharacterInventoryExport;
 import lombok.Getter;
 
 import java.util.List;
@@ -19,5 +20,11 @@ public class CharacterInventory {
         characterInventory.bag = characterInventoryBuilder.getBag();
         characterInventory.goldAmount = characterInventoryBuilder.getGoldAmount();
         return characterInventory;
+    }
+
+    public void exportInventory(CharacterInventoryExport inventoryExport) {
+        inventoryExport.setCharacterEquipment(characterEquipment);
+        inventoryExport.setBag(bag);
+        inventoryExport.setGoldAmount(goldAmount);
     }
 }

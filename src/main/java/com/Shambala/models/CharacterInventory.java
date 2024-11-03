@@ -1,19 +1,23 @@
 package com.Shambala.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.Shambala.models.builder.CharacterInventoryBuilder;
+import lombok.Getter;
 
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
 public class CharacterInventory {
 
-    private List<CharacterEquipment> characterEquipement;
+    private List<CharacterEquipment> characterEquipment;
     private List<String> bag;
     private int goldAmount;
 
 
+    public static CharacterInventory fromInventoryBuilder(CharacterInventoryBuilder characterInventoryBuilder) {
+        CharacterInventory characterInventory = new CharacterInventory();
+        characterInventory.characterEquipment = characterInventoryBuilder.getCharacterEquipment();
+        characterInventory.bag = characterInventoryBuilder.getBag();
+        characterInventory.goldAmount = characterInventoryBuilder.getGoldAmount();
+        return characterInventory;
+    }
 }

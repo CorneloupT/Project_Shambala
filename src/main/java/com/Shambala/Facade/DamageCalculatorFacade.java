@@ -2,7 +2,6 @@ package com.Shambala.Facade;
 
 import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.Quality;
-import com.Shambala.models.CharacterEquipment;
 import com.Shambala.models.builder.CharacterEquipmentBuilder;
 
 public class DamageCalculatorFacade {

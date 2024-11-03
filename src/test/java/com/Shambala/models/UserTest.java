@@ -3,7 +3,7 @@ package com.Shambala.models;
 import com.Shambala.Enum.Race;
 import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.builder.UserBuilder;
-import com.Shambala.models.export.CharacterExport;
+import com.Shambala.models.export.UserExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class UserTest {
 
@@ -32,7 +31,7 @@ public class UserTest {
         firstName = "John";
         email = "john.doe@test.com";
         nickName = "alpha";
-        password = "123azer";
+        password = "123azerty";
         characterList = new ArrayList<>();
 
         CharacterBuilder mockCharacterBuilder = mock(CharacterBuilder.class);
@@ -69,7 +68,7 @@ public class UserTest {
                 "John",
                 "jolly.doe@test.com",
                 "alpha",
-                "123azer",
+                "123azerty",
                 characterList
                 ));
         assertNotNull(user);
@@ -116,9 +115,8 @@ public class UserTest {
     @ValueSource(strings = {"&#@", "Bob_Nal", "Jack!"})
     void testCreateNewUser_whenUserFirstNameIsNullOrEmptyOrHasSpecialCharacter_throwException(String firstName) {
         this.firstName = firstName;
-        IllegalArgumentException userFirstNameException = assertThrows(IllegalArgumentException.class, () -> {
-            User.fromBuilder(createTestUser());
-        });
+        IllegalArgumentException userFirstNameException = assertThrows(IllegalArgumentException.class,
+                () -> User.fromBuilder(createTestUser()));
         assertEquals("User firstName should not be null, empty or contain specials characters", userFirstNameException.getMessage());
     }
 
@@ -127,9 +125,8 @@ public class UserTest {
     @ValueSource(strings = {"&#@", "Bob_Nal", "Jack!"})
     void testCreateNewUser_whenUserLastNameIsNullOrEmptyOrHasSpecialCharacter_throwException(String lastName) {
         this.lastName = lastName;
-        IllegalArgumentException userLastNameException = assertThrows(IllegalArgumentException.class, () -> {
-            User.fromBuilder(createTestUser());
-        });
+        IllegalArgumentException userLastNameException = assertThrows(IllegalArgumentException.class,
+                () -> User.fromBuilder(createTestUser()));
         assertEquals("User lastName should not be null, empty or contain specials characters", userLastNameException.getMessage());
     }
 
@@ -145,9 +142,8 @@ public class UserTest {
             "user.name+tag@domain.co.uk"})
     void testCreateNewUser_whenUserMailIsProvided_returnEmailWithValidPattern(String email) {
         this.email = email;
-        IllegalArgumentException emailException = assertThrows(IllegalArgumentException.class, () -> {
-            User.fromBuilder(createTestUser());
-        });
+        IllegalArgumentException emailException = assertThrows(IllegalArgumentException.class,
+                () -> User.fromBuilder(createTestUser()));
         assertEquals("User email pattern is incorrect", emailException.getMessage());
     }
 
@@ -155,9 +151,8 @@ public class UserTest {
     @NullAndEmptySource
     void testCreateNewUser_whenUserNickNameIsNullOrEmpty_throwException(String nickName) {
         this.nickName = nickName;
-        IllegalArgumentException userNickNameException = assertThrows(IllegalArgumentException.class, () -> {
-            User.fromBuilder(createTestUser());
-        });
+        IllegalArgumentException userNickNameException = assertThrows(IllegalArgumentException.class,
+                () -> User.fromBuilder(createTestUser()));
         assertEquals("User nickName should not be null or empty", userNickNameException.getMessage());
     }
 
@@ -166,10 +161,24 @@ public class UserTest {
     @ValueSource(strings = {"azerty"})
     void testCreateNewUser_whenUserPasswordIsNullOrEmptyOrToShort_throwException(String password) {
         this.password = password;
-        IllegalArgumentException userPasswordException = assertThrows(IllegalArgumentException.class, () -> {
-            User.fromBuilder(createTestUser());
-        });
+        IllegalArgumentException userPasswordException = assertThrows(IllegalArgumentException.class,
+                () -> User.fromBuilder(createTestUser()));
         assertEquals("User password should not be null or empty, and at least 8 characters", userPasswordException.getMessage());
+    }
+
+    @Test
+    void shouldExportUserValues() {
+        UserExport userExport = mock(UserExport.class);
+        User user = User.fromBuilder(createTestUser());
+        user.exportTo(userExport);
+
+        verify(userExport).setLastName(eq("Doe"));
+        verify(userExport).setFirstName(eq("John"));
+        verify(userExport).setEmail(eq("john.doe@test.com"));
+        verify(userExport).setNickName(eq("alpha"));
+        verify(userExport).getPassword(eq("123azerty"));
+        verify(userExport).getListCharacter(eq(characterList));
+
     }
 
 }

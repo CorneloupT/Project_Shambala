@@ -1,6 +1,7 @@
 package com.Shambala.models;
 
 import com.Shambala.models.builder.UserBuilder;
+import com.Shambala.models.export.UserExport;
 import lombok.Getter;
 
 import java.util.List;
@@ -60,4 +61,12 @@ public class User {
         }
     }
 
+    public void exportTo(UserExport export) {
+        export.setLastName(lastName);
+        export.setFirstName(firstName);
+        export.setEmail(email);
+        export.setNickName(nickName);
+        export.getPassword(password);
+        export.getListCharacter(characterList);
+    }
 }

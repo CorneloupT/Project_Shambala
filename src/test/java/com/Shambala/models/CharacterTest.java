@@ -1,7 +1,9 @@
 package com.Shambala.models;
 
 import com.Shambala.Enum.Race;
+import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterBuilder;
+import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.export.CharacterExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class CharacterTest {
 
@@ -49,6 +50,15 @@ class CharacterTest {
         principalStatList = new ArrayList<>();
         equipmentList = new ArrayList<>();
         inventory = new CharacterInventory();
+
+        for (StatType type : StatType.values()) {
+            CharacterPrincipalStatBuilder mockPrincipalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
+            when(mockPrincipalStatBuilder.getStatType()).thenReturn(type);
+            when(mockPrincipalStatBuilder.getValue()).thenReturn(30);
+
+            CharacterPrincipalStat principalStat = CharacterPrincipalStat.fromBuilder(mockPrincipalStatBuilder);
+            principalStatList.add(principalStat);
+        }
 
     }
 
@@ -186,6 +196,39 @@ class CharacterTest {
                 () -> Character.from(createTestCharacter()));
 
         assertEquals("Global experience and class experience points could not be negatives", exception.getMessage());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenAddPrincipalStatListIsProvided_shouldAddPrincipalStatsListSuccessfully() {
+        Character characterTest = Character.from(createTestCharacter());
+        assertEquals(principalStatList, characterTest.getPrincipalStatList());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenAddPhysicalStat_shouldReturnSameStatType() {
+        Character characterTest = Character.from(createTestCharacter());
+        assertEquals(StatType.PHYSICAL, characterTest.getPrincipalStatList().get(0).getStatType());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenAddPhysicalStatValue_shouldReturnSameStatValue() {
+        Character characterTest = Character.from(createTestCharacter());
+        assertEquals(30, characterTest.getPrincipalStatList().get(0).getValue());
+    }
+
+    @Test
+    void testAddPrincipalStat_whenAddingDifferentStatTypes_shouldContainAllStatsWithoutDuplicates() {
+        Character characterTest = Character.from(createTestCharacter());
+
+        // Act
+        characterTest.setPrincipalStatList(principalStatList);
+
+        // Assert
+        assertEquals(5, characterTest.getPrincipalStatList().size());
+        assertEquals(5, characterTest.getPrincipalStatList().stream()
+                .map(CharacterPrincipalStat::getStatType)
+                .distinct()
+                .count());
     }
 
     @Test

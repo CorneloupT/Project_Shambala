@@ -4,10 +4,12 @@ import com.Shambala.Enum.Race;
 import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.export.CharacterExport;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
 public class Character {
 
     private long id;
@@ -54,6 +56,7 @@ public class Character {
             throw new IllegalArgumentException("Global experience and class experience points could not be negatives");
         }
     }
+
 
     public void exportTo(CharacterExport export) {
         export.setId(id);

@@ -32,7 +32,5 @@ public interface CharacterBuilder {
 
     List<CharacterPrincipalStat> getPrincipalStatList();
 
-    List<CharacterEquipment> getEquipmentList();
-
     CharacterInventory getInventory();
 }

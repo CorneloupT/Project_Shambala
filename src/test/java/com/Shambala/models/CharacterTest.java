@@ -33,7 +33,6 @@ class CharacterTest {
     private String background;
     private CharacterStats characterStats;
     private List<CharacterPrincipalStat> principalStatList;
-    private List<CharacterEquipment> equipmentList;
     private CharacterInventory inventory;
 
     @BeforeEach
@@ -49,7 +48,6 @@ class CharacterTest {
         background = "Bonjour";
         characterStats = new CharacterStats();
         principalStatList = new ArrayList<>();
-        equipmentList = new ArrayList<>();
         inventory = new CharacterInventory();
 
         for (StatType type : StatType.values()) {
@@ -74,19 +72,18 @@ class CharacterTest {
                                 String getBackground,
                                 CharacterStats getCharacterStats,
                                 List<CharacterPrincipalStat> getPrincipalStatList,
-                                List<CharacterEquipment> getEquipmentList,
                                 CharacterInventory getInventory) implements CharacterBuilder {
     }
 
     private CharacterBuilder createTestCharacter() {
         return new InnerBuilder(id, name, race, playerClass, globalLevel, experience, classLevel, classExperience, background,
-                characterStats, principalStatList, equipmentList, inventory);
+                characterStats, principalStatList, inventory);
     }
 
     @Test
     void should_create_character_from_builder() {
         Character character = Character.from(new InnerBuilder(1L,"coucou", Race.KHAZAD, "class", 100,
-                150, 200, 250, "background", characterStats, principalStatList, equipmentList, inventory));
+                150, 200, 250, "background", characterStats, principalStatList, inventory));
         assertNotNull(character);
     }
 
@@ -179,12 +176,6 @@ class CharacterTest {
                 () -> Character.from(createTestCharacter()));
 
         assertEquals("Principal Stat List should not contains duplication", principalStatDuplicationException.getMessage());
-    }
-
-    @Test
-    void testCreateNewCharacter_whenCharacterEquipmentsListIsProvided_returnEquipmentList() {
-        Character characterTest = Character.from(createTestCharacter());
-        assertEquals(equipmentList, characterTest.getEquipmentList());
     }
 
     @Test

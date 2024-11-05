@@ -42,7 +42,6 @@ public class Character {
         character.background = builder.getBackground();
         character.characterStats = builder.getCharacterStats();
         character.principalStatList = builder.getPrincipalStatList();
-        character.equipmentList = builder.getEquipmentList();
         character.inventory = builder.getInventory();
         character.verifyCharacterNameAndValueOfLevelAndExperience();
         character.verifyPrincipalStatListSize();

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +151,37 @@ class CharacterTest {
     }
 
     @Test
+    void testCreateNewCharacter_whenPrincipalStatListIsProvided_shouldContainAllFivePrincipalStats() {
+        CharacterPrincipalStatBuilder mockPrincipalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
+        when(mockPrincipalStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
+        when(mockPrincipalStatBuilder.getValue()).thenReturn(30);
+
+        CharacterPrincipalStat newPrincipalStat = CharacterPrincipalStat.fromBuilder(mockPrincipalStatBuilder);
+        principalStatList.add(newPrincipalStat);
+
+        IndexOutOfBoundsException principalStatListSizeException = assertThrows(IndexOutOfBoundsException.class,
+                () -> Character.from(createTestCharacter()));
+
+        assertEquals("The list principalStatList must contain All 5 different statistics", principalStatListSizeException.getMessage());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenPrincipalStatListIsProvided_shouldContainPrincipalStatsWithoutDuplication() {
+        principalStatList.remove(0);
+        CharacterPrincipalStatBuilder mockPrincipalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
+        when(mockPrincipalStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
+        when(mockPrincipalStatBuilder.getValue()).thenReturn(30);
+
+        CharacterPrincipalStat newPrincipalStat = CharacterPrincipalStat.fromBuilder(mockPrincipalStatBuilder);
+        principalStatList.add(newPrincipalStat);
+
+        DuplicateKeyException principalStatDuplicationException = assertThrows(DuplicateKeyException.class,
+                () -> Character.from(createTestCharacter()));
+
+        assertEquals("Principal Stat List should not contains duplication", principalStatDuplicationException.getMessage());
+    }
+
+    @Test
     void testCreateNewCharacter_whenCharacterEquipmentsListIsProvided_returnEquipmentList() {
         Character characterTest = Character.from(createTestCharacter());
         assertEquals(equipmentList, characterTest.getEquipmentList());
@@ -198,38 +230,6 @@ class CharacterTest {
         assertEquals("Global experience and class experience points could not be negatives", exception.getMessage());
     }
 
-    @Test
-    void testCreateNewCharacter_whenAddPrincipalStatListIsProvided_shouldAddPrincipalStatsListSuccessfully() {
-        Character characterTest = Character.from(createTestCharacter());
-        assertEquals(principalStatList, characterTest.getPrincipalStatList());
-    }
-
-    @Test
-    void testCreateNewCharacter_whenAddPhysicalStat_shouldReturnSameStatType() {
-        Character characterTest = Character.from(createTestCharacter());
-        assertEquals(StatType.PHYSICAL, characterTest.getPrincipalStatList().get(0).getStatType());
-    }
-
-    @Test
-    void testCreateNewCharacter_whenAddPhysicalStatValue_shouldReturnSameStatValue() {
-        Character characterTest = Character.from(createTestCharacter());
-        assertEquals(30, characterTest.getPrincipalStatList().get(0).getValue());
-    }
-
-    @Test
-    void testAddPrincipalStat_whenAddingDifferentStatTypes_shouldContainAllStatsWithoutDuplicates() {
-        Character characterTest = Character.from(createTestCharacter());
-
-        // Act
-        characterTest.setPrincipalStatList(principalStatList);
-
-        // Assert
-        assertEquals(5, characterTest.getPrincipalStatList().size());
-        assertEquals(5, characterTest.getPrincipalStatList().stream()
-                .map(CharacterPrincipalStat::getStatType)
-                .distinct()
-                .count());
-    }
 
     @Test
     void shouldExportValues() {

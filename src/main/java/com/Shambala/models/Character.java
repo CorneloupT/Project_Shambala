@@ -5,8 +5,11 @@ import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.export.CharacterExport;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.List;
+
+import static java.util.Arrays.stream;
 
 @Getter
 @Setter
@@ -42,6 +45,8 @@ public class Character {
         character.equipmentList = builder.getEquipmentList();
         character.inventory = builder.getInventory();
         character.verifyCharacterNameAndValueOfLevelAndExperience();
+        character.verifyPrincipalStatListSize();
+        character.verifyPrincipalStatListHasTheFiveTypeWithoutDuplication();
         return character;
     }
 
@@ -54,6 +59,22 @@ public class Character {
         }
         if (experience < 0 || classExperience < 0) {
             throw new IllegalArgumentException("Global experience and class experience points could not be negatives");
+        }
+    }
+
+    private void verifyPrincipalStatListSize() {
+        if (principalStatList.size() != 5) {
+            throw new ArrayIndexOutOfBoundsException("The list principalStatList must contain All 5 different statistics");
+        }
+    }
+
+    private void verifyPrincipalStatListHasTheFiveTypeWithoutDuplication() {
+        long distinctPrincipalStats = principalStatList.stream()
+                .map(CharacterPrincipalStat::getStatType)
+                .distinct()
+                .count();
+        if (distinctPrincipalStats != 5) {
+            throw new DuplicateKeyException("Principal Stat List should not contains duplication");
         }
     }
 

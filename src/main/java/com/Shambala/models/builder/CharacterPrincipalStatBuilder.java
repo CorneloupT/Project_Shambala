@@ -8,10 +8,7 @@ import java.util.List;
 
 public interface CharacterPrincipalStatBuilder {
     StatType getStatType();
-
     int getValue();
-
     List<CharacterSubStats> getSubStatsList();
-
     Character getCharacter();
 }

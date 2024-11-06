@@ -32,7 +32,5 @@ public interface CharacterExport {
 
     void setCharacterPrincipalStat(List<CharacterPrincipalStat> principalStatList);
 
-    void setCharacterEquipmentList(List<CharacterEquipment> equipmentList);
-
     void setCharacterInventory(CharacterInventory inventory);
 }

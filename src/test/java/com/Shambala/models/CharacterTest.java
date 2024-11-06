@@ -4,6 +4,7 @@ import com.Shambala.Enum.Race;
 import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
+import com.Shambala.models.builder.CharacterSubStatsBuilder;
 import com.Shambala.models.export.CharacterExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,14 +51,12 @@ class CharacterTest {
         principalStatList = new ArrayList<>();
         inventory = new CharacterInventory();
 
-        for (StatType type : StatType.values()) {
-            CharacterPrincipalStatBuilder mockPrincipalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
-            when(mockPrincipalStatBuilder.getStatType()).thenReturn(type);
-            when(mockPrincipalStatBuilder.getValue()).thenReturn(30);
+        CharacterPrincipalStatBuilder mockPrincipalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
+        when(mockPrincipalStatBuilder.getStatType()).thenReturn(StatType.PHYSICAL);
+        when(mockPrincipalStatBuilder.getValue()).thenReturn(30);
 
-            CharacterPrincipalStat principalStat = CharacterPrincipalStat.fromBuilder(mockPrincipalStatBuilder);
-            principalStatList.add(principalStat);
-        }
+        CharacterPrincipalStat principalStat = CharacterPrincipalStat.fromBuilder(mockPrincipalStatBuilder);
+        principalStatList.add(principalStat);
 
     }
 
@@ -148,34 +147,33 @@ class CharacterTest {
     }
 
     @Test
-    void testCreateNewCharacter_whenPrincipalStatListIsProvided_shouldContainAllFivePrincipalStats() {
-        CharacterPrincipalStatBuilder mockPrincipalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
-        when(mockPrincipalStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
-        when(mockPrincipalStatBuilder.getValue()).thenReturn(30);
+    void testCreateNewCharacter_whenAddNewPrincipalStat_returnNewStatInList() {
+        Character characterTest = Character.from(createTestCharacter());
 
-        CharacterPrincipalStat newPrincipalStat = CharacterPrincipalStat.fromBuilder(mockPrincipalStatBuilder);
-        principalStatList.add(newPrincipalStat);
+        CharacterPrincipalStatBuilder principalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
+        when(principalStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
+        when(principalStatBuilder.getValue()).thenReturn(30);
 
-        IndexOutOfBoundsException principalStatListSizeException = assertThrows(IndexOutOfBoundsException.class,
-                () -> Character.from(createTestCharacter()));
+        CharacterPrincipalStat principalStat = CharacterPrincipalStat.fromBuilder(principalStatBuilder);
 
-        assertEquals("The list principalStatList must contain All 5 different statistics", principalStatListSizeException.getMessage());
+        characterTest.addNewPrincipalStat(principalStat);
+        assertTrue(characterTest.getPrincipalStatList().contains(principalStat));
     }
 
     @Test
-    void testCreateNewCharacter_whenPrincipalStatListIsProvided_shouldContainPrincipalStatsWithoutDuplication() {
-        principalStatList.remove(0);
-        CharacterPrincipalStatBuilder mockPrincipalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
-        when(mockPrincipalStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
-        when(mockPrincipalStatBuilder.getValue()).thenReturn(30);
+    void testCreateNewCharacter_whenAddNewPrincipalStat_StatTypeShouldNotBeDuplicated() {
+        Character characterTest = Character.from(createTestCharacter());
 
-        CharacterPrincipalStat newPrincipalStat = CharacterPrincipalStat.fromBuilder(mockPrincipalStatBuilder);
-        principalStatList.add(newPrincipalStat);
+        CharacterPrincipalStatBuilder principalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
+        when(principalStatBuilder.getStatType()).thenReturn(StatType.PHYSICAL);
+        when(principalStatBuilder.getValue()).thenReturn(30);
 
-        DuplicateKeyException principalStatDuplicationException = assertThrows(DuplicateKeyException.class,
-                () -> Character.from(createTestCharacter()));
+        CharacterPrincipalStat principalStat = CharacterPrincipalStat.fromBuilder(principalStatBuilder);
 
-        assertEquals("Principal Stat List should not contains duplication", principalStatDuplicationException.getMessage());
+        DuplicateKeyException duplicateStatException = assertThrows(DuplicateKeyException.class,
+                () -> characterTest.addNewPrincipalStat(principalStat));
+
+        assertEquals("Character Principal Stat should not be duplicated", duplicateStatException.getMessage());
     }
 
     @Test
@@ -238,7 +236,6 @@ class CharacterTest {
         verify(export).setBackground(eq("Bonjour"));
         verify(export).setCharacterStats(eq(characterStats));
         verify(export).setCharacterPrincipalStat(eq(principalStatList));
-        verify(export).setCharacterEquipmentList(eq(equipmentList));
         verify(export).setCharacterInventory(eq(inventory));
     }
 

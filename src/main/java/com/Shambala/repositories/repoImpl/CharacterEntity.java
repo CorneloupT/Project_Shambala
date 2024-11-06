@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -41,11 +42,6 @@ class CharacterEntity implements CharacterExport, CharacterBuilder {
 
     @Override
     public void setCharacterPrincipalStat(List<CharacterPrincipalStat> principalStatList) {
-
-    }
-
-    @Override
-    public void setCharacterEquipmentList(List<CharacterEquipment> equipmentList) {
 
     }
 

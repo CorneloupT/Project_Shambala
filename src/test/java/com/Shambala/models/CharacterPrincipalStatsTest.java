@@ -5,6 +5,7 @@ import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.builder.CharacterSubStatsBuilder;
+import com.Shambala.models.export.CharacterPrincipalStatExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CharacterPrincipalStatsTest {
 
@@ -39,17 +39,7 @@ public class CharacterPrincipalStatsTest {
         CharacterSubStats subStats1 = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
         subStatsList.add(subStats1);
 
-        CharacterBuilder mockCharacterBuilder = mock(CharacterBuilder.class);
-        when(mockCharacterBuilder.getId()).thenReturn(1L);
-        when(mockCharacterBuilder.getName()).thenReturn("Character1");
-        when(mockCharacterBuilder.getRace()).thenReturn(Race.YSGANDIEN);
-        when(mockCharacterBuilder.getPlayerClass()).thenReturn("Mage");
-        when(mockCharacterBuilder.getClassLevel()).thenReturn(1);
-        when(mockCharacterBuilder.getClassExperience()).thenReturn(1);
-        when(mockCharacterBuilder.getGlobalLevel()).thenReturn(1);
-        when(mockCharacterBuilder.getExperience()).thenReturn(1);
-        when(mockCharacterBuilder.getBackground()).thenReturn("hello");
-        character = Character.from(mockCharacterBuilder);
+        character = new Character();
 
 
     }
@@ -106,12 +96,14 @@ public class CharacterPrincipalStatsTest {
     }
 
     @Test
-    void testCreatePrincipalStat_whenCharacterIdIsProvided_returnCharacterPrincipalStatWithCorrectCharacterId() {
+    void shouldExportCharacterPrincipalStat() {
+        CharacterPrincipalStatExport exportPrincipalStat = mock(CharacterPrincipalStatExport.class);
         CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
-        assertNotNull(principalStatTest, "CharacterPrincipalStat should be created");
-        assertEquals(character.getId(), principalStatTest.getCharacter().getId(),
-                "L'ID du Character dans CharacterPrincipalStat devrait correspondre à celui du Character associé.");
+        principalStatTest.exportTo(exportPrincipalStat);
 
+        verify(exportPrincipalStat).setType(eq(StatType.PSYCHIC));
+        verify(exportPrincipalStat).setValue(eq(45));
+        verify(exportPrincipalStat).setListSubStat(eq(subStatsList));
     }
 
 }

@@ -1,12 +1,15 @@
 package com.Shambala.models;
 
 import com.Shambala.Enum.Race;
+import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterBuilder;
+import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.export.CharacterExport;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.dao.DuplicateKeyException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.stream;
@@ -44,8 +47,6 @@ public class Character {
         character.principalStatList = builder.getPrincipalStatList();
         character.inventory = builder.getInventory();
         character.verifyCharacterNameAndValueOfLevelAndExperience();
-        character.verifyPrincipalStatListSize();
-        character.verifyPrincipalStatListHasTheFiveTypeWithoutDuplication();
         return character;
     }
 
@@ -77,7 +78,6 @@ public class Character {
         }
     }
 
-
     public void exportTo(CharacterExport export) {
         export.setId(id);
         export.setName(name);
@@ -90,7 +90,15 @@ public class Character {
         export.setBackground(background);
         export.setCharacterStats(characterStats);
         export.setCharacterPrincipalStat(principalStatList);
-        export.setCharacterEquipmentList(equipmentList);
         export.setCharacterInventory(inventory);
+    }
+
+
+    public void addNewPrincipalStat(CharacterPrincipalStat newPrincipalStat) {
+        boolean isStatAlreadyPresent = principalStatList.stream().anyMatch(stat -> stat.getStatType() == newPrincipalStat.getStatType());
+        if (isStatAlreadyPresent) {
+            throw new DuplicateKeyException("Character Principal Stat should not be duplicated");
+        }
+        this.principalStatList.add(newPrincipalStat);
     }
 }

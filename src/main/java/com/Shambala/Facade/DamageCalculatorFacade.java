@@ -4,15 +4,20 @@ import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.Quality;
 import com.Shambala.models.builder.CharacterEquipmentBuilder;
 
+
+
 public class DamageCalculatorFacade {
 
-    public int rollDamageDice(int sides) {
-        return (int) (Math.random() * sides) + 1;
+    private final DiceRoll diceRoll;
+
+    public DamageCalculatorFacade(DiceRoll diceRoll) {
+        this.diceRoll = diceRoll;
     }
 
-    public int getValueOfDice(int sides) {
-        return rollDamageDice(sides);
+    private int getValueOfDice(int sides) {
+        return diceRoll.roll(sides);
     }
+
 
     public int getModifierQuality(Quality quality, EquipmentType equipmentType) {
         return switch (equipmentType) {

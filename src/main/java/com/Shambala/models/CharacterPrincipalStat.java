@@ -49,20 +49,11 @@ public class CharacterPrincipalStat {
         principalStatExport.setListSubStat(subStatsList);
     }
 
-    public void addNewSubStat(CharacterSubStats subStats) {
-        this.subStatsList.add(subStats);
-    }
-
-    public void addNewSubStatWithNoDuplicationName(CharacterSubStats subStats) {
+    public void addNewSubStatWithNoDuplicationNameAndSizeLimit(CharacterSubStats subStats) {
         boolean isSubStatAlreadyPresent = subStatsList.stream().anyMatch(stat -> stat.getSubStatName().equals(subStats.getSubStatName()));
         if (isSubStatAlreadyPresent) {
             throw new DuplicateKeyException("SubStat can't be in the list two time");
-        }
-        subStatsList.add(subStats);
-    }
-
-    public void addNewSubStatWithSizeLimit(CharacterSubStats subStats) {
-        if (subStatsList.size() != 4) {
+        } if (subStatsList.size() != 4) {
             throw new ArrayIndexOutOfBoundsException("SubStat list should contain 4 sub stat by principal Stat");
         }
         subStatsList.add(subStats);

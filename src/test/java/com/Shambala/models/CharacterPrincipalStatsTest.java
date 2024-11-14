@@ -84,22 +84,6 @@ public class CharacterPrincipalStatsTest {
     }
 
     @Test
-    void testCreatePrincipalStat_whenAddNewSubStat_returnNewSubStatInList() {
-        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
-
-        CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
-        when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
-        when(mockSubStatBuilder.getSubStatName()).thenReturn("Calcul");
-        when(mockSubStatBuilder.getSubStatValue()).thenReturn(20);
-        when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
-
-        CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
-        principalStatTest.addNewSubStat(subStats);
-
-        assertTrue(principalStatTest.getSubStatsList().contains(subStats));
-    }
-
-    @Test
     void testCreatePrincipalStat_whenAddNewSubStat_subStatListShouldContainFourSubStatMax()  {
         CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
         CharacterSubStats mockSubStat = mock(CharacterSubStats.class);
@@ -115,7 +99,7 @@ public class CharacterPrincipalStatsTest {
             subStatsList.add(subStats);
         }
         ArrayIndexOutOfBoundsException sizeSubStatListException = assertThrows(ArrayIndexOutOfBoundsException.class,
-                () -> principalStatTest.addNewSubStatWithSizeLimit(mockSubStat));
+                () -> principalStatTest.addNewSubStatWithNoDuplicationNameAndSizeLimit(mockSubStat));
 
         assertEquals("SubStat list should contain 4 sub stat by principal Stat", sizeSubStatListException.getMessage());
     }
@@ -133,7 +117,7 @@ public class CharacterPrincipalStatsTest {
         CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
 
         DuplicateKeyException duplicateStatException = assertThrows(DuplicateKeyException.class,
-                () -> principalStatTest.addNewSubStatWithNoDuplicationName(subStats));
+                () -> principalStatTest.addNewSubStatWithNoDuplicationNameAndSizeLimit(subStats));
 
         assertEquals("SubStat can't be in the list two time", duplicateStatException.getMessage());
     }

@@ -100,6 +100,27 @@ public class CharacterPrincipalStatsTest {
     }
 
     @Test
+    void testCreatePrincipalStat_whenAddNewSubStat_subStatListShouldContainFourSubStatMax()  {
+        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+        CharacterSubStats mockSubStat = mock(CharacterSubStats.class);
+
+        for (int i = 0; i < 4; i++) {
+            CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
+            when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
+            when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition");
+            when(mockSubStatBuilder.getSubStatValue()).thenReturn(30);
+            when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
+
+            CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
+            subStatsList.add(subStats);
+        }
+        ArrayIndexOutOfBoundsException sizeSubStatListException = assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> principalStatTest.addNewSubStatWithSizeLimit(mockSubStat));
+
+        assertEquals("SubStat list should contain 4 sub stat by principal Stat", sizeSubStatListException.getMessage());
+    }
+
+    @Test
     void testCreatePrincipalStat_whenAddNewSubStat_newSubStatCanNotHaveASameName() {
         CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
 

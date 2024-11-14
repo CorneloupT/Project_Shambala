@@ -60,4 +60,11 @@ public class CharacterPrincipalStat {
         }
         subStatsList.add(subStats);
     }
+
+    public void addNewSubStatWithSizeLimit(CharacterSubStats subStats) {
+        if (subStatsList.size() != 4) {
+            throw new ArrayIndexOutOfBoundsException("SubStat list should contain 4 sub stat by principal Stat");
+        }
+        subStatsList.add(subStats);
+    }
 }

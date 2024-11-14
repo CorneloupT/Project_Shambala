@@ -11,22 +11,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public class DamageCalculatorFacadeTest {
 
     private DamageCalculatorFacade damageCalculatorFacade;
     private CharacterEquipmentBuilder characterEquipmentBuilder;
     private DiceRoll diceRoll;
-    private DiceRoll getDiceRoll() {
-        return (sides) -> ThreadLocalRandom.current().nextInt(1, sides + 1);
-    }
 
     @BeforeEach
     void setUp() {
-        damageCalculatorFacade = new DamageCalculatorFacade(getDiceRoll());
+        diceRoll = mock(DiceRoll.class);
+        damageCalculatorFacade = new DamageCalculatorFacade(diceRoll);
         characterEquipmentBuilder = mock(CharacterEquipmentBuilder.class);
-        diceRoll = new DiceRoll();
     }
 
     @Test
@@ -298,5 +293,7 @@ public class DamageCalculatorFacadeTest {
         int resultDamageWithReduction = damageCalculatorFacade.calculateDamageReductionWithArmorModifier(characterEquipmentBuilder, EquipmentType.TWOHAND_WEAPON);
         assertEquals(7 , resultDamageWithReduction);
     }
+
+
 
 }

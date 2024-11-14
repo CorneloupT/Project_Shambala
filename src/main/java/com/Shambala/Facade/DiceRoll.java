@@ -1,14 +1,11 @@
 package com.Shambala.Facade;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class DiceRoll implements Dice{
+public class DiceRoll {
 
-    private final Random random = new Random();
-
-    @Override
     public int roll(int sides) {
-        return random.nextInt(sides) + 1;
+        return ThreadLocalRandom.current().nextInt(1, sides + 1);
     }
 
 }

@@ -4,7 +4,6 @@ import com.Shambala.Enum.Race;
 import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
-import com.Shambala.models.builder.CharacterSubStatsBuilder;
 import com.Shambala.models.export.CharacterExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -156,7 +155,7 @@ class CharacterTest {
 
         CharacterPrincipalStat principalStat = CharacterPrincipalStat.fromBuilder(principalStatBuilder);
 
-        characterTest.addNewPrincipalStat(principalStat);
+        characterTest.addNewPrincipalStatWithoutDuplicationAndVerifySizeList(principalStat);
         assertTrue(characterTest.getPrincipalStatList().contains(principalStat));
     }
 
@@ -171,9 +170,28 @@ class CharacterTest {
         CharacterPrincipalStat principalStat = CharacterPrincipalStat.fromBuilder(principalStatBuilder);
 
         DuplicateKeyException duplicateStatException = assertThrows(DuplicateKeyException.class,
-                () -> characterTest.addNewPrincipalStat(principalStat));
+                () -> characterTest.addNewPrincipalStatWithoutDuplicationAndVerifySizeList(principalStat));
 
         assertEquals("Character Principal Stat should not be duplicated", duplicateStatException.getMessage());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenAddNewPrincipalStat_principalStatListMaxIs5() {
+        Character characterTest = Character.from(createTestCharacter());
+
+        CharacterPrincipalStat principalStat = mock(CharacterPrincipalStat.class);
+        for (StatType type : StatType.values()) {
+            CharacterPrincipalStatBuilder mockPrincipalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
+            when(mockPrincipalStatBuilder.getStatType()).thenReturn(type);
+            when(mockPrincipalStatBuilder.getValue()).thenReturn(20);
+
+            CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(mockPrincipalStatBuilder);
+            principalStatList.add(principalStatTest);
+        }
+
+        ArrayIndexOutOfBoundsException listBoundException = assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> characterTest.addNewPrincipalStatWithoutDuplicationAndVerifySizeList(principalStat));
+        assertEquals("The list principalStatList must contain 5 statistics maximum", listBoundException.getMessage());
     }
 
     @Test

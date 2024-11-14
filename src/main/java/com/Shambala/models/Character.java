@@ -1,18 +1,13 @@
 package com.Shambala.models;
 
 import com.Shambala.Enum.Race;
-import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterBuilder;
-import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.export.CharacterExport;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.dao.DuplicateKeyException;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Arrays.stream;
 
 @Getter
 @Setter
@@ -62,20 +57,14 @@ public class Character {
         }
     }
 
-    private void verifyPrincipalStatListSize() {
-        if (principalStatList.size() != 5) {
-            throw new ArrayIndexOutOfBoundsException("The list principalStatList must contain All 5 different statistics");
+    public void addNewPrincipalStatWithoutDuplicationAndVerifySizeList(CharacterPrincipalStat newPrincipalStat) {
+        boolean isStatAlreadyPresent = principalStatList.stream().anyMatch(stat -> stat.getStatType() == newPrincipalStat.getStatType());
+        if (isStatAlreadyPresent) {
+            throw new DuplicateKeyException("Character Principal Stat should not be duplicated");
+        } if (principalStatList.size() > 5) {
+            throw new ArrayIndexOutOfBoundsException("The list principalStatList must contain 5 statistics maximum");
         }
-    }
-
-    private void verifyPrincipalStatListHasTheFiveTypeWithoutDuplication() {
-        long distinctPrincipalStats = principalStatList.stream()
-                .map(CharacterPrincipalStat::getStatType)
-                .distinct()
-                .count();
-        if (distinctPrincipalStats != 5) {
-            throw new DuplicateKeyException("Principal Stat List should not contains duplication");
-        }
+        this.principalStatList.add(newPrincipalStat);
     }
 
     public void exportTo(CharacterExport export) {
@@ -91,14 +80,5 @@ public class Character {
         export.setCharacterStats(characterStats);
         export.setCharacterPrincipalStat(principalStatList);
         export.setCharacterInventory(inventory);
-    }
-
-
-    public void addNewPrincipalStat(CharacterPrincipalStat newPrincipalStat) {
-        boolean isStatAlreadyPresent = principalStatList.stream().anyMatch(stat -> stat.getStatType() == newPrincipalStat.getStatType());
-        if (isStatAlreadyPresent) {
-            throw new DuplicateKeyException("Character Principal Stat should not be duplicated");
-        }
-        this.principalStatList.add(newPrincipalStat);
     }
 }

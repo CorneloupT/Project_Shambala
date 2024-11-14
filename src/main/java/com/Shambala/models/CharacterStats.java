@@ -22,7 +22,7 @@ public class CharacterStats {
         characterStats.ENPointsMax = characterStatsBuilder.getENPointsMax();
         characterStats.luckyPoints = characterStatsBuilder.getLuckyPoint();
         characterStats.protection = characterStatsBuilder.getProtection();
-        characterStats.verifyMaxLifePointsAndMaxENPoints();;
+        characterStats.verifyMaxLifePointsAndMaxENPoints();
         return characterStats;
     }
 

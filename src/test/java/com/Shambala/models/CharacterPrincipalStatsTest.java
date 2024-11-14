@@ -1,8 +1,6 @@
 package com.Shambala.models;
 
-import com.Shambala.Enum.Race;
 import com.Shambala.Enum.StatType;
-import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.builder.CharacterSubStatsBuilder;
 import com.Shambala.models.export.CharacterPrincipalStatExport;
@@ -10,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,9 @@ public class CharacterPrincipalStatsTest {
     void setUp() {
         statType = StatType.PSYCHIC;
         value = 45;
-
         subStatsList = new ArrayList<>();
+        character = new Character();
+
         CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
         when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
         when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition");
@@ -38,9 +38,6 @@ public class CharacterPrincipalStatsTest {
 
         CharacterSubStats subStats1 = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
         subStatsList.add(subStats1);
-
-        character = new Character();
-
 
     }
 
@@ -84,6 +81,40 @@ public class CharacterPrincipalStatsTest {
     void testCreatePrincipalStat_whenPrincipalStatAreProvided_returnListOfSubStat() {
         CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
         assertEquals(subStatsList, principalStatTest.getSubStatsList());
+    }
+
+    @Test
+    void testCreatePrincipalStat_whenAddNewSubStat_returnNewSubStatInList() {
+        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+
+        CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
+        when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
+        when(mockSubStatBuilder.getSubStatName()).thenReturn("Calcul");
+        when(mockSubStatBuilder.getSubStatValue()).thenReturn(20);
+        when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
+
+        CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
+        principalStatTest.addNewSubStat(subStats);
+
+        assertTrue(principalStatTest.getSubStatsList().contains(subStats));
+    }
+
+    @Test
+    void testCreatePrincipalStat_whenAddNewSubStat_newSubStatCanNotHaveASameName() {
+        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+
+        CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
+        when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
+        when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition");
+        when(mockSubStatBuilder.getSubStatValue()).thenReturn(30);
+        when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
+
+        CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
+
+        DuplicateKeyException duplicateStatException = assertThrows(DuplicateKeyException.class,
+                () -> principalStatTest.addNewSubStatWithNoDuplicationName(subStats));
+
+        assertEquals("SubStat can't be in the list two time", duplicateStatException.getMessage());
     }
 
     @Test

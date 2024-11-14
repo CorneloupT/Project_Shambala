@@ -5,6 +5,7 @@ import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.export.CharacterPrincipalStatExport;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.List;
 
@@ -48,4 +49,15 @@ public class CharacterPrincipalStat {
         principalStatExport.setListSubStat(subStatsList);
     }
 
+    public void addNewSubStat(CharacterSubStats subStats) {
+        this.subStatsList.add(subStats);
+    }
+
+    public void addNewSubStatWithNoDuplicationName(CharacterSubStats subStats) {
+        boolean isSubStatAlreadyPresent = subStatsList.stream().anyMatch(stat -> stat.getSubStatName().equals(subStats.getSubStatName()));
+        if (isSubStatAlreadyPresent) {
+            throw new DuplicateKeyException("SubStat can't be in the list two time");
+        }
+        subStatsList.add(subStats);
+    }
 }

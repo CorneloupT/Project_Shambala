@@ -2,7 +2,7 @@ package com.Shambala.Facade;
 
 import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.Quality;
-import com.Shambala.models.builder.CharacterEquipmentBuilder;
+import com.Shambala.models.CharacterEquipment;
 
 public class DamageCalculatorFacade {
 
@@ -41,20 +41,20 @@ public class DamageCalculatorFacade {
         };
     }
 
-    public int getModifier(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType) {
-        Quality quality = characterEquipmentBuilder.getQuality();
+    public int getModifier(CharacterEquipment characterEquipment, EquipmentType equipmentType) {
+        Quality quality = characterEquipment.getQuality();
         return getModifierQuality(quality, equipmentType);
     }
 
-    public int calculateDamageWithWeaponModifier(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType, int diceSides) {
-        int modifier = getModifier(characterEquipmentBuilder, equipmentType);
+    public int calculateDamageWithWeaponModifier(CharacterEquipment characterEquipment, EquipmentType equipmentType, int diceSides) {
+        int modifier = getModifier(characterEquipment, equipmentType);
         int rolledValue = diceRoll.roll(diceSides);
         return rolledValue + modifier;
     }
 
-    public int calculateDamageReductionWithArmorModifier(CharacterEquipmentBuilder characterEquipmentBuilder, EquipmentType equipmentType) {
-        int damage =  calculateDamageWithWeaponModifier(characterEquipmentBuilder, equipmentType, 8);
-        Quality quality = characterEquipmentBuilder.getQuality();
+    public int calculateDamageReductionWithArmorModifier(CharacterEquipment characterEquipment, EquipmentType equipmentType) {
+        int damage =  calculateDamageWithWeaponModifier(characterEquipment, equipmentType, 8);
+        Quality quality = characterEquipment.getQuality();
         return damage - getModifierQuality(quality, EquipmentType.ARMOR);
     }
 

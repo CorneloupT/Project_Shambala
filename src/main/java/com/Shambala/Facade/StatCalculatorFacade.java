@@ -1,20 +1,19 @@
 package com.Shambala.Facade;
 
-import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
-import com.Shambala.models.builder.CharacterSubStatsBuilder;
-
+import com.Shambala.models.CharacterPrincipalStat;
+import com.Shambala.models.CharacterSubStats;
 
 public class StatCalculatorFacade {
-    ;
+
     public int getValueOfDice100() {
         return (int) (Math.random() * 100) + 1;
     }
 
-    public int addStatsValue(CharacterPrincipalStatBuilder principalStat, CharacterSubStatsBuilder subStats) {
+    public int addStatsValue(CharacterPrincipalStat principalStat, CharacterSubStats subStats) {
         return principalStat.getValue() + subStats.getSubStatValue();
     }
 
-    public String resultD100AndConsequences(CharacterPrincipalStatBuilder principalStat, CharacterSubStatsBuilder subStats) {
+    public String resultD100AndConsequences(CharacterPrincipalStat principalStat, CharacterSubStats subStats) {
         int addStatValue = addStatsValue(principalStat, subStats);
         int dice100Value = getValueOfDice100();
 

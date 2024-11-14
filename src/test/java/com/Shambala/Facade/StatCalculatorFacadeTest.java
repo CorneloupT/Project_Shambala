@@ -3,8 +3,8 @@ package com.Shambala.Facade;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
-import com.Shambala.models.builder.CharacterSubStatsBuilder;
+import com.Shambala.models.CharacterPrincipalStat;
+import com.Shambala.models.CharacterSubStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,18 +12,18 @@ import org.junit.jupiter.api.Test;
 public class StatCalculatorFacadeTest {
 
     private StatCalculatorFacade calculatorFacade;
-    private CharacterPrincipalStatBuilder principalStatBuilder;
-    private CharacterSubStatsBuilder subStatsBuilder;
+    private CharacterPrincipalStat principalStat;
+    private CharacterSubStats subStats;
 
     @BeforeEach
     void setUp() {
         calculatorFacade = spy(new StatCalculatorFacade());
 
-        principalStatBuilder = mock(CharacterPrincipalStatBuilder.class);
-        when(principalStatBuilder.getValue()).thenReturn(30);
+        principalStat = mock(CharacterPrincipalStat.class);
+        when(principalStat.getValue()).thenReturn(30);
 
-        subStatsBuilder = mock(CharacterSubStatsBuilder.class);
-        when(subStatsBuilder.getSubStatValue()).thenReturn(10);
+        subStats = mock(CharacterSubStats.class);
+        when(subStats.getSubStatValue()).thenReturn(10);
 
     }
 
@@ -35,7 +35,7 @@ public class StatCalculatorFacadeTest {
 
     @Test
     void testAddPrincipalAndSubStatValue() {
-        int result = calculatorFacade.addStatsValue(principalStatBuilder, subStatsBuilder);
+        int result = calculatorFacade.addStatsValue(principalStat, subStats);
         assertEquals(40, result, "Addition entre les deux statistiques");
     }
 
@@ -43,7 +43,7 @@ public class StatCalculatorFacadeTest {
     void testThrowingDiceResultIsFail() {
         when(calculatorFacade.getValueOfDice100()).thenReturn(51);
 
-        String result = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStatBuilder, subStatsBuilder));
+        String result = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStat, subStats));
         assertEquals("Fail! addStatValue is greater than the dice roll.", result);
     }
 
@@ -51,7 +51,7 @@ public class StatCalculatorFacadeTest {
     void testThrowingDiceResultIsSuccess() {
         when(calculatorFacade.getValueOfDice100()).thenReturn(33);
 
-        String result = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStatBuilder, subStatsBuilder));
+        String result = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStat, subStats));
         assertEquals("Success! addStatValue is lesser than the dice roll.", result);
     }
 
@@ -59,7 +59,7 @@ public class StatCalculatorFacadeTest {
     void testThrowingDiceResultIsCriticalFail() {
         when(calculatorFacade.getValueOfDice100()).thenReturn(99);
 
-        String criticalResult = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStatBuilder, subStatsBuilder));
+        String criticalResult = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStat, subStats));
         assertEquals("Aie ! ça ressemble à un échec critique !", criticalResult);
     }
 
@@ -67,7 +67,7 @@ public class StatCalculatorFacadeTest {
     void testThrowingDiceResultIsCriticalSuccess() {
         when(calculatorFacade.getValueOfDice100()).thenReturn(2);
 
-        String criticalResult = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStatBuilder, subStatsBuilder));
+        String criticalResult = String.valueOf(calculatorFacade.resultD100AndConsequences(principalStat, subStats));
         assertEquals("Critical Success !!", criticalResult);
     }
 

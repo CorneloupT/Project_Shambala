@@ -53,9 +53,40 @@ public class CharacterPrincipalStat {
         boolean isSubStatAlreadyPresent = subStatsList.stream().anyMatch(stat -> stat.getSubStatName().equals(subStats.getSubStatName()));
         if (isSubStatAlreadyPresent) {
             throw new DuplicateKeyException("SubStat can't be in the list two time");
-        } if (subStatsList.size() != 4) {
-            throw new ArrayIndexOutOfBoundsException("SubStat list should contain 4 sub stat by principal Stat");
+        } if (subStatsList.size() != 20) {
+            throw new ArrayIndexOutOfBoundsException("SubStat list should contain 20 sub stat");
         }
         subStatsList.add(subStats);
+    }
+
+    public void verifyPrincipalStatWithSpecificTypeHas4SubStatWithThisType(CharacterPrincipalStat principalStat) {
+        long statHasAlready4SubStatWithSameType = subStatsList
+                .stream()
+                .filter(subStats -> subStats.getStatType().equals(principalStat.getStatType()))
+                .count();
+
+        if (statHasAlready4SubStatWithSameType != 4) {
+            throw new IllegalArgumentException("Principal stat should have four sub Stat with the same type");
+        }
+    }
+
+    public void completeListOfSubStatForAllPrincipalStat() {
+        for (StatType statType : StatType.values()) {
+            long count = subStatsList
+                    .stream()
+                    .filter(subStat -> subStat.getStatType().equals(statType))
+                    .count();
+
+            if (count > 4) {
+                throw new ArrayIndexOutOfBoundsException("list is not complete");
+            }
+
+            while (count < 4) {
+                CharacterSubStats subStat = new CharacterSubStats();
+                subStatsList.add(subStat);
+                count++;
+            }
+        }
+
     }
 }

@@ -30,15 +30,6 @@ public class CharacterPrincipalStatsTest {
         subStatsList = new ArrayList<>();
         character = new Character();
 
-        CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
-        when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
-        when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition");
-        when(mockSubStatBuilder.getSubStatValue()).thenReturn(20);
-        when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
-
-        CharacterSubStats subStats1 = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
-        subStatsList.add(subStats1);
-
     }
 
     private record TestBuilder(StatType getStatType, int getValue, List<CharacterSubStats> getSubStatsList, Character getCharacter) implements CharacterPrincipalStatBuilder {
@@ -88,7 +79,7 @@ public class CharacterPrincipalStatsTest {
         CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
         CharacterSubStats mockSubStat = mock(CharacterSubStats.class);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 16; i++) {
             CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
             when(mockSubStatBuilder.getStatType()).thenReturn(StatType.PSYCHIC);
             when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition");
@@ -101,7 +92,7 @@ public class CharacterPrincipalStatsTest {
         ArrayIndexOutOfBoundsException sizeSubStatListException = assertThrows(ArrayIndexOutOfBoundsException.class,
                 () -> principalStatTest.addNewSubStatWithNoDuplicationNameAndSizeLimit(mockSubStat));
 
-        assertEquals("SubStat list should contain 4 sub stat by principal Stat", sizeSubStatListException.getMessage());
+        assertEquals("SubStat list should contain 20 sub stat", sizeSubStatListException.getMessage());
     }
 
     @Test
@@ -120,6 +111,47 @@ public class CharacterPrincipalStatsTest {
                 () -> principalStatTest.addNewSubStatWithNoDuplicationNameAndSizeLimit(subStats));
 
         assertEquals("SubStat can't be in the list two time", duplicateStatException.getMessage());
+    }
+
+    @Test
+    void testCreatePrincipalStat_whenSubStatListIsProvided_aPrincipalStatShouldHas4SubStatWithSameType() {
+        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+
+        for (int i = 0; i < 3; i++) {
+            CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
+            when(mockSubStatBuilder.getStatType()).thenReturn(StatType.DEXTERITY);
+            when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition");
+            when(mockSubStatBuilder.getSubStatValue()).thenReturn(30);
+            when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
+
+            CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
+            subStatsList.add(subStats);
+        }
+
+        IllegalArgumentException subStatNumberException = assertThrows(IllegalArgumentException.class,
+                () -> principalStatTest.verifyPrincipalStatWithSpecificTypeHas4SubStatWithThisType(principalStatTest));
+
+        assertEquals("Principal stat should have four sub Stat with the same type", subStatNumberException.getMessage());
+    }
+
+    @Test
+    void testCreatePrincipalStat_whenSubStatListIsComplete_principalStatShouldHave20ItemInSubStatList() {
+        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+
+        for (StatType statType : StatType.values()) {
+            for (int i = 0; i < 4; i++) {
+                CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
+                when(mockSubStatBuilder.getStatType()).thenReturn(statType);
+                when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition" + i);
+                when(mockSubStatBuilder.getSubStatValue()).thenReturn(30);
+                when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
+
+                CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
+                subStatsList.add(subStats);
+            }
+        }
+        principalStatTest.completeListOfSubStatForAllPrincipalStat();
+        assertEquals(20, principalStatTest.getSubStatsList().size());
     }
 
     @Test

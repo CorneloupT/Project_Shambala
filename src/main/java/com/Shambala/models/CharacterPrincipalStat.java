@@ -5,7 +5,6 @@ import com.Shambala.models.builder.CharacterPrincipalStatBuilder;
 import com.Shambala.models.export.CharacterPrincipalStatExport;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.dao.DuplicateKeyException;
 
 import java.util.List;
 
@@ -51,40 +50,27 @@ public class CharacterPrincipalStat {
 
     public void addNewSubStatWithNoDuplicationNameAndSizeLimit(CharacterSubStats subStats) {
         boolean isSubStatAlreadyPresent = subStatsList.stream().anyMatch(stat -> stat.getSubStatName().equals(subStats.getSubStatName()));
-        if (isSubStatAlreadyPresent) {
-            throw new DuplicateKeyException("SubStat can't be in the list two time");
-        } if (subStatsList.size() != 20) {
-            throw new ArrayIndexOutOfBoundsException("SubStat list should contain 20 sub stat");
+        if (isSubStatAlreadyPresent || subStatsList.size() != 20) {
+            throw new RuntimeException("SubStat can't be duplicate and the list should contains 20 sub stats");
         }
         subStatsList.add(subStats);
     }
 
-    public void verifyPrincipalStatWithSpecificTypeHas4SubStatWithThisType(CharacterPrincipalStat principalStat) {
-        long statHasAlready4SubStatWithSameType = subStatsList
-                .stream()
-                .filter(subStats -> subStats.getStatType().equals(principalStat.getStatType()))
-                .count();
-
-        if (statHasAlready4SubStatWithSameType != 4) {
-            throw new IllegalArgumentException("Principal stat should have four sub Stat with the same type");
-        }
-    }
-
     public void completeListOfSubStatForAllPrincipalStat() {
         for (StatType statType : StatType.values()) {
-            long count = subStatsList
+            long allSubStat = subStatsList
                     .stream()
                     .filter(subStat -> subStat.getStatType().equals(statType))
                     .count();
 
-            if (count > 4) {
+            if (allSubStat > 4) {
                 throw new ArrayIndexOutOfBoundsException("list is not complete");
             }
 
-            while (count < 4) {
+            while (allSubStat < 4) {
                 CharacterSubStats subStat = new CharacterSubStats();
                 subStatsList.add(subStat);
-                count++;
+                allSubStat++;
             }
         }
 

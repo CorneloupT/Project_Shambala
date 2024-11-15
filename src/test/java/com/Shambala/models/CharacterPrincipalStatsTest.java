@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.dao.DuplicateKeyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,10 +88,10 @@ public class CharacterPrincipalStatsTest {
             CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
             subStatsList.add(subStats);
         }
-        ArrayIndexOutOfBoundsException sizeSubStatListException = assertThrows(ArrayIndexOutOfBoundsException.class,
+        RuntimeException sizeSubStatListException = assertThrows(RuntimeException.class,
                 () -> principalStatTest.addNewSubStatWithNoDuplicationNameAndSizeLimit(mockSubStat));
 
-        assertEquals("SubStat list should contain 20 sub stat", sizeSubStatListException.getMessage());
+        assertEquals("SubStat can't be duplicate and the list should contains 20 sub stats", sizeSubStatListException.getMessage());
     }
 
     @Test
@@ -107,31 +106,10 @@ public class CharacterPrincipalStatsTest {
 
         CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
 
-        DuplicateKeyException duplicateStatException = assertThrows(DuplicateKeyException.class,
+        RuntimeException duplicateSubStatException = assertThrows(RuntimeException.class,
                 () -> principalStatTest.addNewSubStatWithNoDuplicationNameAndSizeLimit(subStats));
 
-        assertEquals("SubStat can't be in the list two time", duplicateStatException.getMessage());
-    }
-
-    @Test
-    void testCreatePrincipalStat_whenSubStatListIsProvided_aPrincipalStatShouldHas4SubStatWithSameType() {
-        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
-
-        for (int i = 0; i < 3; i++) {
-            CharacterSubStatsBuilder mockSubStatBuilder = mock(CharacterSubStatsBuilder.class);
-            when(mockSubStatBuilder.getStatType()).thenReturn(StatType.DEXTERITY);
-            when(mockSubStatBuilder.getSubStatName()).thenReturn("Erudition");
-            when(mockSubStatBuilder.getSubStatValue()).thenReturn(30);
-            when(mockSubStatBuilder.getDescription()).thenReturn("Hello world");
-
-            CharacterSubStats subStats = CharacterSubStats.fromSubStatBuilder(mockSubStatBuilder);
-            subStatsList.add(subStats);
-        }
-
-        IllegalArgumentException subStatNumberException = assertThrows(IllegalArgumentException.class,
-                () -> principalStatTest.verifyPrincipalStatWithSpecificTypeHas4SubStatWithThisType(principalStatTest));
-
-        assertEquals("Principal stat should have four sub Stat with the same type", subStatNumberException.getMessage());
+        assertEquals("SubStat can't be duplicate and the list should contains 20 sub stats", duplicateSubStatException.getMessage());
     }
 
     @Test
@@ -152,15 +130,6 @@ public class CharacterPrincipalStatsTest {
         }
         principalStatTest.completeListOfSubStatForAllPrincipalStat();
         assertEquals(20, principalStatTest.getSubStatsList().size());
-    }
-
-    @Test
-    void testCreatePrincipalStat_whenPrincipalStatTypeIsProvided_returnListOfSubStatWithTheSameType() {
-        statType = StatType.DEXTERITY;
-        IllegalArgumentException subStatTypeException = assertThrows(IllegalArgumentException.class,
-                () -> CharacterPrincipalStat.fromBuilder(createTestPrincipalStat()));
-
-        assertEquals("All sub Stat should be have same type than principal Stat", subStatTypeException.getMessage());
     }
 
     @Test

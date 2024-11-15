@@ -26,7 +26,7 @@ public class CharacterSubStats {
 
     private void verifyValueSubStat() {
         if (subStatValue < 5 || subStatValue > 30 || subStatValue % 5 != 0) {
-            throw new IllegalArgumentException("SubStat Value should not be greater than 30, lesser than 5 and should be divisibleby 5");
+            throw new IllegalArgumentException("SubStat Value should not be greater than 30, lesser than 5 and should be divisible by 5");
         }
     }
 

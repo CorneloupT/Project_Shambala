@@ -42,12 +42,6 @@ public class CharacterPrincipalStat {
         }
     }
 
-    public void exportTo(CharacterPrincipalStatExport principalStatExport) {
-        principalStatExport.setType(statType);
-        principalStatExport.setValue(value);
-        principalStatExport.setListSubStat(subStatsList);
-    }
-
     public void addNewSubStatWithNoDuplicationNameAndSizeLimit(CharacterSubStats subStats) {
         boolean isSubStatAlreadyPresent = subStatsList.stream().anyMatch(stat -> stat.getSubStatName().equals(subStats.getSubStatName()));
         if (isSubStatAlreadyPresent || subStatsList.size() != 20) {
@@ -75,4 +69,11 @@ public class CharacterPrincipalStat {
         }
 
     }
+
+    public void exportTo(CharacterPrincipalStatExport principalStatExport) {
+        principalStatExport.setType(statType);
+        principalStatExport.setValue(value);
+        principalStatExport.setListSubStat(subStatsList);
+    }
+
 }

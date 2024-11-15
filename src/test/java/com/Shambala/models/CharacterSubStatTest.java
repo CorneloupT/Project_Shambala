@@ -2,12 +2,15 @@ package com.Shambala.models;
 
 import com.Shambala.Enum.StatType;
 import com.Shambala.models.builder.CharacterSubStatsBuilder;
+import com.Shambala.models.export.CharacterSubStatsExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class CharacterSubStatTest {
 
@@ -66,10 +69,21 @@ public class CharacterSubStatTest {
     @ValueSource(ints = {0, 14, 31})
     void testCreateSubStat_whenSubStatIsGreaterThan50_OrLesserThan10_OrNotDivisibleBy5_returnError(int subStatValue) {
         this.subStatValue = subStatValue;
-        IllegalArgumentException subStatValueException = assertThrows(IllegalArgumentException.class, () -> {
-           CharacterSubStats.fromSubStatBuilder(createTestSubStat());
-        });
+        IllegalArgumentException subStatValueException = assertThrows(IllegalArgumentException.class,
+                () -> CharacterSubStats.fromSubStatBuilder(createTestSubStat()));
 
-        assertEquals("SubStat Value should not be greater than 30, lesser than 5 and should be divisibleby 5", subStatValueException.getMessage());
+        assertEquals("SubStat Value should not be greater than 30, lesser than 5 and should be divisible by 5", subStatValueException.getMessage());
+    }
+
+    @Test
+    void shouldExportValues() {
+        CharacterSubStatsExport subStatsExport = mock(CharacterSubStatsExport.class);
+        CharacterSubStats characterSubStats = CharacterSubStats.fromSubStatBuilder(createTestSubStat());
+        characterSubStats.exportTo(subStatsExport);
+
+        verify(subStatsExport).setType(statType);
+        verify(subStatsExport).setSubStatName(subStatName);
+        verify(subStatsExport).setSubStatValue(subStatValue);
+        verify(subStatsExport).setDescription(description);
     }
 }

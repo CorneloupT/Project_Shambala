@@ -1,10 +1,14 @@
 package com.Shambala.models;
 
 import com.Shambala.models.builder.CharacterStatsBuilder;
+import com.Shambala.models.export.CharacterStatsExport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class CharacterStatsTest {
 
@@ -89,24 +93,34 @@ public class CharacterStatsTest {
         lifePoints = 15;
         lifePointsMax = 14;
 
-        IllegalArgumentException lifePointException = assertThrows(IllegalArgumentException.class, () -> {
-           CharacterStats.fromStatBuilder(createCharacterStats());
-        });
+        IllegalArgumentException lifePointException = assertThrows(IllegalArgumentException.class,
+                () -> CharacterStats.fromStatBuilder(createCharacterStats()));
 
         assertEquals("life points and EN points are always less than or equal to their maximum", lifePointException.getMessage());
     }
 
-    // Est-ce qu'on peut faire une refactorisation de ces deux tests ou vut-il mieux les laisser séparés ?
     @Test
     void testCreateCharacterStats_whenENPointsAndENPointsMaxAreProvided_ENPointsMaxIsMaximum() {
         ENPoints = 7;
         ENPointsMax = 6;
 
-        IllegalArgumentException ENPointsException = assertThrows(IllegalArgumentException.class, () -> {
-           CharacterStats.fromStatBuilder(createCharacterStats());
-        });
+        IllegalArgumentException ENPointsException = assertThrows(IllegalArgumentException.class,
+                () -> CharacterStats.fromStatBuilder(createCharacterStats()));
 
         assertEquals("life points and EN points are always less than or equal to their maximum", ENPointsException.getMessage());
     }
 
+    @Test
+    void shouldExportStatValue() {
+        CharacterStatsExport statsExport = mock(CharacterStatsExport.class);
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
+        characterStats.exportTo(statsExport);
+
+        verify(statsExport).setLifePoints(eq(12));
+        verify(statsExport).setLifePointsMax(eq(14));
+        verify(statsExport).setENPoints(eq(3));
+        verify(statsExport).setENPointsMax(eq(5));
+        verify(statsExport).setLuckyPoints(eq(5));
+        verify(statsExport).setProtection(eq(2));
+    }
 }

@@ -33,12 +33,12 @@ public class CharacterStats {
     }
 
     public void exportTo(CharacterStatsExport statsExport) {
-        statsExport.setLifePoints();
-        statsExport.setLifePointsMax();
-        statsExport.setENPoints();
-        statsExport.setENpointsMax();
-        statsExport.setLuckyPoints();
-        statsExport.setProtection();
+        statsExport.setLifePoints(lifePoints);
+        statsExport.setLifePointsMax(lifePointsMax);
+        statsExport.setENPoints(ENPoints);
+        statsExport.setENPointsMax(ENPointsMax);
+        statsExport.setLuckyPoints(luckyPoints);
+        statsExport.setProtection(protection);
     }
 
 }

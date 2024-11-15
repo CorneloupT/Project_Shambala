@@ -2,15 +2,15 @@ package com.Shambala.models.export;
 
 public interface CharacterStatsExport {
 
-    void setLifePoints();
+    void setLifePoints(int lifePoints);
 
-    void setLifePointsMax();
+    void setLifePointsMax(int lifePointsMax);
 
-    void setENPoints();
+    void setENPoints(int ENPoints);
 
-    void setENpointsMax();
+    void setENPointsMax(int ENPointsMax);
 
-    void setLuckyPoints();
+    void setLuckyPoints(int luckyPoints);
 
-    void setProtection();
+    void setProtection( int protection);
 }

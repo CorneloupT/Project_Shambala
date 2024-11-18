@@ -1,15 +1,12 @@
-package com.Shambala.repositories.repoImpl;
+package com.Shambala.repositories.Entity;
 
 import com.Shambala.Enum.Race;
 import com.Shambala.models.*;
 import com.Shambala.models.Character;
 import com.Shambala.models.builder.CharacterBuilder;
 import com.Shambala.models.export.CharacterExport;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ import java.util.List;
  * Une classe de type Entity devrait toujours rester au niveau de la couche de persistence et ne jamais aller plus haut
  */
 @Data
-class CharacterEntity implements CharacterExport, CharacterBuilder {
+public class CharacterEntity implements CharacterExport, CharacterBuilder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,14 +28,22 @@ class CharacterEntity implements CharacterExport, CharacterBuilder {
     private int classLevel;
     private int classExperience;
     private String background;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "characterStats_id", referencedColumnName = "id")
     private CharacterStats characterStats;
+
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CharacterPrincipalStat> principalStatList;
-    private List<CharacterEquipment> equipmentList;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inventory_id", referencedColumnName = "id")
     private CharacterInventory inventory;
 
-    Character toCharacterModel() {
+    public Character toCharacterModel() {
         return Character.from(this);
     }
+
 
     @Override
     public void setCharacterPrincipalStat(List<CharacterPrincipalStat> principalStatList) {

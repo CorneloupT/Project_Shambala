@@ -2,6 +2,7 @@ package com.Shambala.repositories.repoImpl;
 
 import com.Shambala.models.Character;
 import com.Shambala.repositories.CharacterRepository;
+import com.Shambala.repositories.Entity.CharacterEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 

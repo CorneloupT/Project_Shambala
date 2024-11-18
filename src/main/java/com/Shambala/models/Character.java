@@ -24,7 +24,6 @@ public class Character {
     private String background;
     private CharacterStats characterStats;
     private List<CharacterPrincipalStat> principalStatList;
-    private List<CharacterEquipment> equipmentList;
     private CharacterInventory inventory;
 
     public static Character from(CharacterBuilder builder) {

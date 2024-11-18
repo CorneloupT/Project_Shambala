@@ -9,7 +9,7 @@ import jakarta.persistence.PersistenceContext;
 public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    public EntityManager entityManager;
 
     @Override
     public void saveNewUser(User user) {
@@ -21,6 +21,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getById(Long idUser) {
         UserEntity entity = entityManager.find(UserEntity.class, idUser);
+        if (entity == null) {
+            throw new NullPointerException("Character ID not found");
+        }
         return entity.toUserModel();
     }
 }

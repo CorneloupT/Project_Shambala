@@ -7,21 +7,25 @@ import lombok.Getter;
 @Getter
 public class CharacterStats {
 
+    private long id;
     private int lifePoints;
     private int lifePointsMax;
     private int ENPoints;
     private int ENPointsMax;
     private int luckyPoints;
     private int protection;
+    private Character character;
 
     public static CharacterStats fromStatBuilder(CharacterStatsBuilder characterStatsBuilder) {
         CharacterStats characterStats = new CharacterStats();
+        characterStats.id = characterStatsBuilder.getId();
         characterStats.lifePoints = characterStatsBuilder.getLifePoint();
         characterStats.lifePointsMax = characterStatsBuilder.getLifePointMax();
         characterStats.ENPoints = characterStatsBuilder.getENPoints();
         characterStats.ENPointsMax = characterStatsBuilder.getENPointsMax();
         characterStats.luckyPoints = characterStatsBuilder.getLuckyPoint();
         characterStats.protection = characterStatsBuilder.getProtection();
+        characterStats.character = characterStatsBuilder.getCharacter();
         characterStats.verifyMaxLifePointsAndMaxENPoints();
         return characterStats;
     }

@@ -12,44 +12,56 @@ import static org.mockito.Mockito.verify;
 
 public class CharacterStatsTest {
 
+    private long id;
     private int lifePoints;
     private int lifePointsMax;
     private int ENPoints;
     private int ENPointsMax;
     private int luckyPoints;
     private int protection;
+    private Character character;
 
     @BeforeEach
     void Setup() {
+        id = 1L;
         lifePoints = 12;
         lifePointsMax = 14;
         ENPoints = 3;
         ENPointsMax = 5;
         luckyPoints = 5;
         protection = 2;
+        character = new Character();
     }
 
-    private record InnerBuilder(int getLifePoint,
+    private record InnerBuilder(long getId,
+                                int getLifePoint,
                                 int getLifePointMax,
                                 int getENPoints,
                                 int getENPointsMax,
                                 int getLuckyPoint,
-                                int getProtection)
+                                int getProtection,
+                                Character getCharacter)
             implements CharacterStatsBuilder {
     }
 
     private CharacterStatsBuilder createCharacterStats() {
-        return new InnerBuilder(lifePoints, lifePointsMax,ENPoints, ENPointsMax, luckyPoints, protection);
+        return new InnerBuilder(id, lifePoints, lifePointsMax,ENPoints, ENPointsMax, luckyPoints, protection, character);
     }
 
     @Test
     void testCreateCharacterStats_whenStatsAreProvided_returnAllStatsFromBuilder() {
         //Act
-        CharacterStats characterStats = CharacterStats.fromStatBuilder(new InnerBuilder(
-                10, 12,5,5,5,2
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(new InnerBuilder(1L,
+                10, 12,5,5,5,2, character
         ));
         //Assert
         assertNotNull(characterStats);
+    }
+
+    @Test
+    void testCreateCharacterStats_whenIdIsProvided_returnId() {
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
+        assertEquals(id, characterStats.getId());
     }
 
     @Test
@@ -86,6 +98,12 @@ public class CharacterStatsTest {
     void testCreateCharacterStats_whenProtectionIsProvided_returnProtection() {
         CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
         assertEquals(protection, characterStats.getProtection());
+    }
+
+    @Test
+    void testCreateCharacterStats_whenCharacterIsProvided_returnCharacter() {
+        CharacterStats characterStats = CharacterStats.fromStatBuilder(createCharacterStats());
+        assertEquals(character, characterStats.getCharacter());
     }
 
     @Test

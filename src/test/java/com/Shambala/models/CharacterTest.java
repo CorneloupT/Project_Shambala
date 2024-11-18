@@ -31,6 +31,7 @@ class CharacterTest {
     private int classLevel;
     private int classExperience;
     private String background;
+    private User user;
     private CharacterStats characterStats;
     private List<CharacterPrincipalStat> principalStatList;
     private CharacterInventory inventory;
@@ -46,6 +47,7 @@ class CharacterTest {
         classLevel = 6;
         classExperience = 2000;
         background = "Bonjour";
+        user = new User();
         characterStats = new CharacterStats();
         principalStatList = new ArrayList<>();
         inventory = new CharacterInventory();
@@ -68,20 +70,21 @@ class CharacterTest {
                                 int getClassLevel,
                                 int getClassExperience,
                                 String getBackground,
+                                User getUser,
                                 CharacterStats getCharacterStats,
                                 List<CharacterPrincipalStat> getPrincipalStatList,
                                 CharacterInventory getInventory) implements CharacterBuilder {
     }
 
     private CharacterBuilder createTestCharacter() {
-        return new InnerBuilder(id, name, race, playerClass, globalLevel, experience, classLevel, classExperience, background,
+        return new InnerBuilder(id, name, race, playerClass, globalLevel, experience, classLevel, classExperience, background, user,
                 characterStats, principalStatList, inventory);
     }
 
     @Test
     void should_create_character_from_builder() {
         Character character = Character.from(new InnerBuilder(1L,"coucou", Race.KHAZAD, "class", 100,
-                150, 200, 250, "background", characterStats, principalStatList, inventory));
+                150, 200, 250, "background", user, characterStats, principalStatList, inventory));
         assertNotNull(character);
     }
 
@@ -131,6 +134,12 @@ class CharacterTest {
     void testCreateNewCharacter_whenCharacterDetailsProvided_returnSameBackground() {
         Character characterTest = Character.from(createTestCharacter());
         assertEquals(background, characterTest.getBackground());
+    }
+
+    @Test
+    void testCreateNewCharacter_whenUserIsProvided_returnUser() {
+        Character characterTest = Character.from(createTestCharacter());
+        assertEquals(user, characterTest.getUser());
     }
 
     @Test
@@ -252,6 +261,7 @@ class CharacterTest {
         verify(export).setClassLevel(eq(6));
         verify(export).setClassExperience(eq(2000));
         verify(export).setBackground(eq("Bonjour"));
+        verify(export).setUser(eq(user));
         verify(export).setCharacterStats(eq(characterStats));
         verify(export).setCharacterPrincipalStat(eq(principalStatList));
         verify(export).setCharacterInventory(eq(inventory));

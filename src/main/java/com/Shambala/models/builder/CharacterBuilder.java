@@ -1,10 +1,7 @@
 package com.Shambala.models.builder;
 
 import com.Shambala.Enum.Race;
-import com.Shambala.models.CharacterEquipment;
-import com.Shambala.models.CharacterInventory;
-import com.Shambala.models.CharacterPrincipalStat;
-import com.Shambala.models.CharacterStats;
+import com.Shambala.models.*;
 
 import java.util.List;
 
@@ -33,4 +30,6 @@ public interface CharacterBuilder {
     List<CharacterPrincipalStat> getPrincipalStatList();
 
     CharacterInventory getInventory();
+
+    User getUser();
 }

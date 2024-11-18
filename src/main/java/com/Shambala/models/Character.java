@@ -22,6 +22,7 @@ public class Character {
     private int classLevel;
     private int classExperience;
     private String background;
+    private User user;
     private CharacterStats characterStats;
     private List<CharacterPrincipalStat> principalStatList;
     private CharacterInventory inventory;
@@ -37,6 +38,7 @@ public class Character {
         character.classLevel = builder.getClassLevel();
         character.classExperience = builder.getClassExperience();
         character.background = builder.getBackground();
+        character.user = builder.getUser();
         character.characterStats = builder.getCharacterStats();
         character.principalStatList = builder.getPrincipalStatList();
         character.inventory = builder.getInventory();
@@ -76,6 +78,7 @@ public class Character {
         export.setClassLevel(classLevel);
         export.setClassExperience(classExperience);
         export.setBackground(background);
+        export.setUser(user);
         export.setCharacterStats(characterStats);
         export.setCharacterPrincipalStat(principalStatList);
         export.setCharacterInventory(inventory);

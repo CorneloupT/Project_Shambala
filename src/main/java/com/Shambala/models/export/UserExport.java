@@ -13,7 +13,7 @@ public interface UserExport {
 
     void setNickName(String nickName);
 
-    void getPassword(String password);
+    void setPassword(String password);
 
-    void getListCharacter(List<Character> characterList);
+    void setListCharacter(List<Character> characterList);
 }

@@ -68,7 +68,7 @@ public class User {
         export.setFirstName(firstName);
         export.setEmail(email);
         export.setNickName(nickName);
-        export.getPassword(password);
-        export.getListCharacter(characterList);
+        export.setPassword(password);
+        export.setListCharacter(characterList);
     }
 }

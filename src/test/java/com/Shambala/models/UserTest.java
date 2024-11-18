@@ -187,8 +187,8 @@ public class UserTest {
         verify(userExport).setFirstName(eq("John"));
         verify(userExport).setEmail(eq("john.doe@test.com"));
         verify(userExport).setNickName(eq("alpha"));
-        verify(userExport).getPassword(eq("123azerty"));
-        verify(userExport).getListCharacter(eq(characterList));
+        verify(userExport).setPassword(eq("123azerty"));
+        verify(userExport).setListCharacter(eq(characterList));
 
     }
 

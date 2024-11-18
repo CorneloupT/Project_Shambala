@@ -29,6 +29,10 @@ public class CharacterEntity implements CharacterExport, CharacterBuilder {
     private int classExperience;
     private String background;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "characterStats_id", referencedColumnName = "id")
     private CharacterStats characterStats;
@@ -54,4 +58,10 @@ public class CharacterEntity implements CharacterExport, CharacterBuilder {
     public void setCharacterInventory(CharacterInventory inventory) {
 
     }
+
+    @Override
+    public void setUser(User user) {
+
+    }
+
 }

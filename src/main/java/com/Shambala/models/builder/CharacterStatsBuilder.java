@@ -4,11 +4,11 @@ import com.Shambala.models.Character;
 
 public interface CharacterStatsBuilder {
     long getId();
-    int getLifePoint();
-    int getLifePointMax();
+    int getLifePoints();
+    int getLifePointsMax();
     int getENPoints();
     int getENPointsMax();
-    int getLuckyPoint();
+    int getLuckyPoints();
     int getProtection();
     Character getCharacter();
 }

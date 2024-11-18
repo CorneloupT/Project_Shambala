@@ -1,5 +1,7 @@
 package com.Shambala.models.export;
 
+import com.Shambala.models.Character;
+
 public interface CharacterStatsExport {
 
     void setLifePoints(int lifePoints);
@@ -12,5 +14,7 @@ public interface CharacterStatsExport {
 
     void setLuckyPoints(int luckyPoints);
 
-    void setProtection( int protection);
+    void setProtection(int protection);
+
+    void setCharacter(Character character);
 }

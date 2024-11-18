@@ -34,11 +34,11 @@ public class CharacterStatsTest {
     }
 
     private record InnerBuilder(long getId,
-                                int getLifePoint,
-                                int getLifePointMax,
+                                int getLifePoints,
+                                int getLifePointsMax,
                                 int getENPoints,
                                 int getENPointsMax,
-                                int getLuckyPoint,
+                                int getLuckyPoints,
                                 int getProtection,
                                 Character getCharacter)
             implements CharacterStatsBuilder {
@@ -140,5 +140,6 @@ public class CharacterStatsTest {
         verify(statsExport).setENPointsMax(eq(5));
         verify(statsExport).setLuckyPoints(eq(5));
         verify(statsExport).setProtection(eq(2));
+        verify(statsExport).setCharacter(eq(character));
     }
 }

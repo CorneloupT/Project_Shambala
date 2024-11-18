@@ -19,11 +19,11 @@ public class CharacterStats {
     public static CharacterStats fromStatBuilder(CharacterStatsBuilder characterStatsBuilder) {
         CharacterStats characterStats = new CharacterStats();
         characterStats.id = characterStatsBuilder.getId();
-        characterStats.lifePoints = characterStatsBuilder.getLifePoint();
-        characterStats.lifePointsMax = characterStatsBuilder.getLifePointMax();
+        characterStats.lifePoints = characterStatsBuilder.getLifePoints();
+        characterStats.lifePointsMax = characterStatsBuilder.getLifePointsMax();
         characterStats.ENPoints = characterStatsBuilder.getENPoints();
         characterStats.ENPointsMax = characterStatsBuilder.getENPointsMax();
-        characterStats.luckyPoints = characterStatsBuilder.getLuckyPoint();
+        characterStats.luckyPoints = characterStatsBuilder.getLuckyPoints();
         characterStats.protection = characterStatsBuilder.getProtection();
         characterStats.character = characterStatsBuilder.getCharacter();
         characterStats.verifyMaxLifePointsAndMaxENPoints();
@@ -43,6 +43,7 @@ public class CharacterStats {
         statsExport.setENPointsMax(ENPointsMax);
         statsExport.setLuckyPoints(luckyPoints);
         statsExport.setProtection(protection);
+        statsExport.setCharacter(character);
     }
 
 }

@@ -64,4 +64,21 @@ public class CharacterRepositoryImplTest {
 
         assertEquals("Character ID is null", characterIdNullException.getMessage());
     }
+
+    @Test
+    void testGetCharacterById_whenIdIsProvided_shouldReturnCharacterWithThisSpecificId() {
+        characterRepository.entityManager = entityManagerMock;
+
+        // on utilise la méthode fin qui consiste a selectionner une class et un attribut (ici l'Id) et de retourné un objet characterEntity simulé
+        when(entityManagerMock.find(CharacterEntity.class, 1L)).thenReturn(characterEntityMock);
+
+        // On utilise ce mock pour appeler la méthode toCharacterModel et retourné un objet character simulé
+        when(characterEntityMock.toCharacterModel()).thenReturn(characterMock);
+
+        // Appel de la méthode à tester
+        Character characterResult = characterRepository.getCharacterById(1L);
+
+        //Validation des résultats
+        assertEquals(characterMock, characterResult);
+    }
 }

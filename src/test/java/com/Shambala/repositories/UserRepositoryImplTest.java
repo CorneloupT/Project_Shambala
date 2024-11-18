@@ -48,7 +48,7 @@ public class UserRepositoryImplTest {
                 () -> userRepository.getById(1L));
 
         //Assert
-        assertEquals("Character ID not found", userIdNullException.getMessage());
+        assertEquals("User ID not found", userIdNullException.getMessage());
     }
 
     @Test

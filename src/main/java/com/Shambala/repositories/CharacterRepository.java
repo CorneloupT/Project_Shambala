@@ -5,5 +5,5 @@ import com.Shambala.models.Character;
 public interface CharacterRepository {
     void saveNewCharacter(Character character);
 
-    Character getById(Long idCharacter);
+    Character getCharacterById(Long idCharacter);
 }

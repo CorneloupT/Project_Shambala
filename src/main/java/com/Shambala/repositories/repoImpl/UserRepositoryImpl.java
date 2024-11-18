@@ -22,7 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User getById(Long idUser) {
         UserEntity entity = entityManager.find(UserEntity.class, idUser);
         if (entity == null) {
-            throw new NullPointerException("Character ID not found");
+            throw new NullPointerException("User ID not found");
         }
         return entity.toUserModel();
     }

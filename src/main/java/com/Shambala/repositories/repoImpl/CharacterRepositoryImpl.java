@@ -6,10 +6,10 @@ import com.Shambala.repositories.Entity.CharacterEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-class CharacterRepositoryImpl implements CharacterRepository {
+public class CharacterRepositoryImpl implements CharacterRepository {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    public EntityManager entityManager;
 
     @Override
     public void saveNewCharacter(Character character) {
@@ -19,9 +19,11 @@ class CharacterRepositoryImpl implements CharacterRepository {
     }
 
     @Override
-    public Character getById(Long idCharacter) {
-        // TODO attention au NPE
+    public Character getCharacterById(Long idCharacter) {
         CharacterEntity entity = entityManager.find(CharacterEntity.class, idCharacter);
+        if (entity == null) {
+            throw new NullPointerException("Character ID is null");
+        }
         return entity.toCharacterModel();
     }
     

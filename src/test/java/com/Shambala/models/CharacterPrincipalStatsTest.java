@@ -17,6 +17,7 @@ import static org.mockito.Mockito.*;
 
 public class CharacterPrincipalStatsTest {
 
+    private long id;
     private StatType statType;
     private int value;
     private List<CharacterSubStats> subStatsList;
@@ -24,6 +25,7 @@ public class CharacterPrincipalStatsTest {
 
     @BeforeEach
     void setUp() {
+        id = 1L;
         statType = StatType.PSYCHIC;
         value = 45;
         subStatsList = new ArrayList<>();
@@ -31,18 +33,24 @@ public class CharacterPrincipalStatsTest {
 
     }
 
-    private record TestBuilder(StatType getStatType, int getValue, List<CharacterSubStats> getSubStatsList, Character getCharacter) implements CharacterPrincipalStatBuilder {
+    private record TestBuilder(long getId, StatType getStatType, int getValue, List<CharacterSubStats> getSubStatsList, Character getCharacter) implements CharacterPrincipalStatBuilder {
 
     }
 
     private CharacterPrincipalStatBuilder createTestPrincipalStat() {
-        return new TestBuilder(statType, value, subStatsList, character);
+        return new TestBuilder(id, statType, value, subStatsList, character);
     }
 
     @Test
     void should_create_character_principal_stat_from_builder() {
-        CharacterPrincipalStat characterPrincipalStat = CharacterPrincipalStat.fromBuilder(new TestBuilder(StatType.PSYCHIC, 50, subStatsList, character));
+        CharacterPrincipalStat characterPrincipalStat = CharacterPrincipalStat.fromBuilder(new TestBuilder(1L, StatType.PSYCHIC, 50, subStatsList, character));
         assertNotNull(characterPrincipalStat);
+    }
+
+    @Test
+    void testCreatePrincipalStats_whenIdIsProvided_returnId() {
+        CharacterPrincipalStat principalStatTest = CharacterPrincipalStat.fromBuilder(createTestPrincipalStat());
+        assertEquals(id, principalStatTest.getId());
     }
 
     @Test

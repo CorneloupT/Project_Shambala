@@ -11,4 +11,5 @@ public interface CharacterPrincipalStatBuilder {
     int getValue();
     List<CharacterSubStats> getSubStatsList();
     Character getCharacter();
+    long getId();
 }

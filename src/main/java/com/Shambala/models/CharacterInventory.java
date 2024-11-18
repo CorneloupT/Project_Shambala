@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 public class CharacterInventory {
 
+    private long id;
     private List<CharacterEquipment> characterEquipment;
     private List<String> bag;
     private int goldAmount;
@@ -16,6 +17,7 @@ public class CharacterInventory {
 
     public static CharacterInventory fromInventoryBuilder(CharacterInventoryBuilder characterInventoryBuilder) {
         CharacterInventory characterInventory = new CharacterInventory();
+        characterInventory.id = characterInventoryBuilder.getId();
         characterInventory.characterEquipment = characterInventoryBuilder.getCharacterEquipment();
         characterInventory.bag = characterInventoryBuilder.getBag();
         characterInventory.goldAmount = characterInventoryBuilder.getGoldAmount();

@@ -14,6 +14,7 @@ import static org.mockito.Mockito.verify;
 
 public class CharacterSubStatTest {
 
+    private long id;
     private StatType statType;
     private String subStatName;
     private int subStatValue;
@@ -21,24 +22,32 @@ public class CharacterSubStatTest {
 
     @BeforeEach
     void setUp() {
+        id = 1L;
         statType = StatType.PHYSICAL;
         subStatName = "Endurance";
         subStatValue = 15;
         description = "hello world";
     }
 
-    private record testBuilder(StatType getStatType, String getSubStatName, int getSubStatValue, String getDescription) implements CharacterSubStatsBuilder {
+    private record testBuilder(long getId, StatType getStatType, String getSubStatName, int getSubStatValue, String getDescription) implements CharacterSubStatsBuilder {
 
     }
 
     private CharacterSubStatsBuilder createTestSubStat() {
-        return new testBuilder(statType, subStatName, subStatValue,description);
+        return new testBuilder(id, statType, subStatName, subStatValue,description);
     }
+
 
     @Test
     void should_create_character_sub_stat_from_builder() {
-        CharacterSubStats characterSubStats = CharacterSubStats.fromSubStatBuilder(new testBuilder(statType, subStatName, subStatValue, description));
+        CharacterSubStats characterSubStats = CharacterSubStats.fromSubStatBuilder(new testBuilder(id, statType, subStatName, subStatValue, description));
         assertNotNull(characterSubStats);
+    }
+
+    @Test
+    void testCreateSubStat_whenIdIsProvided_returnId() {
+        CharacterSubStats characterSubStats = CharacterSubStats.fromSubStatBuilder(createTestSubStat());
+        assertEquals(id, characterSubStats.getId());
     }
 
     @Test

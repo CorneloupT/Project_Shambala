@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface UserBuilder {
 
+    long getId();
+
     String getLastName();
 
     String getFirstName();
@@ -17,4 +19,5 @@ public interface UserBuilder {
     String getPassword();
 
     List<Character> getCharacterList();
+
 }

@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 public class User {
 
+    private long id;
     private String lastName;
     private String firstName;
     private String email;
@@ -18,6 +19,7 @@ public class User {
 
     public static User fromBuilder(UserBuilder userBuilder) {
         User user = new User();
+        user.id = userBuilder.getId();
         user.lastName = userBuilder.getLastName();
         user.firstName = userBuilder.getFirstName();
         user.email = userBuilder.getEmail();

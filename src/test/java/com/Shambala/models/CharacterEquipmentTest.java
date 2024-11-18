@@ -14,6 +14,7 @@ import static org.mockito.Mockito.verify;
 
 public class CharacterEquipmentTest {
 
+    private long id;
     private String name;
     private String description;
     private EquipmentType equipmentType;
@@ -23,6 +24,7 @@ public class CharacterEquipmentTest {
 
     @BeforeEach
     void setUp() {
+        id = 1L;
         name = "bow";
         description = "new equipment";
         equipmentType = EquipmentType.ARMOR;
@@ -32,6 +34,7 @@ public class CharacterEquipmentTest {
     }
 
     private record testBuilder(
+            long getId,
             String getName,
             String getDescription,
             EquipmentType getEquipmentType,
@@ -42,13 +45,14 @@ public class CharacterEquipmentTest {
     }
 
     private CharacterEquipmentBuilder createEquipmentTest() {
-        return new testBuilder(name, description, equipmentType, materialType, quality, breakPoint);
+        return new testBuilder(id, name, description, equipmentType, materialType, quality, breakPoint);
     }
 
     @Test
     void testCreateNewEquipmentForCharacter_shouldCreateEquipmentFromBuilder() {
         CharacterEquipment characterEquipment = CharacterEquipment.
                 fromEquipmentBuilder(new testBuilder(
+                        1L,
                         "bow",
                         "nice bow",
                         EquipmentType.ARMOR,
@@ -56,6 +60,12 @@ public class CharacterEquipmentTest {
                         Quality.NOVICE,
                         75));
         assertNotNull(characterEquipment);
+    }
+
+    @Test
+    void testCreateNewEquipmentName_whenIdIsProvided_shouldReturnId() {
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(id, equipmentTest.getId());
     }
 
     @Test

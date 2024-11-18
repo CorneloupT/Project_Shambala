@@ -18,6 +18,7 @@ import static org.mockito.Mockito.*;
 
 public class UserTest {
 
+    private long id;
     private String lastName;
     private String firstName;
     private String email;
@@ -27,6 +28,7 @@ public class UserTest {
 
     @BeforeEach
     void setUp() {
+        id = 1L;
         lastName = "Doe";
         firstName = "John";
         email = "john.doe@test.com";
@@ -35,6 +37,7 @@ public class UserTest {
         characterList = new ArrayList<>();
 
         CharacterBuilder mockCharacterBuilder = mock(CharacterBuilder.class);
+        when(mockCharacterBuilder.getId()).thenReturn(1L);
         when(mockCharacterBuilder.getName()).thenReturn("Archie");
         when(mockCharacterBuilder.getRace()).thenReturn(Race.YSGANDIEN);
         when(mockCharacterBuilder.getPlayerClass()).thenReturn("Mage");
@@ -49,6 +52,7 @@ public class UserTest {
     }
 
     private record TestBuilder(
+            long getId,
             String getLastName,
             String getFirstName,
             String getEmail,
@@ -58,12 +62,13 @@ public class UserTest {
     }
 
     private UserBuilder createTestUser() {
-        return new TestBuilder(lastName, firstName, email, nickName, password, characterList);
+        return new TestBuilder(id, lastName, firstName, email, nickName, password, characterList);
     }
 
     @Test
     void should_create_user_from_builder() {
         User user = User.fromBuilder(new TestBuilder(
+                1L,
                 "Morris",
                 "John",
                 "jolly.doe@test.com",
@@ -72,6 +77,12 @@ public class UserTest {
                 characterList
                 ));
         assertNotNull(user);
+    }
+
+    @Test
+    void testCreateNewUser_whenIdIsProvided_returnId() {
+        User userTest = User.fromBuilder(createTestUser());
+        assertEquals(id, userTest.getId());
     }
 
     @Test

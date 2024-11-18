@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 public class CharacterPrincipalStat {
 
+    private long id;
     private StatType statType;
     private int value;
     private List<CharacterSubStats> subStatsList;
@@ -19,6 +20,7 @@ public class CharacterPrincipalStat {
 
     public static CharacterPrincipalStat fromBuilder(CharacterPrincipalStatBuilder builder) {
         CharacterPrincipalStat characterPrincipalStat = new CharacterPrincipalStat();
+        characterPrincipalStat.id = builder.getId();
         characterPrincipalStat.statType = builder.getStatType();
         characterPrincipalStat.value = builder.getValue();
         characterPrincipalStat.subStatsList = builder.getSubStatsList();

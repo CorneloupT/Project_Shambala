@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 public class CharacterEquipment {
 
+    private long id;
     private String name;
     private String description;
     private MaterialType materialType;
@@ -19,6 +20,7 @@ public class CharacterEquipment {
 
     public static CharacterEquipment fromEquipmentBuilder(CharacterEquipmentBuilder equipmentBuilder) {
         CharacterEquipment characterEquipment = new CharacterEquipment();
+        characterEquipment.id = equipmentBuilder.getId();
         characterEquipment.name = equipmentBuilder.getName();
         characterEquipment.description = equipmentBuilder.getDescription();
         characterEquipment.materialType = equipmentBuilder.getMaterialType();

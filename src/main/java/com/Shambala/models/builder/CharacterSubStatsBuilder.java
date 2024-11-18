@@ -11,4 +11,6 @@ public interface CharacterSubStatsBuilder {
     int getSubStatValue();
 
     String getDescription();
+
+    long getId();
 }

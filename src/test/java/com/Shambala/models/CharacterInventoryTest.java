@@ -15,29 +15,37 @@ import java.util.List;
 
 public class CharacterInventoryTest {
 
+    private long id;
     private List<CharacterEquipment> characterEquipment;
     private List<String> bag;
     private int goldAmount;
 
     @BeforeEach
     void setUp() {
+        id = 1L;
         characterEquipment = new ArrayList<>();
         bag = new ArrayList<>();
         goldAmount = 100;
     }
 
-    private record InnerBuilder(List<CharacterEquipment> getCharacterEquipment, List<String> getBag, int getGoldAmount) implements CharacterInventoryBuilder {
+    private record InnerBuilder(long getId, List<CharacterEquipment> getCharacterEquipment, List<String> getBag, int getGoldAmount) implements CharacterInventoryBuilder {
 
     }
 
     private CharacterInventoryBuilder createTestInventory() {
-        return new InnerBuilder(characterEquipment, bag, goldAmount);
+        return new InnerBuilder(id, characterEquipment, bag, goldAmount);
     }
 
     @Test
     void testCreateCharacterInventory_returnCharacterInventory() {
-        CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(new InnerBuilder(characterEquipment, bag, goldAmount));
+        CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(new InnerBuilder(id, characterEquipment, bag, goldAmount));
         assertNotNull(characterInventory);
+    }
+
+    @Test
+    void testCreateCharacterInventory_whenIdIsProvided_returnId() {
+        CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(createTestInventory());
+        assertEquals(id, characterInventory.getId());
     }
 
     @Test

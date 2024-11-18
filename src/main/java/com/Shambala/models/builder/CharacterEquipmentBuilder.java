@@ -16,4 +16,6 @@ public interface CharacterEquipmentBuilder {
     int getBreakPoint();
 
     EquipmentType getEquipmentType();
+
+    long getId();
 }

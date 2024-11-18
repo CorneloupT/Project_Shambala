@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class CharacterSubStats {
 
+    private long id;
     private StatType statType;
     private String subStatName;
     private int subStatValue;
@@ -16,6 +17,7 @@ public class CharacterSubStats {
 
     public static CharacterSubStats fromSubStatBuilder(CharacterSubStatsBuilder builder) {
         CharacterSubStats characterSubStats = new CharacterSubStats();
+        characterSubStats.id = builder.getId();
         characterSubStats.statType = builder.getStatType();
         characterSubStats.subStatName = builder.getSubStatName();
         characterSubStats.subStatValue = builder.getSubStatValue();

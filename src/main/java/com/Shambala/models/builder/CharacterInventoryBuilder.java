@@ -10,4 +10,6 @@ public interface CharacterInventoryBuilder {
     List<String> getBag();
 
     int getGoldAmount();
+
+    long getId();
 }

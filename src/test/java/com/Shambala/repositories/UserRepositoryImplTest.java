@@ -4,11 +4,11 @@ import com.Shambala.models.User;
 import com.Shambala.repositories.Entity.UserEntity;
 import com.Shambala.repositories.repoImpl.UserRepositoryImpl;
 import jakarta.persistence.EntityManager;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UserRepositoryImplTest {

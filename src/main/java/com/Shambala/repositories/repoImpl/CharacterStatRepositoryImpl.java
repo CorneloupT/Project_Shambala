@@ -9,7 +9,7 @@ import jakarta.persistence.PersistenceContext;
 public class CharacterStatRepositoryImpl implements CharacterStatRepository {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    public EntityManager entityManager;
 
     @Override
     public void saveNewStat(CharacterStats characterStats) {

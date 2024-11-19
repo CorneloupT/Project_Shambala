@@ -14,6 +14,7 @@ public class CharacterSubStats {
     private String subStatName;
     private int subStatValue;
     private String description;
+    private CharacterPrincipalStat principalStat;
 
     public static CharacterSubStats fromSubStatBuilder(CharacterSubStatsBuilder builder) {
         CharacterSubStats characterSubStats = new CharacterSubStats();
@@ -22,6 +23,7 @@ public class CharacterSubStats {
         characterSubStats.subStatName = builder.getSubStatName();
         characterSubStats.subStatValue = builder.getSubStatValue();
         characterSubStats.description = builder.getDescription();
+        characterSubStats.principalStat = builder.getPrincipalStat();
         characterSubStats.verifyValueSubStat();
         return characterSubStats;
     }
@@ -37,6 +39,7 @@ public class CharacterSubStats {
         subStatsExport.setSubStatName(subStatName);
         subStatsExport.setSubStatValue(subStatValue);
         subStatsExport.setDescription(description);
+        subStatsExport.setPrincipalStat(principalStat);
     }
 
 }

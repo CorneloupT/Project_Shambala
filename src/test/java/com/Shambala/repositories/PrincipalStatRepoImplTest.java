@@ -1,7 +1,6 @@
 package com.Shambala.repositories;
 
 import com.Shambala.models.CharacterPrincipalStat;
-import com.Shambala.repositories.Entity.CharacterEntity;
 import com.Shambala.repositories.Entity.CharacterPrincipalStatEntity;
 import com.Shambala.repositories.repoImpl.CharacterPrincipalStatRepositoryImpl;
 import jakarta.persistence.EntityManager;

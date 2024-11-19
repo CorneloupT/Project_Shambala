@@ -1,6 +1,7 @@
 package com.Shambala.models.builder;
 
 import com.Shambala.Enum.StatType;
+import com.Shambala.models.CharacterPrincipalStat;
 
 public interface CharacterSubStatsBuilder {
 
@@ -13,4 +14,6 @@ public interface CharacterSubStatsBuilder {
     String getDescription();
 
     long getId();
+
+    CharacterPrincipalStat getPrincipalStat();
 }

@@ -19,6 +19,7 @@ public class CharacterSubStatTest {
     private String subStatName;
     private int subStatValue;
     private String description;
+    private CharacterPrincipalStat principalStat;
 
     @BeforeEach
     void setUp() {
@@ -27,20 +28,21 @@ public class CharacterSubStatTest {
         subStatName = "Endurance";
         subStatValue = 15;
         description = "hello world";
+        principalStat = new CharacterPrincipalStat();
     }
 
-    private record testBuilder(long getId, StatType getStatType, String getSubStatName, int getSubStatValue, String getDescription) implements CharacterSubStatsBuilder {
+    private record testBuilder(long getId, StatType getStatType, String getSubStatName, int getSubStatValue, String getDescription, CharacterPrincipalStat getPrincipalStat) implements CharacterSubStatsBuilder {
 
     }
 
     private CharacterSubStatsBuilder createTestSubStat() {
-        return new testBuilder(id, statType, subStatName, subStatValue,description);
+        return new testBuilder(id, statType, subStatName, subStatValue, description, principalStat);
     }
 
 
     @Test
     void should_create_character_sub_stat_from_builder() {
-        CharacterSubStats characterSubStats = CharacterSubStats.fromSubStatBuilder(new testBuilder(id, statType, subStatName, subStatValue, description));
+        CharacterSubStats characterSubStats = CharacterSubStats.fromSubStatBuilder(new testBuilder(id, statType, subStatName, subStatValue, description, principalStat));
         assertNotNull(characterSubStats);
     }
 
@@ -74,6 +76,12 @@ public class CharacterSubStatTest {
         assertEquals(description, characterSubStats.getDescription());
     }
 
+    @Test
+    void testCreateSubStat_whenPrincipalStatIsProvided_returnPrincipalStat() {
+        CharacterSubStats characterSubStats = CharacterSubStats.fromSubStatBuilder(createTestSubStat());
+        assertEquals(principalStat, characterSubStats.getPrincipalStat());
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {0, 14, 31})
     void testCreateSubStat_whenSubStatIsGreaterThan50_OrLesserThan10_OrNotDivisibleBy5_returnError(int subStatValue) {
@@ -94,5 +102,6 @@ public class CharacterSubStatTest {
         verify(subStatsExport).setSubStatName(subStatName);
         verify(subStatsExport).setSubStatValue(subStatValue);
         verify(subStatsExport).setDescription(description);
+        verify(subStatsExport).setPrincipalStat(principalStat);
     }
 }

@@ -21,6 +21,7 @@ public class CharacterEquipmentTest {
     private MaterialType materialType;
     private Quality quality;
     private int breakPoint;
+    private CharacterInventory characterInventory;
 
     @BeforeEach
     void setUp() {
@@ -31,6 +32,7 @@ public class CharacterEquipmentTest {
         materialType = MaterialType.WHITE_STEEL;
         quality = Quality.NOVICE;
         breakPoint = 75;
+        characterInventory = new CharacterInventory();
     }
 
     private record testBuilder(
@@ -40,12 +42,13 @@ public class CharacterEquipmentTest {
             EquipmentType getEquipmentType,
             MaterialType getMaterialType,
             Quality getQuality,
-            int getBreakPoint) implements CharacterEquipmentBuilder {
+            int getBreakPoint,
+            CharacterInventory getCharacterInventory) implements CharacterEquipmentBuilder {
 
     }
 
     private CharacterEquipmentBuilder createEquipmentTest() {
-        return new testBuilder(id, name, description, equipmentType, materialType, quality, breakPoint);
+        return new testBuilder(id, name, description, equipmentType, materialType, quality, breakPoint, characterInventory);
     }
 
     @Test
@@ -58,7 +61,8 @@ public class CharacterEquipmentTest {
                         EquipmentType.ARMOR,
                         MaterialType.WHITE_STEEL,
                         Quality.NOVICE,
-                        75));
+                        75,
+                        characterInventory));
         assertNotNull(characterEquipment);
     }
 
@@ -102,6 +106,12 @@ public class CharacterEquipmentTest {
     void testCreateNewEquipmentType_shouldReturnType() {
         CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
         assertEquals(equipmentType, equipmentTest.getEquipmentType());
+    }
+
+    @Test
+    void testCreateNewEquipmentType_shouldCharacterInventory() {
+        CharacterEquipment equipmentTest = CharacterEquipment.fromEquipmentBuilder(createEquipmentTest());
+        assertEquals(characterInventory, equipmentTest.getCharacterInventory());
     }
 
     @Test
@@ -228,5 +238,6 @@ public class CharacterEquipmentTest {
         verify(characterEquipmentExport).setMaterialType(MaterialType.WHITE_STEEL);
         verify(characterEquipmentExport).setQuality(Quality.NOVICE);
         verify(characterEquipmentExport).setBreakPoint(75);
+        verify(characterEquipmentExport).setCharacterInventory(characterInventory);
     }
 }

@@ -17,6 +17,7 @@ public class CharacterEquipment {
     private Quality quality;
     private int breakPoint;
     private EquipmentType equipmentType;
+    private CharacterInventory characterInventory;
 
     public static CharacterEquipment fromEquipmentBuilder(CharacterEquipmentBuilder equipmentBuilder) {
         CharacterEquipment characterEquipment = new CharacterEquipment();
@@ -27,6 +28,7 @@ public class CharacterEquipment {
         characterEquipment.quality = equipmentBuilder.getQuality();
         characterEquipment.breakPoint = equipmentBuilder.getBreakPoint();
         characterEquipment.equipmentType = equipmentBuilder.getEquipmentType();
+        characterEquipment.characterInventory = equipmentBuilder.getCharacterInventory();
         characterEquipment.verifyEquipmentPercentageBreakPointWhenQualityIsProvided();
         return characterEquipment;
     }
@@ -58,6 +60,7 @@ public class CharacterEquipment {
         export.setQuality(quality);
         export.setBreakPoint(breakPoint);
         export.setEquipmentType(equipmentType);
+        export.setCharacterInventory(characterInventory);
     }
 
 }

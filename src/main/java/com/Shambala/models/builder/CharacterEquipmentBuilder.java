@@ -3,6 +3,7 @@ package com.Shambala.models.builder;
 import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.MaterialType;
 import com.Shambala.Enum.Quality;
+import com.Shambala.models.CharacterInventory;
 
 public interface CharacterEquipmentBuilder {
     String getName();
@@ -18,4 +19,6 @@ public interface CharacterEquipmentBuilder {
     EquipmentType getEquipmentType();
 
     long getId();
+
+    CharacterInventory getCharacterInventory();
 }

@@ -1,5 +1,6 @@
 package com.Shambala.models.builder;
 
+import com.Shambala.models.Character;
 import com.Shambala.models.CharacterEquipment;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface CharacterInventoryBuilder {
     int getGoldAmount();
 
     long getId();
+
+    Character getCharacter();
 }

@@ -19,6 +19,7 @@ public class CharacterInventoryTest {
     private List<CharacterEquipment> characterEquipment;
     private List<String> bag;
     private int goldAmount;
+    private Character character;
 
     @BeforeEach
     void setUp() {
@@ -26,19 +27,20 @@ public class CharacterInventoryTest {
         characterEquipment = new ArrayList<>();
         bag = new ArrayList<>();
         goldAmount = 100;
+        character = new Character();
     }
 
-    private record InnerBuilder(long getId, List<CharacterEquipment> getCharacterEquipment, List<String> getBag, int getGoldAmount) implements CharacterInventoryBuilder {
+    private record InnerBuilder(long getId, List<CharacterEquipment> getCharacterEquipment, List<String> getBag, int getGoldAmount, Character getCharacter) implements CharacterInventoryBuilder {
 
     }
 
     private CharacterInventoryBuilder createTestInventory() {
-        return new InnerBuilder(id, characterEquipment, bag, goldAmount);
+        return new InnerBuilder(id, characterEquipment, bag, goldAmount, character);
     }
 
     @Test
     void testCreateCharacterInventory_returnCharacterInventory() {
-        CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(new InnerBuilder(id, characterEquipment, bag, goldAmount));
+        CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(new InnerBuilder(id, characterEquipment, bag, goldAmount, character));
         assertNotNull(characterInventory);
     }
 
@@ -67,6 +69,12 @@ public class CharacterInventoryTest {
     }
 
     @Test
+    void testCreateCharacterInventory_whenCharacterIsProvided_returnCharacter() {
+        CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(createTestInventory());
+        assertEquals(character, characterInventory.getCharacter());
+    }
+
+    @Test
     void shouldExportCharacterInventoryValues() {
         CharacterInventoryExport inventoryExport = mock(CharacterInventoryExport.class);
         CharacterInventory characterInventory = CharacterInventory.fromInventoryBuilder(createTestInventory());
@@ -75,6 +83,7 @@ public class CharacterInventoryTest {
         verify(inventoryExport).setCharacterEquipment(eq(characterEquipment));
         verify(inventoryExport).setBag(eq(bag));
         verify(inventoryExport).setGoldAmount(eq(goldAmount));
+        verify(inventoryExport).setCharacter(eq(character));
     }
 
 }

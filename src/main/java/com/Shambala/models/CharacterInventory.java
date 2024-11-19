@@ -13,6 +13,7 @@ public class CharacterInventory {
     private List<CharacterEquipment> characterEquipment;
     private List<String> bag;
     private int goldAmount;
+    private Character character;
 
 
     public static CharacterInventory fromInventoryBuilder(CharacterInventoryBuilder characterInventoryBuilder) {
@@ -21,6 +22,7 @@ public class CharacterInventory {
         characterInventory.characterEquipment = characterInventoryBuilder.getCharacterEquipment();
         characterInventory.bag = characterInventoryBuilder.getBag();
         characterInventory.goldAmount = characterInventoryBuilder.getGoldAmount();
+        characterInventory.character = characterInventoryBuilder.getCharacter();
         return characterInventory;
     }
 
@@ -28,5 +30,6 @@ public class CharacterInventory {
         inventoryExport.setCharacterEquipment(characterEquipment);
         inventoryExport.setBag(bag);
         inventoryExport.setGoldAmount(goldAmount);
+        inventoryExport.setCharacter(character);
     }
 }

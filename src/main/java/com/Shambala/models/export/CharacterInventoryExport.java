@@ -1,5 +1,6 @@
 package com.Shambala.models.export;
 
+import com.Shambala.models.Character;
 import com.Shambala.models.CharacterEquipment;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface CharacterInventoryExport {
     void setBag(List<String> bag);
 
     void setGoldAmount(int goldAmount);
+
+    void setCharacter(Character character);
 }

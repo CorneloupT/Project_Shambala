@@ -8,4 +8,6 @@ public interface UserRepository {
     User getById(Long idUser);
 
     User getByLastName(String name);
+
+    void deleteUserById(User user);
 }

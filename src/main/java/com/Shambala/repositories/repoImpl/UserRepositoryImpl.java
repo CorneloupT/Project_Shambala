@@ -35,4 +35,11 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return entity.toUserModel();
     }
+
+    @Override
+    public void deleteUserById(User user) {
+        UserEntity entity = new UserEntity();
+        user.exportTo(entity);
+        entityManager.remove(entity);
+    }
 }

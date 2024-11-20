@@ -31,12 +31,19 @@ public class UserRepositoryImplTest {
     void testSaveNewUser_shouldSaveUSer() {
         //Arrange
         doNothing().when(userMock).exportTo(userEntityMock);
-
         //act
         userRepository.saveNewUser(userMock);
-
         //Assert
-        verify(entityManagerMock).persist(Mockito.any(UserEntity.class));
+        verify(entityManagerMock).persist(any(UserEntity.class));
+    }
+
+    @Test
+    void testRemoveUser_shouldDeleteUser() {
+        doNothing().when(userMock).exportTo(userEntityMock);
+
+        userRepository.deleteUserById(userMock);
+
+        verify(entityManagerMock).remove(any(UserEntity.class));
     }
 
     @Test
@@ -72,8 +79,6 @@ public class UserRepositoryImplTest {
 
     @Test
     void testGetUserByName_whenUserNameIsNull_shouldReturnNullPointerException() {
-
-
         NullPointerException nameNullException = assertThrows(NullPointerException.class,
                 () -> userRepository.getByLastName("Efrim"));
 

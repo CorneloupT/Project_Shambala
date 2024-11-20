@@ -26,4 +26,10 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return entity.toUserModel();
     }
+
+    @Override
+    public User getByName(String name) {
+        UserEntity entity = entityManager.find(UserEntity.class, name);
+        return entity.toUserModel();
+    }
 }

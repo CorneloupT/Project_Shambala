@@ -61,4 +61,16 @@ public class UserRepositoryImplTest {
 
         assertEquals(userMock, userResult);
     }
+
+    @Test
+    void testGetUserByName_shouldReturnUserWithSpecificName() {
+        userRepository.entityManager = entityManagerMock;
+        when(entityManagerMock.find(UserEntity.class, "Efrim")).thenReturn(userEntityMock);
+        when(userEntityMock.toUserModel()).thenReturn(userMock);
+
+        User userResult = userRepository.getByName("Efrim");
+
+        assertEquals(userMock, userResult);
+    }
+
 }

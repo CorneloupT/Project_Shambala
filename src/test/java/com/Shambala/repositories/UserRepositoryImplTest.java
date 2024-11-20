@@ -24,12 +24,12 @@ public class UserRepositoryImplTest {
         userMock = mock(User.class);
         userEntityMock = mock(UserEntity.class);
         userRepository = new UserRepositoryImpl();
+        userRepository.entityManager = entityManagerMock;
     }
 
     @Test
     void testSaveNewUser_shouldSaveUSer() {
         //Arrange
-        userRepository.entityManager = entityManagerMock;
         doNothing().when(userMock).exportTo(userEntityMock);
 
         //act
@@ -42,7 +42,6 @@ public class UserRepositoryImplTest {
     @Test
     void testGetUserById_whenUserIdIsNull_shouldReturnNullPointerException() {
         //Arrange
-        userRepository.entityManager = entityManagerMock;
         //Act
         NullPointerException userIdNullException = assertThrows(NullPointerException.class,
                 () -> userRepository.getById(1L));
@@ -53,7 +52,6 @@ public class UserRepositoryImplTest {
 
     @Test
     void testGetUserById_whenUserIdIsProvided_shouldConvertEntityToModel() {
-        userRepository.entityManager = entityManagerMock;
         when(entityManagerMock.find(UserEntity.class, 1L)).thenReturn(userEntityMock);
         when(userEntityMock.toUserModel()).thenReturn(userMock);
 
@@ -64,13 +62,22 @@ public class UserRepositoryImplTest {
 
     @Test
     void testGetUserByName_shouldReturnUserWithSpecificName() {
-        userRepository.entityManager = entityManagerMock;
         when(entityManagerMock.find(UserEntity.class, "Efrim")).thenReturn(userEntityMock);
         when(userEntityMock.toUserModel()).thenReturn(userMock);
 
-        User userResult = userRepository.getByName("Efrim");
+        User userResult = userRepository.getByLastName("Efrim");
 
         assertEquals(userMock, userResult);
+    }
+
+    @Test
+    void testGetUserByName_whenUserNameIsNull_shouldReturnNullPointerException() {
+
+
+        NullPointerException nameNullException = assertThrows(NullPointerException.class,
+                () -> userRepository.getByLastName("Efrim"));
+
+        assertEquals("User last name is null", nameNullException.getMessage());
     }
 
 }

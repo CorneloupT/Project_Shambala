@@ -28,8 +28,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getByName(String name) {
+    public User getByLastName(String name) {
         UserEntity entity = entityManager.find(UserEntity.class, name);
+        if (entity == null) {
+            throw new NullPointerException("User last name is null");
+        }
         return entity.toUserModel();
     }
 }

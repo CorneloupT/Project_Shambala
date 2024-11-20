@@ -7,5 +7,5 @@ public interface UserRepository {
 
     User getById(Long idUser);
 
-    User getByName(String name);
+    User getByLastName(String name);
 }

@@ -42,4 +42,11 @@ public class UserRepositoryImpl implements UserRepository {
         user.exportTo(entity);
         entityManager.remove(entity);
     }
+
+    @Override
+    public void updateUser(User user) {
+        UserEntity entity = new UserEntity();
+        user.exportTo(entity);
+        entityManager.merge(entity);
+    }
 }

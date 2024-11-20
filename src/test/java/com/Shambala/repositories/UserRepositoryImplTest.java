@@ -40,10 +40,15 @@ public class UserRepositoryImplTest {
     @Test
     void testRemoveUser_shouldDeleteUser() {
         doNothing().when(userMock).exportTo(userEntityMock);
-
         userRepository.deleteUserById(userMock);
-
         verify(entityManagerMock).remove(any(UserEntity.class));
+    }
+
+    @Test
+    void testUpdateUser_shouldUpdateUser() {
+        doNothing().when(userMock).exportTo(userEntityMock);
+        userRepository.updateUser(userMock);
+        verify(entityManagerMock).merge(any(UserEntity.class));
     }
 
     @Test

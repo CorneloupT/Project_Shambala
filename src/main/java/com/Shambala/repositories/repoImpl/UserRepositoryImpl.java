@@ -19,6 +19,20 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public void deleteUserById(User user) {
+        UserEntity entity = new UserEntity();
+        user.exportTo(entity);
+        entityManager.remove(entity);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        UserEntity entity = new UserEntity();
+        user.exportTo(entity);
+        entityManager.merge(entity);
+    }
+
+    @Override
     public User getById(Long idUser) {
         UserEntity entity = entityManager.find(UserEntity.class, idUser);
         if (entity == null) {
@@ -37,16 +51,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteUserById(User user) {
-        UserEntity entity = new UserEntity();
-        user.exportTo(entity);
-        entityManager.remove(entity);
-    }
-
-    @Override
-    public void updateUser(User user) {
-        UserEntity entity = new UserEntity();
-        user.exportTo(entity);
-        entityManager.merge(entity);
+    public User getUserByEmail(String email) {
+        UserEntity entity = entityManager.find(UserEntity.class, email);
+        if (entity == null) {
+            throw new NullPointerException("user email is null");
+        }
+        return entity.toUserModel();
     }
 }

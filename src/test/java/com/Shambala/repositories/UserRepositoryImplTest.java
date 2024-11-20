@@ -6,7 +6,6 @@ import com.Shambala.repositories.repoImpl.UserRepositoryImpl;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -88,6 +87,24 @@ public class UserRepositoryImplTest {
                 () -> userRepository.getByLastName("Efrim"));
 
         assertEquals("User last name is null", nameNullException.getMessage());
+    }
+
+    @Test
+    void testGetUserByEmail_whenUserEmailIsFound_shouldReturnUser() {
+        when(entityManagerMock.find(UserEntity.class, "efrim.bob@gmail.com")).thenReturn(userEntityMock);
+        when(userEntityMock.toUserModel()).thenReturn(userMock);
+
+        User userResult = userRepository.getUserByEmail("efrim.bob@gmail.com");
+
+        assertEquals(userMock, userResult);
+    }
+
+    @Test
+    void testGetUserByEmail_whenEmailIsNull_shouldReturnNullPointerException() {
+        NullPointerException emailNullException = assertThrows(NullPointerException.class,
+                () -> userRepository.getUserByEmail("efrim.bob@gmail.com"));
+
+        assertEquals("user email is null", emailNullException.getMessage());
     }
 
 }

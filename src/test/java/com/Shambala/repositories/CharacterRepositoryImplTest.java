@@ -38,10 +38,7 @@ public class CharacterRepositoryImplTest {
         CharacterEntity characterEntityMock = mock(CharacterEntity.class);
 
         // Appel de la classe CharacterRepositoryImpl afin de pouvoir utiliser ses méthodes
-        CharacterRepositoryImpl characterRepository = new CharacterRepositoryImpl();
-
-        // Faire correspondre l'entityManager du repository à l'attribut mock de la classe EntityManager afin de pouvoir simuler ses fonctions
-        characterRepository.entityManager = entityManagerMock;
+        CharacterRepositoryImpl characterRepository = new CharacterRepositoryImpl(entityManagerMock);
 
         //Export des attributs du Model vers la couche Entity
         doNothing().when(characterMock).exportTo(characterEntityMock);

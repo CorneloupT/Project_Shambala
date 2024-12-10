@@ -5,11 +5,17 @@ import com.Shambala.repositories.CharacterRepository;
 import com.Shambala.repositories.Entity.CharacterEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+@Component
 public class CharacterRepositoryImpl implements CharacterRepository {
 
-    @PersistenceContext
-    public EntityManager entityManager;
+    private final EntityManager entityManager;
+
+    public CharacterRepositoryImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public void saveNewCharacter(Character character) {

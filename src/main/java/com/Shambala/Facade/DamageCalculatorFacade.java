@@ -3,12 +3,15 @@ package com.Shambala.Facade;
 import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.Quality;
 import com.Shambala.models.CharacterEquipment;
+import com.Shambala.models.DiceRollPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DamageCalculatorFacade {
 
-     private final DiceRoll diceRoll;
+     private final DiceRollPort diceRoll;
 
-     public DamageCalculatorFacade(DiceRoll diceRoll) {
+     public DamageCalculatorFacade(DiceRollPort diceRoll) {
          this.diceRoll = diceRoll;
      }
 

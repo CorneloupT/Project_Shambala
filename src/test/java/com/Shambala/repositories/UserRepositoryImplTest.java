@@ -2,7 +2,6 @@ package com.Shambala.repositories;
 
 import com.Shambala.models.User;
 import com.Shambala.repositories.Entity.UserEntity;
-import com.Shambala.repositories.repoImpl.UserRepositoryImpl;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +52,8 @@ public class UserRepositoryImplTest {
     @Test
     void testGetUserById_whenUserIdIsNull_shouldReturnNullPointerException() {
         //Arrange
+
+        userRepository.findById(1l).ifPresent(u -> u.toUserModel());
         //Act
         NullPointerException userIdNullException = assertThrows(NullPointerException.class,
                 () -> userRepository.getById(1L));

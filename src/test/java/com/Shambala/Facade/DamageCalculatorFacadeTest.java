@@ -7,6 +7,8 @@ import static org.mockito.Mockito.*;
 import com.Shambala.Enum.EquipmentType;
 import com.Shambala.Enum.Quality;
 import com.Shambala.models.CharacterEquipment;
+import com.Shambala.models.DiceRollPort;
+import com.Shambala.provider.DiceRoll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,11 +17,11 @@ public class DamageCalculatorFacadeTest {
 
     private DamageCalculatorFacade damageCalculatorFacade;
     private CharacterEquipment characterEquipment;
-    private DiceRoll diceRoll;
+    private DiceRollPort diceRoll;
 
     @BeforeEach
     void setUp() {
-        diceRoll = mock(DiceRoll.class);
+        diceRoll = mock(DiceRollPort.class);
         damageCalculatorFacade = new DamageCalculatorFacade(diceRoll);
         characterEquipment = mock(CharacterEquipment.class);
     }

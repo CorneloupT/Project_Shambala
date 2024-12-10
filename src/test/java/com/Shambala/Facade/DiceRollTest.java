@@ -1,5 +1,6 @@
 package com.Shambala.Facade;
 
+import com.Shambala.provider.DiceRoll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

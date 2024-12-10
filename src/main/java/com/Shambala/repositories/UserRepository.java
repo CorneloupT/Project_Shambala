@@ -1,17 +1,11 @@
 package com.Shambala.repositories;
 
 import com.Shambala.models.User;
+import com.Shambala.repositories.Entity.UserEntity;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository {
-    void saveNewUser(User user);
+@Repository
+public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    User getById(Long idUser);
-
-    User getByLastName(String name);
-
-    void deleteUserById(User user);
-
-    void updateUser(User user);
-
-    User getUserByEmail(String mail);
 }
